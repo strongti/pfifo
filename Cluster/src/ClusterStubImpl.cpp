@@ -31,3 +31,10 @@ void ClusterStubImpl::clickButtons(const std::shared_ptr<CommonAPI::ClientId> _c
 
     _reply(0);
 }
+
+void ClusterStubImpl::sendDetects(const std::shared_ptr<CommonAPI::ClientId> _client, std::string _detection, sendDetectsReply_t _reply) {
+     std::cout << "Detect : " << _detection << " \n";
+     emit signalDetects(_detection); // Emit the signal
+
+    _reply(0);
+}

@@ -13,7 +13,7 @@ Detect::Detect(QObject *parent) : QObject(parent)
 
 void Detect::startCamera() {
     // Load YOLO network
-    cv::dnn::Net net = cv::dnn::readNet("yolov3-tiny.weights", "yolov3-tiny.cfg");
+    cv::dnn::Net net = cv::dnn::readNet("yolov4-tiny.weights", "yolov4-tiny.cfg");
     net.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
     net.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
 
@@ -24,7 +24,7 @@ void Detect::startCamera() {
 
     // Open the camera
     if (!cap.isOpened()) {
-        if (!cap.open(1)) {
+        if (!cap.open(0)) {
             std::cerr << "Could not open camera." << std::endl;
             return;
         }
@@ -56,6 +56,10 @@ void Detect::startCamera() {
         net.forward(outs, net.getUnconnectedOutLayersNames());
 
         // Postprocessing: draw detected objects and display the frame
+        std::vector<int> classIds;
+        std::vector<float> confidences;
+        std::vector<cv::Rect> boxes;
+
         for (size_t i = 0; i < outs.size(); ++i) {
             for (int j = 0; j < outs[i].rows; ++j) {
                 cv::Mat scores = outs[i].row(j).colRange(5, outs[i].cols);
@@ -70,17 +74,34 @@ void Detect::startCamera() {
                     int left = centerX - width / 2;
                     int top = centerY - height / 2;
 
-                    std::string label = cv::format("%.2f", confidence);
-                    label = classes[classIdPoint.x] + ":" + label;
-
-                    int baseLine;
-                    cv::Size labelSize = getTextSize(label, cv::FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
-                    top = std::max(top, labelSize.height);
-                    rectangle(frame, cv::Point(left, top), cv::Point(left + width, top + height), cv::Scalar(0, 255, 0), 3);
-                    rectangle(frame, cv::Point(left, top - round(1.5*labelSize.height)), cv::Point(left + round(1.5*labelSize.width), top + baseLine), cv::Scalar(255, 255, 255), cv::FILLED);
-                    putText(frame, label, cv::Point(left, top), cv::FONT_HERSHEY_SIMPLEX, 0.75, cv::Scalar(0,0,0),1);
+                    classIds.push_back(classIdPoint.x);
+                    confidences.push_back((float)confidence);
+                    boxes.push_back(cv::Rect(left, top, width, height));
                 }
             }
+        }
+
+        std::vector<int> indices;
+        cv::dnn::NMSBoxes(boxes, confidences, 0.5, 0.4, indices);
+
+        int result;
+        CommonAPI::CallStatus callStatus;
+        for (int idx : indices) {
+            cv::Rect box = boxes[idx];
+            std::string label = cv::format("%.2f", confidences[idx]);
+            label = classes[classIds[idx]];
+
+            // Print detected object to console
+            std::cout << classes[classIds[idx]] << std::endl;
+
+            myProxy->sendDetects(classes[classIds[idx]], callStatus, result);
+
+            int baseLine;
+            cv::Size labelSize = getTextSize(label, cv::FONT_HERSHEY_SIMPLEX, 0.5, 1, &baseLine);
+            int top = std::max(box.y, labelSize.height);
+            rectangle(frame, box, cv::Scalar(0, 255, 0), 3);
+            rectangle(frame, cv::Point(box.x, top - round(1.5*labelSize.height)), cv::Point(box.x + round(1.5*labelSize.width), top + baseLine), cv::Scalar(255, 255, 255), cv::FILLED);
+            putText(frame, label, cv::Point(box.x, top), cv::FONT_HERSHEY_SIMPLEX, 0.75, cv::Scalar(0,0,0),1);
         }
 
         cv::imshow("Webcam", frame);

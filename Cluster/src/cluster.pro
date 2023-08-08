@@ -17,6 +17,7 @@ SOURCES += main.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
+    DetectsReceiver.cpp \
     WeatherAPI.cpp \
     ClusterStubImpl.cpp \
     ButtonsReceiver.cpp \
@@ -66,6 +67,7 @@ HEADERS += \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
     ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
     ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
+    DetectsReceiver.h \
     WeatherAPI.h \
     ClusterStubImpl.hpp \
     ButtonsReceiver.h \
