@@ -265,20 +265,20 @@ ApplicationWindow {
         visible: bState === "P"
     }
 
-    Camera {
-        id: camera
-        deviceId: "/dev/video1"
-    }
+//    Camera {
+//        id: camera
+//        deviceId: "/dev/video1"
+//    }
 
-    VideoOutput {
-        id: videoOutput
-        width: 492 // Set width of the camera output
-        height: 441
-        anchors.verticalCenterOffset: -334
-        anchors.horizontalCenterOffset: 0 // Set height of the camera output
-        anchors.horizontalCenter: parent.horizontalCenter // Center the output horizontally
-        anchors.verticalCenter: parent.verticalCenter // Center the output vertically
-        source: camera
-        visible: bState === "R"
-    }
+//    VideoOutput {
+//        id: videoOutput
+//        width: 492 // Set width of the camera output
+//        height: 441
+//        anchors.verticalCenterOffset: -334
+//        anchors.horizontalCenterOffset: 0 // Set height of the camera output
+//        anchors.horizontalCenter: parent.horizontalCenter // Center the output horizontally
+//        anchors.verticalCenter: parent.verticalCenter // Center the output vertically
+//        source: camera
+//        visible: bState === "R"
+//    }
 }

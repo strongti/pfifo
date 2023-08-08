@@ -19,7 +19,8 @@ SOURCES += \
     main.cpp \
     RPM.cpp \
     Speed.cpp \
-    Buttons.cpp
+    Buttons.cpp \
+    Detect.cpp
 
 RESOURCES += qml.qrc
 
@@ -66,4 +67,32 @@ HEADERS += \
     ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
     Speed.h \
     RPM.h \
-    Buttons.h
+    Buttons.h \
+    Detect.h
+
+INCLUDEPATH += /usr/include/opencv4/
+DEPENDPATH += /usr/include/opencv4/
+
+LIBS += -L/usr/lib/x86_64-linux-gnu/
+LIBS += \
+-lopencv_core \
+-lopencv_videoio \
+-lopencv_ml \
+-lopencv_objdetect \
+-lopencv_stitching \
+-lopencv_calib3d \
+-lopencv_photo \
+-lopencv_video \
+-lopencv_dnn \
+-lopencv_imgcodecs \
+-lopencv_flann \
+-lopencv_features2d \
+-lopencv_imgproc \
+-lopencv_highgui
+
+DISTFILES += \
+    yolov3-tiny.weights \
+    coco.names \
+    yolov3-tiny.cfg
+
+

@@ -9,6 +9,7 @@
 #include "Buttons.h"
 #include "RPM.h"
 #include <qqml.h>
+#include "Detect.h"
 
 using namespace v1_0::commonapi;
 
@@ -22,6 +23,7 @@ int main(int argc, char *argv[]) {
     qmlRegisterType<Speed>("com.seame.Speed", 1, 0, "Speed");
     qmlRegisterType<Buttons>("com.seame.Buttons", 1, 0, "Buttons");
     qmlRegisterType<RPM>("com.seame.RPM", 1, 0, "RPM");
+    qmlRegisterType<Detect>("com.seame.Detect", 1, 0, "Detect");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

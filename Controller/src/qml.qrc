@@ -7,5 +7,7 @@
         <file>image/warn1.png</file>
         <file>image/weather.png</file>
         <file>image/weather1.png</file>
+        <file>image/camoff.png</file>
+        <file>image/camon.png</file>
     </qresource>
 </RCC>
