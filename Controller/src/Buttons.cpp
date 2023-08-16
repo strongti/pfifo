@@ -1,4 +1,7 @@
 #include "Buttons.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
 
 Buttons::Buttons(QObject *parent) : QObject(parent)
 {
@@ -16,6 +19,19 @@ void Buttons::adjustButtons(QString clickedButton)
     std::string clickedButtonStdString = clickedButton.toStdString();
 
     std::cout << "Click : " << clickedButtonStdString << std::endl;
-    myProxy->clickButtons(clickedButtonStdString, callStatus, result);
+
+    uint8_t tos1 = 0x2;
+
+    std::mutex socket_buttons;
+    {
+        std::lock_guard<std::mutex> lock(socket_buttons);
+
+        int socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
+        setsockopt(socket_fd, IPPROTO_IP, IP_TOS, &tos1, sizeof(tos1));
+
+        // Send detected label to other application through Some/IP
+        myProxy->clickButtons(clickedButtonStdString, callStatus, result);
+    }
+
     std::cout << "Check error: '" << result << "'\n";
 }
