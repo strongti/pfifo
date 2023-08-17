@@ -25,8 +25,7 @@ void RPM::adjustRPM(int scrollValue)
     {
         std::lock_guard<std::mutex> lock(socket_rpm);
 
-        int socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
-        setsockopt(socket_fd, IPPROTO_IP, IP_TOS, &tos2, sizeof(tos2));
+        setsockopt(33, IPPROTO_IP, IP_TOS, &tos2, sizeof(tos2));
 
         // Send detected label to other application through Some/IP
         myProxy->updateRPM(scrollValue, callStatus, result);

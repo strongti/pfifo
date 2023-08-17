@@ -3,13 +3,11 @@
 
 #include <QObject>
 #include <iostream>
-
-
-#include <iostream>
 #include <string>
 #include <unistd.h>
 #include <CommonAPI/CommonAPI.hpp>
 #include <v1/commonapi/ClusterProxy.hpp>
+#include <QThread>
 
 using namespace v1_0::commonapi;
 
@@ -19,11 +17,17 @@ class Speed : public QObject
 
 public:
     explicit Speed(QObject *parent = nullptr);
+    ~Speed();
     std::shared_ptr < CommonAPI::Runtime > runtime;
     std::shared_ptr<ClusterProxy<>> myProxy;
 
 public slots:
     void adjustSpeed(int scrollValue);
+    void processSpeed();
+
+private:
+    QThread speedThread;
+    int currentScrollValue;
 };
 
 #endif // SPEED_H

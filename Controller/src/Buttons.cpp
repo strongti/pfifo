@@ -26,8 +26,7 @@ void Buttons::adjustButtons(QString clickedButton)
     {
         std::lock_guard<std::mutex> lock(socket_buttons);
 
-        int socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
-        setsockopt(socket_fd, IPPROTO_IP, IP_TOS, &tos1, sizeof(tos1));
+        setsockopt(33, IPPROTO_IP, IP_TOS, &tos1, sizeof(tos1));
 
         // Send detected label to other application through Some/IP
         myProxy->clickButtons(clickedButtonStdString, callStatus, result);

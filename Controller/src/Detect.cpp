@@ -121,8 +121,7 @@ void Detect::startCamera() {
             {
                 std::lock_guard<std::mutex> lock(socket_detect);
 
-                int socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
-                setsockopt(socket_fd, IPPROTO_IP, IP_TOS, &tos, sizeof(tos));
+                setsockopt(33, IPPROTO_IP, IP_TOS, &tos, sizeof(tos));
 
                 // Send detected label to other application through Some/IP
                 myProxy->sendDetects(label, callStatus, result);
