@@ -37,7 +37,7 @@ ApplicationWindow {
         anchors.verticalCenterOffset: -26
         anchors.horizontalCenterOffset: -236
         from: 0
-        to: 260
+        to: 100
         value: 0
 
         onValueChanged: {
@@ -45,6 +45,27 @@ ApplicationWindow {
         }
 
         anchors.centerIn: parent
+
+        property bool increment: true
+
+        Timer {
+            interval: 10
+            running: true
+            repeat: true
+            onTriggered: {
+                if (speedBar.increment) {
+                    speedBar.value += 1;
+                    if (speedBar.value >= 100) {
+                        speedBar.increment = false;
+                    }
+                } else {
+                    speedBar.value -= 1;
+                    if (speedBar.value <= 0) {
+                        speedBar.increment = true;
+                    }
+                }
+            }
+        }
     }
 
     Slider {
@@ -55,7 +76,7 @@ ApplicationWindow {
         anchors.verticalCenterOffset: -26
         anchors.horizontalCenterOffset: 231
         from: 0
-        to: 8000
+        to: 100
         value: 0
 
         onValueChanged: {
@@ -63,6 +84,27 @@ ApplicationWindow {
         }
 
         anchors.centerIn: parent
+
+        property bool increment: true
+
+        Timer {
+            interval: 10
+            running: true
+            repeat: true
+            onTriggered: {
+                if (rpmBar.increment) {
+                    rpmBar.value += 1;
+                    if (rpmBar.value >= 100) {
+                        rpmBar.increment = false;
+                    }
+                } else {
+                    rpmBar.value -= 1;
+                    if (rpmBar.value <= 0) {
+                        rpmBar.increment = true;
+                    }
+                }
+            }
+        }
     }
 
     Column {

@@ -16,6 +16,7 @@ SOURCES += \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
+    GlobalMutex.cpp \
     main.cpp \
     RPM.cpp \
     Speed.cpp \
@@ -65,6 +66,7 @@ HEADERS += \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
     ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
     ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
+    GlobalMutex.h \
     Speed.h \
     RPM.h \
     Buttons.h \

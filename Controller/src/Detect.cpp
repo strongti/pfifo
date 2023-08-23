@@ -19,7 +19,7 @@ Detect::Detect(QObject *parent) : QObject(parent)
 
 void Detect::startCamera() {
     // Load YOLO network
-    cv::dnn::Net net = cv::dnn::readNet("yolov4-tiny.weights", "yolov4-tiny.cfg");
+    cv::dnn::Net net = cv::dnn::readNet("yolov2-tiny.weights", "yolov2-tiny.cfg");
     net.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
     net.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
 
@@ -96,9 +96,6 @@ void Detect::startCamera() {
         int result;
         CommonAPI::CallStatus callStatus;
         for (int idx : indices) {
-
-            
-
             cv::Rect box = boxes[idx];
             std::string label = cv::format("%.2f", confidences[idx]);
             label = classes[classIds[idx]] + ": " + std::to_string(frameCount) + "frame" ;
@@ -116,7 +113,6 @@ void Detect::startCamera() {
                 tos = 0x0; // for Normal Service
             }
 
-            std::mutex socket_detect;
 
             {
                 std::lock_guard<std::mutex> lock(socket_detect);

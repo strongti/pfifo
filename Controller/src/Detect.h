@@ -26,7 +26,14 @@ public:
 public slots:
     void startCamera();
     void stopCamera();
+
+private:
+    std::mutex socket_detect;
+
 };
 
 
 #endif // DETECT_H
+
+
+

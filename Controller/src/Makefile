@@ -55,6 +55,7 @@ OBJECTS_DIR   = ./
 SOURCES       = ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
+		GlobalMutex.cpp \
 		main.cpp \
 		RPM.cpp \
 		Speed.cpp \
@@ -67,6 +68,7 @@ SOURCES       = ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
 OBJECTS       = ClusterSomeIPDeployment.o \
 		ClusterSomeIPProxy.o \
 		ClusterSomeIPStubAdapter.o \
+		GlobalMutex.o \
 		main.o \
 		RPM.o \
 		Speed.o \
@@ -168,12 +170,14 @@ DIST          = yolov3-tiny.weights \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
+		GlobalMutex.h \
 		Speed.h \
 		RPM.h \
 		Buttons.h \
 		Detect.h ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
+		GlobalMutex.cpp \
 		main.cpp \
 		RPM.cpp \
 		Speed.cpp \
@@ -371,8 +375,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../src-gen-cluster/v1/commonapi/Cluster.hpp ../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp ../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp Speed.h RPM.h Buttons.h Detect.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp main.cpp RPM.cpp Speed.cpp Buttons.cpp Detect.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../src-gen-cluster/v1/commonapi/Cluster.hpp ../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp ../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp GlobalMutex.h Speed.h RPM.h Buttons.h Detect.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp GlobalMutex.cpp main.cpp RPM.cpp Speed.cpp Buttons.cpp Detect.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -480,6 +484,9 @@ ClusterSomeIPStubAdapter.o: ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStub
 		../../src-gen-cluster/v1/commonapi/Cluster.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ClusterSomeIPStubAdapter.o ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp
 
+GlobalMutex.o: GlobalMutex.cpp GlobalMutex.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o GlobalMutex.o GlobalMutex.cpp
+
 main.o: main.cpp ../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
 		../../src-gen-cluster/v1/commonapi/Cluster.hpp \
@@ -492,13 +499,15 @@ main.o: main.cpp ../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
 RPM.o: RPM.cpp RPM.h \
 		../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
-		../../src-gen-cluster/v1/commonapi/Cluster.hpp
+		../../src-gen-cluster/v1/commonapi/Cluster.hpp \
+		GlobalMutex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o RPM.o RPM.cpp
 
 Speed.o: Speed.cpp Speed.h \
 		../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
-		../../src-gen-cluster/v1/commonapi/Cluster.hpp
+		../../src-gen-cluster/v1/commonapi/Cluster.hpp \
+		GlobalMutex.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Speed.o Speed.cpp
 
 Buttons.o: Buttons.cpp Buttons.h \

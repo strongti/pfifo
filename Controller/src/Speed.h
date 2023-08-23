@@ -27,7 +27,8 @@ public slots:
 
 private:
     QThread speedThread;
-    int currentScrollValue;
+    int currentSpeed;
+    //std::mutex socket_speed;
 };
 
 #endif // SPEED_H
