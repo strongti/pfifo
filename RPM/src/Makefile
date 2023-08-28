@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = rpm1.0.0
-DISTDIR = /home/avees/pfifo/RPM/src/.tmp/rpm1.0.0
+DISTDIR = /home/avees/failbutkeep/RPM/src/.tmp/rpm1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/local/lib/ -lCommonAPI -lCommonAPI-SomeIP -lvsomeip3 /usr/lib/aarch64-linux-gnu/libQt5Quick.so /usr/lib/aarch64-linux-gnu/libQt5Gui.so /usr/lib/aarch64-linux-gnu/libQt5Qml.so /usr/lib/aarch64-linux-gnu/libQt5Network.so /usr/lib/aarch64-linux-gnu/libQt5Core.so /usr/lib/aarch64-linux-gnu/libGL.so -lpthread   
@@ -398,7 +398,7 @@ moc_RPM.cpp: RPM.h \
 		../../src-gen-cluster/v1/commonapi/Cluster.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/avees/pfifo/RPM/src/moc_predefs.h -I/usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/avees/pfifo/RPM/src -I/home/avees/pfifo/src-gen-cluster -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu/qt5 -I/usr/include/aarch64-linux-gnu/qt5/QtQuick -I/usr/include/aarch64-linux-gnu/qt5/QtGui -I/usr/include/aarch64-linux-gnu/qt5/QtQml -I/usr/include/aarch64-linux-gnu/qt5/QtNetwork -I/usr/include/aarch64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/aarch64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/aarch64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/aarch64-linux-gnu/7/include-fixed -I/usr/include/aarch64-linux-gnu -I/usr/include RPM.h -o moc_RPM.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/avees/failbutkeep/RPM/src/moc_predefs.h -I/usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/avees/failbutkeep/RPM/src -I/home/avees/failbutkeep/src-gen-cluster -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include -I/usr/include/aarch64-linux-gnu/qt5 -I/usr/include/aarch64-linux-gnu/qt5/QtQuick -I/usr/include/aarch64-linux-gnu/qt5/QtGui -I/usr/include/aarch64-linux-gnu/qt5/QtQml -I/usr/include/aarch64-linux-gnu/qt5/QtNetwork -I/usr/include/aarch64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/aarch64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/aarch64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/aarch64-linux-gnu/7/include-fixed -I/usr/include/aarch64-linux-gnu -I/usr/include RPM.h -o moc_RPM.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:

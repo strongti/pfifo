@@ -3,42 +3,21 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 
-RPM::RPM(QObject *parent) : QObject(parent), currentRPM(0)
+RPM::RPM(QObject *parent) : QObject(parent)
 {
     runtime = CommonAPI::Runtime::get();
     myProxy = runtime->buildProxy<ClusterProxy>("local", "cluster_service");
 
     while (!myProxy->isAvailable())
         usleep(10);
-
-    moveToThread(&RPMThread);
-    connect(&RPMThread, &QThread::started, this, &RPM::processRPM);
-    RPMThread.start();
-}
-
-RPM::~RPM()
-{
-    RPMThread.quit();
-    RPMThread.wait();
+    uint8_t tos3 = 0x10;
+    setsockopt(33, IPPROTO_IP, IP_TOS, &tos3, sizeof(tos3));
 }
 
 void RPM::adjustRPM(int scrollValue)
 {
-    currentRPM = scrollValue;
-    QMetaObject::invokeMethod(this, "processRPM", Qt::QueuedConnection);
-}
-
-void RPM::processRPM()
-{
     int result;
     CommonAPI::CallStatus callStatus;
-
-    std::cout << "RPM : " << currentRPM << std::endl;
-    uint8_t tos3 = 0x10;
-
-    {
-        std::lock_guard<std::mutex> lock(socket_RPM);
-        setsockopt(33, IPPROTO_IP, IP_TOS, &tos3, sizeof(tos3));
-        myProxy->updateRPM(currentRPM, callStatus, result);
-    }
+    std::cout << "RPM : " << scrollValue << std::endl;
+    myProxy->updateRPM(scrollValue, callStatus, result);
 }

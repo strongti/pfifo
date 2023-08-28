@@ -17,18 +17,11 @@ class Speed : public QObject
 
 public:
     explicit Speed(QObject *parent = nullptr);
-    ~Speed();
     std::shared_ptr < CommonAPI::Runtime > runtime;
     std::shared_ptr<ClusterProxy<>> myProxy;
 
 public slots:
     void adjustSpeed(int scrollValue);
-    void processSpeed();
-
-private:
-    QThread speedThread;
-    int currentSpeed;
-    std::mutex socket_speed;
 };
 
 #endif // SPEED_H

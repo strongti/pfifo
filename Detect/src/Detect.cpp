@@ -104,21 +104,15 @@ void Detect::startCamera() {
             std::cout << label << std::endl;
 
             // Set the TOS value based on detected class
-            tos = 0x0;
+
 
             // Check if detected class is "person"
             if (classes[classIds[idx]] == "person") {
                 tos = 0x10; // for Minimize Delay
-            } else {
-                tos = 0x0; // for Normal Service
             }
-
-
             {
                 std::lock_guard<std::mutex> lock(socket_detect);
-
                 setsockopt(33, IPPROTO_IP, IP_TOS, &tos, sizeof(tos));
-
                 // Send detected label to other application through Some/IP
                 myProxy->sendDetects(label, callStatus, result);
             }
@@ -136,6 +130,8 @@ void Detect::startCamera() {
         if (key == 27) {
             break;
         }
+        tos = 0x0;
+        setsockopt(33, IPPROTO_IP, IP_TOS, &tos, sizeof(tos));
     }
 }
 

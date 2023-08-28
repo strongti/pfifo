@@ -18,18 +18,10 @@ class RPM : public QObject
 
 public:
     explicit RPM(QObject *parent = nullptr);
-    ~RPM();
     std::shared_ptr < CommonAPI::Runtime > runtime;
     std::shared_ptr<ClusterProxy<>> myProxy;
-
 public slots:
     void adjustRPM(int scrollValue);
-    void processRPM();
-private:
-    QThread RPMThread;
-    int currentRPM;
-    std::mutex socket_RPM;
-
 };
 
 #endif // RPM_H
