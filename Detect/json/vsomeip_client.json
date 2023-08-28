@@ -1,0 +1,25 @@
+{ 
+   "unicast" : "192.168.1.1",
+    "logging" :
+    {
+        "level" : "debug",
+        "console" : "true",
+        "file" : { "enable" : "false" },
+        "dlt" : "false"
+    },
+    "applications" :
+    [
+        {
+            "name" : "detect",
+            "id" : "0x1341"
+        }
+    ],
+   "routing" : "detect",
+    "service-discovery" :
+    {
+        "enable" : "true",
+        "multicast" : "224.244.224.241",
+        "port" : "30490",
+        "protocol" : "udp"
+    }
+}  
