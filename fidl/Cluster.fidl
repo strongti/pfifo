@@ -28,7 +28,7 @@ interface Cluster {
   }
   method sendDetects {
     in {
-      String detection
+      UInt8 [] image
     }
     out {
       Int32 status

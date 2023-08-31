@@ -140,7 +140,7 @@ public:
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void sendDetects(std::string _detection, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendDetects(std::vector< uint8_t > _image, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
     /**
      * Calls sendDetects with asynchronous semantics.
      *
@@ -151,7 +151,7 @@ public:
      * The std::future returned by this method will be fulfilled at arrival of the reply.
      * It will provide the same value for CallStatus as will be handed to the callback.
      */
-    virtual std::future<CommonAPI::CallStatus> sendDetectsAsync(const std::string &_detection, SendDetectsAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
+    virtual std::future<CommonAPI::CallStatus> sendDetectsAsync(const std::vector< uint8_t > &_image, SendDetectsAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
 
 
 
@@ -203,13 +203,13 @@ std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::clickB
     return delegate_->clickButtonsAsync(_command, _callback, _info);
 }
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::sendDetects(std::string _detection, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
-    delegate_->sendDetects(_detection, _internalCallStatus, _status, _info);
+void ClusterProxy<_AttributeExtensions...>::sendDetects(std::vector< uint8_t > _image, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
+    delegate_->sendDetects(_image, _internalCallStatus, _status, _info);
 }
 
 template <typename ... _AttributeExtensions>
-std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendDetectsAsync(const std::string &_detection, SendDetectsAsyncCallback _callback, const CommonAPI::CallInfo *_info) {
-    return delegate_->sendDetectsAsync(_detection, _callback, _info);
+std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendDetectsAsync(const std::vector< uint8_t > &_image, SendDetectsAsyncCallback _callback, const CommonAPI::CallInfo *_info) {
+    return delegate_->sendDetectsAsync(_image, _callback, _info);
 }
 
 template <typename ... _AttributeExtensions>

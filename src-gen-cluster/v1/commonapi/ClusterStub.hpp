@@ -107,7 +107,7 @@ public:
     /// This is the method that will be called on remote calls on the method clickButtons.
     virtual void clickButtons(const std::shared_ptr<CommonAPI::ClientId> _client, std::string _command, clickButtonsReply_t _reply) = 0;
     /// This is the method that will be called on remote calls on the method sendDetects.
-    virtual void sendDetects(const std::shared_ptr<CommonAPI::ClientId> _client, std::string _detection, sendDetectsReply_t _reply) = 0;
+    virtual void sendDetects(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image, sendDetectsReply_t _reply) = 0;
 
 
     using CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>::initStubAdapter;

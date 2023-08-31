@@ -65,9 +65,9 @@ public:
 
     virtual std::future<CommonAPI::CallStatus> clickButtonsAsync(const std::string &_command, ClickButtonsAsyncCallback _callback, const CommonAPI::CallInfo *_info);
 
-    virtual void sendDetects(std::string _detection, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
+    virtual void sendDetects(std::vector< uint8_t > _image, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
 
-    virtual std::future<CommonAPI::CallStatus> sendDetectsAsync(const std::string &_detection, SendDetectsAsyncCallback _callback, const CommonAPI::CallInfo *_info);
+    virtual std::future<CommonAPI::CallStatus> sendDetectsAsync(const std::vector< uint8_t > &_image, SendDetectsAsyncCallback _callback, const CommonAPI::CallInfo *_info);
 
     virtual void getOwnVersion(uint16_t &_major, uint16_t &_minor) const;
 

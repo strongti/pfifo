@@ -22,10 +22,7 @@ ApplicationWindow {
             isToggled = !isToggled;
             if (isToggled) {
                 detect.startCamera();
-            } else {
-                detect.stopCamera();
             }
-        }
         width: 131
         height: 120
 

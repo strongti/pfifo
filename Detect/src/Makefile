@@ -65,7 +65,8 @@ OBJECTS       = ClusterSomeIPDeployment.o \
 		Detect.o \
 		qrc_qml.o \
 		moc_Detect.o
-DIST          = yolov3-tiny.weights \
+DIST          = image.jpg \
+		yolov3-tiny.weights \
 		coco.names \
 		yolov3-tiny.cfg \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \

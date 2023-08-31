@@ -20,5 +20,6 @@ void Speed::adjustSpeed(int scrollValue)
     CommonAPI::CallStatus callStatus;
     std::cout << "Speed : " << scrollValue << std::endl;
     myProxy->updateSpeed(scrollValue, callStatus, result);
+    std::cout << "Speedresult : " << result << std::endl;
 }
 

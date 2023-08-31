@@ -230,14 +230,14 @@ std::future<CommonAPI::CallStatus> ClusterSomeIPProxy::clickButtonsAsync(const s
         std::make_tuple(deploy_status));
 }
 
-void ClusterSomeIPProxy::sendDetects(std::string _detection, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
-    CommonAPI::Deployable< std::string, CommonAPI::SomeIP::StringDeployment> deploy_detection(_detection, static_cast< CommonAPI::SomeIP::StringDeployment* >(nullptr));
+void ClusterSomeIPProxy::sendDetects(std::vector< uint8_t > _image, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
+    CommonAPI::Deployable< std::vector< uint8_t >, CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >> deploy_image(_image, static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr));
     CommonAPI::Deployable< int32_t, CommonAPI::SomeIP::IntegerDeployment<int32_t>> deploy_status(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr));
     CommonAPI::SomeIP::ProxyHelper<
         CommonAPI::SomeIP::SerializableArguments<
             CommonAPI::Deployable<
-                std::string,
-                CommonAPI::SomeIP::StringDeployment
+                std::vector< uint8_t >,
+                CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >
             >
         >,
         CommonAPI::SomeIP::SerializableArguments<
@@ -252,20 +252,20 @@ void ClusterSomeIPProxy::sendDetects(std::string _detection, CommonAPI::CallStat
         false,
         false,
         (_info ? _info : &CommonAPI::SomeIP::defaultCallInfo),
-        deploy_detection,
+        deploy_image,
         _internalCallStatus,
         deploy_status);
     _status = deploy_status.getValue();
 }
 
-std::future<CommonAPI::CallStatus> ClusterSomeIPProxy::sendDetectsAsync(const std::string &_detection, SendDetectsAsyncCallback _callback, const CommonAPI::CallInfo *_info) {
-    CommonAPI::Deployable< std::string, CommonAPI::SomeIP::StringDeployment> deploy_detection(_detection, static_cast< CommonAPI::SomeIP::StringDeployment* >(nullptr));
+std::future<CommonAPI::CallStatus> ClusterSomeIPProxy::sendDetectsAsync(const std::vector< uint8_t > &_image, SendDetectsAsyncCallback _callback, const CommonAPI::CallInfo *_info) {
+    CommonAPI::Deployable< std::vector< uint8_t >, CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >> deploy_image(_image, static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr));
     CommonAPI::Deployable< int32_t, CommonAPI::SomeIP::IntegerDeployment<int32_t>> deploy_status(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr));
     return CommonAPI::SomeIP::ProxyHelper<
         CommonAPI::SomeIP::SerializableArguments<
             CommonAPI::Deployable<
-                std::string,
-                CommonAPI::SomeIP::StringDeployment
+                std::vector< uint8_t >,
+                CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >
             >
         >,
         CommonAPI::SomeIP::SerializableArguments<
@@ -280,7 +280,7 @@ std::future<CommonAPI::CallStatus> ClusterSomeIPProxy::sendDetectsAsync(const st
         false,
         false,
         (_info ? _info : &CommonAPI::SomeIP::defaultCallInfo),
-        deploy_detection,
+        deploy_image,
         [_callback] (CommonAPI::CallStatus _internalCallStatus, CommonAPI::Deployable< int32_t, CommonAPI::SomeIP::IntegerDeployment<int32_t> > _status) {
             if (_callback)
                 _callback(_internalCallStatus, _status.getValue());

@@ -85,6 +85,7 @@ LIBS += \
 -lopencv_highgui
 
 DISTFILES += \
+    image.jpg \
     yolov3-tiny.weights \
     coco.names \
     yolov3-tiny.cfg

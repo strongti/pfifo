@@ -78,9 +78,9 @@ public:
         int32_t status = 0;
         _reply(status);
     }
-    COMMONAPI_EXPORT virtual void sendDetects(const std::shared_ptr<CommonAPI::ClientId> _client, std::string _detection, sendDetectsReply_t _reply) {
+    COMMONAPI_EXPORT virtual void sendDetects(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image, sendDetectsReply_t _reply) {
         (void)_client;
-        (void)_detection;
+        (void)_image;
         int32_t status = 0;
         _reply(status);
     }

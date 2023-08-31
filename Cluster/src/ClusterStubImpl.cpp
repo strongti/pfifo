@@ -1,4 +1,5 @@
 #include "ClusterStubImpl.hpp"
+#include <opencv2/opencv.hpp>
 
 ClusterStubImpl::ClusterStubImpl() { }
 ClusterStubImpl::~ClusterStubImpl() { }
@@ -32,9 +33,16 @@ void ClusterStubImpl::clickButtons(const std::shared_ptr<CommonAPI::ClientId> _c
     _reply(0);
 }
 
-void ClusterStubImpl::sendDetects(const std::shared_ptr<CommonAPI::ClientId> _client, std::string _detection, sendDetectsReply_t _reply) {
-     std::cout << "Detect : " << _detection << " \n";
-     emit signalDetects(_detection); // Emit the signal
+void ClusterStubImpl::sendDetects(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image, sendDetectsReply_t _reply) {
+    cv::Mat decoded_image = cv::imdecode(_image, cv::IMREAD_COLOR);
+     if (decoded_image.empty()) {
+        std::cerr << "Failed to decode image." << std::endl;
+        _reply(-1);
+    }
+    std::cout << "Got message@@'" << "'\n";
+    cv::namedWindow("Decoded Image");
+    cv::imshow("Decoded Image", decoded_image);
+    cv::waitKey(0);
 
     _reply(0);
 }

@@ -33,7 +33,7 @@ ApplicationWindow {
         property bool increment: true
 
         Timer {
-            interval: 10
+            interval: 1
             running: true
             repeat: true
             onTriggered: {

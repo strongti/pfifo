@@ -13,6 +13,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 INCLUDEPATH += ../../src-gen-cluster/
 SOURCES += \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
@@ -54,14 +57,14 @@ INCLUDEPATH += /usr/local/include
 DEPENDPATH += /usr/local/include
 
 HEADERS += \
-    ../../src-gen-cluster/v1/commonapi/Cluster.hpp \
-    ../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
-    ../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
-    ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp \
-    ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.hpp \
-    ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
-    ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
-    ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/Cluster.hpp \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.hpp \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/ClusterStub.hpp \
+    ../../../pfifo/src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
     Speed.h \
 
 

@@ -2,6 +2,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
+#include <opencv2/opencv.hpp>
 
 RPM::RPM(QObject *parent) : QObject(parent)
 {
@@ -20,4 +21,5 @@ void RPM::adjustRPM(int scrollValue)
     CommonAPI::CallStatus callStatus;
     std::cout << "RPM : " << scrollValue << std::endl;
     myProxy->updateRPM(scrollValue, callStatus, result);
+    std::cout << "Rpmresult : " << result << std::endl;//
 }
