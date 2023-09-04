@@ -25,7 +25,7 @@ public:
 
 public slots:
     void startCamera();
-
+    void sendChunks(const std::vector<uchar>& data);
 private:
     std::mutex socket_detect;
 
