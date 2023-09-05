@@ -20,6 +20,7 @@ Q_DECLARE_METATYPE(std::string)
 
 int main(int argc, char *argv[])
 {
+
     qRegisterMetaType<std::string>();
 
     std::shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
@@ -27,7 +28,9 @@ int main(int argc, char *argv[])
         std::make_shared<ClusterStubImpl>();
     runtime->registerService("local", "cluster_service", myService);
     std::cout << "Successfully Registered Service!" << std::endl;
+    while(true){
 
+    }
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
@@ -48,8 +51,9 @@ int main(int argc, char *argv[])
     QObject::connect(&(*myService), &ClusterStubImpl::signalButtons, &buttonStorage, &ButtonsReceiver::receiveButtons); // Connect the instances
     QObject::connect(&(*myService), &ClusterStubImpl::signalRPM, &rpmStorage, &RPMReceiver::receiveRPM); // Connect the instances
 
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    if (engine.rootObjects().isEmpty())
-        return -1;
-    return app.exec();
+//    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+//    if (engine.rootObjects().isEmpty())
+//        return -1;
+//    return app.exec();
+    return 0;
 }

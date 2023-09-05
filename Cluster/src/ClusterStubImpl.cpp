@@ -44,5 +44,11 @@ void ClusterStubImpl::sendDetects(const std::shared_ptr<CommonAPI::ClientId> _cl
     std::cerr << "1=======" << std::endl;
     cv::imshow("Decoded Image", decoded_image);
     std::cerr << "2=======" << std::endl;
+    cv::waitKey(20);
+    std::cerr << "3=======" << std::endl;
+    decoded_image.release();
+    std::cerr << "4=======" << std::endl;
     _reply(0);
 }
+
+
