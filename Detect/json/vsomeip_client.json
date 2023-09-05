@@ -14,7 +14,15 @@
             "id" : "0x1341"
         }
     ],
-   "routing" : "detect",
+    "clients" :
+    [
+        {
+            "service" : "0x1234",
+            "instance" : "0x5678",
+            "reliable" : [ "30510"]
+        }
+    ],
+    "routing" : "detect",
     "service-discovery" :
     {
         "enable" : "true",
@@ -22,4 +30,4 @@
         "port" : "30490",
         "protocol" : "udp"
     }
-}  
+}

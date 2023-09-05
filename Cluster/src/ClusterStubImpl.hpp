@@ -13,6 +13,9 @@ public:
     virtual void updateRPM(const std::shared_ptr<CommonAPI::ClientId> _client, int _rpm, updateRPMReply_t _reply);
     virtual void clickButtons(const std::shared_ptr<CommonAPI::ClientId> _client, std::string _command, clickButtonsReply_t _reply);
     virtual void sendDetects(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image, sendDetectsReply_t _reply);
+
+    void receiveChunk(const std::vector<uchar>& chunk);
+    void assembleAndShowImage();
 signals:
     void signalSpeed(int);
     void signalRPM(int);

@@ -14,12 +14,20 @@
             "id" : "0x1342"
         }
     ],
-   "routing" : "detect",
+    "clients" :
+    [
+        {
+            "service" : "0x1234",
+            "instance" : "0x5678",
+            "reliable" : [ "30510"]
+        }
+    ],
+   "routing" : "rpm",
     "service-discovery" :
     {
         "enable" : "true",
         "multicast" : "224.244.224.241",
-        "port" : "30491",
+        "port" : "30490",
         "protocol" : "udp"
     }
 }  

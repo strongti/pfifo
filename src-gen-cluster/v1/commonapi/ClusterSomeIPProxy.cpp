@@ -75,7 +75,7 @@ void ClusterSomeIPProxy::updateSpeed(int32_t _speed, CommonAPI::CallStatus &_int
     >::callMethodWithReply(
         *this,
         CommonAPI::SomeIP::method_id_t(0x7b),
-        false,
+        true,
         false,
         (_info ? _info : &CommonAPI::SomeIP::defaultCallInfo),
         deploy_speed,
@@ -103,7 +103,7 @@ std::future<CommonAPI::CallStatus> ClusterSomeIPProxy::updateSpeedAsync(const in
     >::callMethodAsync(
         *this,
         CommonAPI::SomeIP::method_id_t(0x7b),
-        false,
+        true,
         false,
         (_info ? _info : &CommonAPI::SomeIP::defaultCallInfo),
         deploy_speed,
@@ -249,7 +249,7 @@ void ClusterSomeIPProxy::sendDetects(std::vector< uint8_t > _image, CommonAPI::C
     >::callMethodWithReply(
         *this,
         CommonAPI::SomeIP::method_id_t(0x7e),
-        false,
+        true,
         false,
         (_info ? _info : &CommonAPI::SomeIP::defaultCallInfo),
         deploy_image,
@@ -277,7 +277,7 @@ std::future<CommonAPI::CallStatus> ClusterSomeIPProxy::sendDetectsAsync(const st
     >::callMethodAsync(
         *this,
         CommonAPI::SomeIP::method_id_t(0x7e),
-        false,
+        true,
         false,
         (_info ? _info : &CommonAPI::SomeIP::defaultCallInfo),
         deploy_image,
