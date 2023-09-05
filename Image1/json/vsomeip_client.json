@@ -10,8 +10,8 @@
     "applications" :
     [
         {
-            "name" : "speed",
-            "id" : "0x1341"
+            "name" : "image1",
+            "id" : "0x1342"
         }
     ],
     "clients" :

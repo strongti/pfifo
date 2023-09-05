@@ -17,12 +17,7 @@ SOURCES += main.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
-    DetectsReceiver.cpp \
-    WeatherAPI.cpp \
-    ClusterStubImpl.cpp \
-    ButtonsReceiver.cpp \
-    SpeedReceiver.cpp \
-    RPMReceiver.cpp
+    ClusterStubImpl.cpp
 
 RESOURCES += qml.qrc
 
@@ -67,12 +62,7 @@ HEADERS += \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
     ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
     ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
-    DetectsReceiver.h \
-    WeatherAPI.h \
-    ClusterStubImpl.hpp \
-    ButtonsReceiver.h \
-    RPMReceiver.h \
-    SpeedReceiver.h
+    ClusterStubImpl.hpp
 
 INCLUDEPATH += /usr/include/opencv4/
 DEPENDPATH += /usr/include/opencv4/

@@ -1,10 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "SpeedReceiver.h" // Include the new header
-#include "ButtonsReceiver.h"
-#include "RPMReceiver.h"
-#include "DetectsReceiver.h"
 #include <qqml.h>
 #include <QMetaType>
 #include <string>
@@ -13,7 +9,7 @@
 #include <CommonAPI/CommonAPI.hpp>
 #include "ClusterStubImpl.hpp"
 
-#include "WeatherAPI.h"
+//#include "WeatherAPI.h"
 
 using namespace std;
 Q_DECLARE_METATYPE(std::string)
@@ -31,25 +27,25 @@ int main(int argc, char *argv[])
     while(true){
 
     }
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
-    QQmlApplicationEngine engine;
+//    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+//    QGuiApplication app(argc, argv);
+//    QQmlApplicationEngine engine;
 
-    SpeedReceiver speedStorage;
-    ButtonsReceiver buttonStorage;
-    RPMReceiver rpmStorage;
-    WeatherAPI weatherAPIStorage;
-    DetectsReceiver detectStorage;
+//    SpeedReceiver speedStorage;
+//    ButtonsReceiver buttonStorage;
+//    RPMReceiver rpmStorage;
+//    WeatherAPI weatherAPIStorage;
+//    DetectsReceiver detectStorage;
 
-    engine.rootContext()->setContextProperty("speedReceiver", &speedStorage);
-    engine.rootContext()->setContextProperty("buttonsReceiver", &buttonStorage);
-    engine.rootContext()->setContextProperty("rpmReceiver", &rpmStorage);
-    engine.rootContext()->setContextProperty("weatherAPI", &weatherAPIStorage);
-    engine.rootContext()->setContextProperty("weatherAPI", &detectStorage);
+//    engine.rootContext()->setContextProperty("speedReceiver", &speedStorage);
+//    engine.rootContext()->setContextProperty("buttonsReceiver", &buttonStorage);
+//    engine.rootContext()->setContextProperty("rpmReceiver", &rpmStorage);
+//    engine.rootContext()->setContextProperty("weatherAPI", &weatherAPIStorage);
+//    engine.rootContext()->setContextProperty("weatherAPI", &detectStorage);
 
-    QObject::connect(&(*myService), &ClusterStubImpl::signalSpeed, &speedStorage, &SpeedReceiver::receiveSpeed); // Connect the instances
-    QObject::connect(&(*myService), &ClusterStubImpl::signalButtons, &buttonStorage, &ButtonsReceiver::receiveButtons); // Connect the instances
-    QObject::connect(&(*myService), &ClusterStubImpl::signalRPM, &rpmStorage, &RPMReceiver::receiveRPM); // Connect the instances
+//    QObject::connect(&(*myService), &ClusterStubImpl::signalSpeed, &speedStorage, &SpeedReceiver::receiveSpeed); // Connect the instances
+//    QObject::connect(&(*myService), &ClusterStubImpl::signalButtons, &buttonStorage, &ButtonsReceiver::receiveButtons); // Connect the instances
+//    QObject::connect(&(*myService), &ClusterStubImpl::signalRPM, &rpmStorage, &RPMReceiver::receiveRPM); // Connect the instances
 
 //    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 //    if (engine.rootObjects().isEmpty())

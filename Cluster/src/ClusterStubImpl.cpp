@@ -6,49 +6,28 @@ ClusterStubImpl::ClusterStubImpl() { }
 ClusterStubImpl::~ClusterStubImpl() { }
 
 void ClusterStubImpl::updateSpeed(const std::shared_ptr<CommonAPI::ClientId> _client, int _speed, updateSpeedReply_t _reply) {
-    std::cout << "Speed : " << _speed << " \n";
-    emit signalSpeed(_speed); // Emit the signal
-
-    if (0 <= _speed && _speed <= 260) {
-        _reply(0);
-    } else {
-        _reply(-1);
-    }
-}
-
-void ClusterStubImpl::updateRPM(const std::shared_ptr<CommonAPI::ClientId> _client, int _rpm, updateRPMReply_t _reply) {
-     std::cout << "RPM : " << _rpm << " \n";
-     emit signalRPM(_rpm); // Emit the signal
-
-     if (0 <= _rpm && _rpm <= 8000) {
-         _reply(0);
-     } else {
-         _reply(-1);
-     }
-}
-
-void ClusterStubImpl::clickButtons(const std::shared_ptr<CommonAPI::ClientId> _client, std::string _command, clickButtonsReply_t _reply) {
-     std::cout << "command : " << _command << " \n";
-     emit signalButtons(_command); // Emit the signal
-
+    std::cerr << "Connect!" << std::endl;
     _reply(0);
 }
 
-void ClusterStubImpl::sendDetects(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image, sendDetectsReply_t _reply) {
-    cv::Mat decoded_image = cv::imdecode(_image, cv::IMREAD_COLOR);
-    std::cerr << "0=======" << std::endl;
-    if (decoded_image.empty()) {
+void ClusterStubImpl::sendImage1(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image1, sendImage1Reply_t _reply) {
+    cv::Mat decoded_image1 = cv::imdecode(_image1, cv::IMREAD_COLOR);
+    if (decoded_image1.empty()) {
         std::cerr << "Failed to decode image." << std::endl;
         return;
-    }
-    std::cerr << "1=======" << std::endl;
-    cv::imshow("Decoded Image", decoded_image);
-    std::cerr << "2=======" << std::endl;
-    cv::waitKey(20);
-    std::cerr << "3=======" << std::endl;
-    decoded_image.release();
-    std::cerr << "4=======" << std::endl;
+    };
+    cv::imshow("Decoded Image1", decoded_image1);
+    cv::waitKey(1);
     _reply(0);
 }
 
-
+void ClusterStubImpl::sendImage2(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image2, sendImage2Reply_t _reply) {
+    cv::Mat decoded_image2 = cv::imdecode(_image2, cv::IMREAD_COLOR);
+    if (decoded_image2.empty()) {
+        std::cerr << "Failed to decode image." << std::endl;
+        return;
+    };
+    cv::imshow("Decoded Image2", decoded_image2);
+    cv::waitKey(1);
+    _reply(0);
+}

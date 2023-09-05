@@ -57,17 +57,13 @@ public:
 
     virtual std::future<CommonAPI::CallStatus> updateSpeedAsync(const int32_t &_speed, UpdateSpeedAsyncCallback _callback, const CommonAPI::CallInfo *_info);
 
-    virtual void updateRPM(int32_t _rpm, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
+    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
 
-    virtual std::future<CommonAPI::CallStatus> updateRPMAsync(const int32_t &_rpm, UpdateRPMAsyncCallback _callback, const CommonAPI::CallInfo *_info);
+    virtual std::future<CommonAPI::CallStatus> sendImage1Async(const std::vector< uint8_t > &_image1, SendImage1AsyncCallback _callback, const CommonAPI::CallInfo *_info);
 
-    virtual void clickButtons(std::string _command, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
+    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
 
-    virtual std::future<CommonAPI::CallStatus> clickButtonsAsync(const std::string &_command, ClickButtonsAsyncCallback _callback, const CommonAPI::CallInfo *_info);
-
-    virtual void sendDetects(std::vector< uint8_t > _image, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
-
-    virtual std::future<CommonAPI::CallStatus> sendDetectsAsync(const std::vector< uint8_t > &_image, SendDetectsAsyncCallback _callback, const CommonAPI::CallInfo *_info);
+    virtual std::future<CommonAPI::CallStatus> sendImage2Async(const std::vector< uint8_t > &_image2, SendImage2AsyncCallback _callback, const CommonAPI::CallInfo *_info);
 
     virtual void getOwnVersion(uint16_t &_major, uint16_t &_minor) const;
 

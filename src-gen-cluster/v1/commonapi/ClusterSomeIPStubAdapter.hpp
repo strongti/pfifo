@@ -63,19 +63,11 @@ public:
     
     CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
         ::v1::commonapi::ClusterStub,
+        std::tuple< std::vector< uint8_t >>,
         std::tuple< int32_t>,
-        std::tuple< int32_t>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>,
+        std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>,
         std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
-    > updateRPMStubDispatcher;
-    
-    CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
-        ::v1::commonapi::ClusterStub,
-        std::tuple< std::string>,
-        std::tuple< int32_t>,
-        std::tuple< CommonAPI::SomeIP::StringDeployment>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
-    > clickButtonsStubDispatcher;
+    > sendImage1StubDispatcher;
     
     CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
         ::v1::commonapi::ClusterStub,
@@ -83,7 +75,7 @@ public:
         std::tuple< int32_t>,
         std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>,
         std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
-    > sendDetectsStubDispatcher;
+    > sendImage2StubDispatcher;
     
     ClusterSomeIPStubAdapterInternal(
         const CommonAPI::SomeIP::Address &_address,
@@ -103,34 +95,25 @@ public:
             std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
         
         ,
-        updateRPMStubDispatcher(
-            &ClusterStub::updateRPM,
+        sendImage1StubDispatcher(
+            &ClusterStub::sendImage1,
             false,
             _stub->hasElement(1),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)),
+            std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)),
             std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
         
         ,
-        clickButtonsStubDispatcher(
-            &ClusterStub::clickButtons,
+        sendImage2StubDispatcher(
+            &ClusterStub::sendImage2,
             false,
             _stub->hasElement(2),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::StringDeployment* >(nullptr)),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
-        
-        ,
-        sendDetectsStubDispatcher(
-            &ClusterStub::sendDetects,
-            false,
-            _stub->hasElement(3),
             std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)),
             std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
         
     {
         ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7b) }, &updateSpeedStubDispatcher );
-        ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7c) }, &updateRPMStubDispatcher );
-        ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7d) }, &clickButtonsStubDispatcher );
-        ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7e) }, &sendDetectsStubDispatcher );
+        ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7c) }, &sendImage1StubDispatcher );
+        ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7d) }, &sendImage2StubDispatcher );
         // Provided events/fields
     }
 

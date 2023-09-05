@@ -15,11 +15,11 @@ ApplicationWindow {
 
     Slider {
         id: speedBar
-        width: 631
-        height: 219
+        width: 200
+        height: 203
         rotation: 270
-        anchors.verticalCenterOffset: -26
-        anchors.horizontalCenterOffset: -236
+        anchors.verticalCenterOffset: 101
+        anchors.horizontalCenterOffset: -41
         from: 0
         to: 100
         value: 0
@@ -30,34 +30,12 @@ ApplicationWindow {
 
         anchors.centerIn: parent
 
-        property bool increment: true
-
-        Timer {
-            interval: 1
-            running: true
-            repeat: true
-            onTriggered: {
-                if (speedBar.increment) {
-                    speedBar.value += 1;
-                    if (speedBar.value >= 100) {
-                        speedBar.increment = false;
-                    }
-                } else {
-                    speedBar.value -= 1;
-                    if (speedBar.value <= 0) {
-                        speedBar.increment = true;
-                    }
-                }
-            }
-        }
     }
-
-
     Text {
         id: text1
-        x: 350
-        y: 91
-        text: qsTr("Speed")
+        x: 571
+        y: 329
+        text: qsTr("HI !")
         font.bold: true
         font.pixelSize: 36
     }

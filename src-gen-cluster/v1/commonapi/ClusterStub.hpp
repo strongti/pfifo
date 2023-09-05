@@ -89,25 +89,22 @@ class ClusterStub
 {
 public:
     typedef std::function<void (int32_t _status)> updateSpeedReply_t;
-    typedef std::function<void (int32_t _status)> updateRPMReply_t;
-    typedef std::function<void (int32_t _status)> clickButtonsReply_t;
-    typedef std::function<void (int32_t _status)> sendDetectsReply_t;
+    typedef std::function<void (int32_t _status)> sendImage1Reply_t;
+    typedef std::function<void (int32_t _status)> sendImage2Reply_t;
 
     virtual ~ClusterStub() {}
     void lockInterfaceVersionAttribute(bool _lockAccess) { static_cast<void>(_lockAccess); }
     bool hasElement(const uint32_t _id) const {
-        return (_id < 4);
+        return (_id < 3);
     }
     virtual const CommonAPI::Version& getInterfaceVersion(std::shared_ptr<CommonAPI::ClientId> _client) = 0;
 
     /// This is the method that will be called on remote calls on the method updateSpeed.
     virtual void updateSpeed(const std::shared_ptr<CommonAPI::ClientId> _client, int32_t _speed, updateSpeedReply_t _reply) = 0;
-    /// This is the method that will be called on remote calls on the method updateRPM.
-    virtual void updateRPM(const std::shared_ptr<CommonAPI::ClientId> _client, int32_t _rpm, updateRPMReply_t _reply) = 0;
-    /// This is the method that will be called on remote calls on the method clickButtons.
-    virtual void clickButtons(const std::shared_ptr<CommonAPI::ClientId> _client, std::string _command, clickButtonsReply_t _reply) = 0;
-    /// This is the method that will be called on remote calls on the method sendDetects.
-    virtual void sendDetects(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image, sendDetectsReply_t _reply) = 0;
+    /// This is the method that will be called on remote calls on the method sendImage1.
+    virtual void sendImage1(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image1, sendImage1Reply_t _reply) = 0;
+    /// This is the method that will be called on remote calls on the method sendImage2.
+    virtual void sendImage2(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image2, sendImage2Reply_t _reply) = 0;
 
 
     using CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>::initStubAdapter;

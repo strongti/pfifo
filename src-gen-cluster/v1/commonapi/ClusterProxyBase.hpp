@@ -38,18 +38,15 @@ class ClusterProxyBase
 public:
 
     typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> UpdateSpeedAsyncCallback;
-    typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> UpdateRPMAsyncCallback;
-    typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> ClickButtonsAsyncCallback;
-    typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> SendDetectsAsyncCallback;
+    typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> SendImage1AsyncCallback;
+    typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> SendImage2AsyncCallback;
 
     virtual void updateSpeed(int32_t _speed, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr) = 0;
     virtual std::future<CommonAPI::CallStatus> updateSpeedAsync(const int32_t &_speed, UpdateSpeedAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual void updateRPM(int32_t _rpm, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual std::future<CommonAPI::CallStatus> updateRPMAsync(const int32_t &_rpm, UpdateRPMAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual void clickButtons(std::string _command, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual std::future<CommonAPI::CallStatus> clickButtonsAsync(const std::string &_command, ClickButtonsAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual void sendDetects(std::vector< uint8_t > _image, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual std::future<CommonAPI::CallStatus> sendDetectsAsync(const std::vector< uint8_t > &_image, SendDetectsAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
+    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr) = 0;
+    virtual std::future<CommonAPI::CallStatus> sendImage1Async(const std::vector< uint8_t > &_image1, SendImage1AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
+    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr) = 0;
+    virtual std::future<CommonAPI::CallStatus> sendImage2Async(const std::vector< uint8_t > &_image2, SendImage2AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
 
     virtual std::future<void> getCompletionFuture() = 0;
 };

@@ -10,8 +10,6 @@ Speed::Speed(QObject *parent) : QObject(parent)
 
     while (!myProxy->isAvailable())
         usleep(10);
-    uint8_t tos2 = 0x00;
-    setsockopt(33, IPPROTO_IP, IP_TOS, &tos2, sizeof(tos2));
 }
 
 void Speed::adjustSpeed(int scrollValue)

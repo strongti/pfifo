@@ -90,7 +90,7 @@ public:
      */
     virtual std::future<CommonAPI::CallStatus> updateSpeedAsync(const int32_t &_speed, UpdateSpeedAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
     /**
-     * Calls updateRPM with synchronous semantics.
+     * Calls sendImage1 with synchronous semantics.
      *
      * All const parameters are input parameters to this method.
      * All non-const parameters will be filled with the returned values.
@@ -98,9 +98,9 @@ public:
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void updateRPM(int32_t _rpm, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
     /**
-     * Calls updateRPM with asynchronous semantics.
+     * Calls sendImage1 with asynchronous semantics.
      *
      * The provided callback will be called when the reply to this call arrives or
      * an error occurs during the call. The CallStatus will indicate either "SUCCESS"
@@ -109,9 +109,9 @@ public:
      * The std::future returned by this method will be fulfilled at arrival of the reply.
      * It will provide the same value for CallStatus as will be handed to the callback.
      */
-    virtual std::future<CommonAPI::CallStatus> updateRPMAsync(const int32_t &_rpm, UpdateRPMAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
+    virtual std::future<CommonAPI::CallStatus> sendImage1Async(const std::vector< uint8_t > &_image1, SendImage1AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
     /**
-     * Calls clickButtons with synchronous semantics.
+     * Calls sendImage2 with synchronous semantics.
      *
      * All const parameters are input parameters to this method.
      * All non-const parameters will be filled with the returned values.
@@ -119,9 +119,9 @@ public:
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void clickButtons(std::string _command, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
     /**
-     * Calls clickButtons with asynchronous semantics.
+     * Calls sendImage2 with asynchronous semantics.
      *
      * The provided callback will be called when the reply to this call arrives or
      * an error occurs during the call. The CallStatus will indicate either "SUCCESS"
@@ -130,28 +130,7 @@ public:
      * The std::future returned by this method will be fulfilled at arrival of the reply.
      * It will provide the same value for CallStatus as will be handed to the callback.
      */
-    virtual std::future<CommonAPI::CallStatus> clickButtonsAsync(const std::string &_command, ClickButtonsAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
-    /**
-     * Calls sendDetects with synchronous semantics.
-     *
-     * All const parameters are input parameters to this method.
-     * All non-const parameters will be filled with the returned values.
-     * The CallStatus will be filled when the method returns and indicate either
-     * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
-     * will be set.
-     */
-    virtual void sendDetects(std::vector< uint8_t > _image, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
-    /**
-     * Calls sendDetects with asynchronous semantics.
-     *
-     * The provided callback will be called when the reply to this call arrives or
-     * an error occurs during the call. The CallStatus will indicate either "SUCCESS"
-     * or which type of error has occurred. In case of any error, ONLY the CallStatus
-     * will have a defined value.
-     * The std::future returned by this method will be fulfilled at arrival of the reply.
-     * It will provide the same value for CallStatus as will be handed to the callback.
-     */
-    virtual std::future<CommonAPI::CallStatus> sendDetectsAsync(const std::vector< uint8_t > &_image, SendDetectsAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
+    virtual std::future<CommonAPI::CallStatus> sendImage2Async(const std::vector< uint8_t > &_image2, SendImage2AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
 
 
 
@@ -185,31 +164,22 @@ std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::update
     return delegate_->updateSpeedAsync(_speed, _callback, _info);
 }
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::updateRPM(int32_t _rpm, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
-    delegate_->updateRPM(_rpm, _internalCallStatus, _status, _info);
+void ClusterProxy<_AttributeExtensions...>::sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
+    delegate_->sendImage1(_image1, _internalCallStatus, _status, _info);
 }
 
 template <typename ... _AttributeExtensions>
-std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::updateRPMAsync(const int32_t &_rpm, UpdateRPMAsyncCallback _callback, const CommonAPI::CallInfo *_info) {
-    return delegate_->updateRPMAsync(_rpm, _callback, _info);
+std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendImage1Async(const std::vector< uint8_t > &_image1, SendImage1AsyncCallback _callback, const CommonAPI::CallInfo *_info) {
+    return delegate_->sendImage1Async(_image1, _callback, _info);
 }
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::clickButtons(std::string _command, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
-    delegate_->clickButtons(_command, _internalCallStatus, _status, _info);
-}
-
-template <typename ... _AttributeExtensions>
-std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::clickButtonsAsync(const std::string &_command, ClickButtonsAsyncCallback _callback, const CommonAPI::CallInfo *_info) {
-    return delegate_->clickButtonsAsync(_command, _callback, _info);
-}
-template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::sendDetects(std::vector< uint8_t > _image, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
-    delegate_->sendDetects(_image, _internalCallStatus, _status, _info);
+void ClusterProxy<_AttributeExtensions...>::sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
+    delegate_->sendImage2(_image2, _internalCallStatus, _status, _info);
 }
 
 template <typename ... _AttributeExtensions>
-std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendDetectsAsync(const std::vector< uint8_t > &_image, SendDetectsAsyncCallback _callback, const CommonAPI::CallInfo *_info) {
-    return delegate_->sendDetectsAsync(_image, _callback, _info);
+std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendImage2Async(const std::vector< uint8_t > &_image2, SendImage2AsyncCallback _callback, const CommonAPI::CallInfo *_info) {
+    return delegate_->sendImage2Async(_image2, _callback, _info);
 }
 
 template <typename ... _AttributeExtensions>

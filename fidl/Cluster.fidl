@@ -10,25 +10,17 @@ interface Cluster {
       Int32 status
     }
   }
-  method updateRPM {
+  method sendImage1 {
     in {
-      Int32 rpm
+      UInt8 [] image1
     }
     out {
       Int32 status
     }
   }
-  method clickButtons {
+  method sendImage2 {
     in {
-      String command
-    }
-    out {
-      Int32 status
-    }
-  }
-  method sendDetects {
-    in {
-      UInt8 [] image
+      UInt8 [] image2
     }
     out {
       Int32 status
