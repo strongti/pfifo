@@ -4,10 +4,6 @@ import "Cluster.fidl"
 define org.genivi.commonapi.someip.deployment for interface commonapi.Cluster {
         SomeIpServiceID = 4660
 
-        method updateSpeed {
-                SomeIpMethodID = 123
-                SomeIpReliable = true
-        }
 	method sendImage1 {
 		SomeIpMethodID = 124
 		SomeIpReliable = true
@@ -16,6 +12,14 @@ define org.genivi.commonapi.someip.deployment for interface commonapi.Cluster {
 		SomeIpMethodID = 125
 		SomeIpReliable = true
 	}
+	method sendImage3 {
+		SomeIpMethodID = 126
+		SomeIpReliable = true
+	}
+	method sendImage4 {
+		SomeIpMethodID = 127
+		SomeIpReliable = true
+	}		
 }
 
 define org.genivi.commonapi.someip.deployment for provider as MyService {

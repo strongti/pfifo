@@ -10,8 +10,8 @@
     "applications" :
     [
         {
-            "name" : "speed",
-            "id" : "0x1341"
+            "name" : "image3",
+            "id" : "0x1344"
         }
     ],
     "clients" :
@@ -19,10 +19,10 @@
         {
             "service" : "0x1234",
             "instance" : "0x5678",
-            "reliable" : ["30510"]
+            "reliable" : [ "30510"]
         }
     ],
-    "routing" : "speed",
+    "routing" : "image1",
     "service-discovery" :
     {
         "enable" : "true",

@@ -1,5 +1,5 @@
-#ifndef SPEED_H
-#define SPEED_H
+#ifndef DETECT_H
+#define DETECT_H
 
 #include <QObject>
 #include <iostream>
@@ -7,21 +7,30 @@
 #include <unistd.h>
 #include <CommonAPI/CommonAPI.hpp>
 #include <v1/commonapi/ClusterProxy.hpp>
-#include <QThread>
+#include <opencv2/opencv.hpp>
+#include <cstdint>
+
 
 using namespace v1_0::commonapi;
 
-class Speed : public QObject
+class Detect : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit Speed(QObject *parent = nullptr);
+    explicit Detect(QObject *parent = nullptr);
     std::shared_ptr < CommonAPI::Runtime > runtime;
     std::shared_ptr<ClusterProxy<>> myProxy;
+    cv::VideoCapture cap;
 
 public slots:
-    void adjustSpeed(int scrollValue);
+    void startCamera();
+
+
 };
 
-#endif // SPEED_H
+
+#endif // DETECT_H
+
+
+

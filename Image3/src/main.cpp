@@ -5,8 +5,8 @@
 #include <v1/commonapi/ClusterProxy.hpp>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include "Speed.h"
 #include <qqml.h>
+#include "Detect.h"
 
 using namespace v1_0::commonapi;
 
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
 
-    qmlRegisterType<Speed>("com.seame.Speed", 1, 0, "Speed");
+    qmlRegisterType<Detect>("com.seame.Detect", 1, 0, "Detect");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

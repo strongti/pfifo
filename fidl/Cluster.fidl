@@ -2,14 +2,6 @@ package commonapi
 
 interface Cluster {
   version {major 1 minor 0}
-  method updateSpeed {
-    in {
-      Int32 speed
-    }
-    out {
-      Int32 status
-    }
-  }
   method sendImage1 {
     in {
       UInt8 [] image1
@@ -26,4 +18,20 @@ interface Cluster {
       Int32 status
     }
   }
+  method sendImage3 {
+    in {
+      UInt8 [] image3
+    }
+    out {
+      Int32 status
+    }
+  }
+  method sendImage4 {
+    in {
+      UInt8 [] image4
+    }
+    out {
+      Int32 status
+    }
+  }    
 }

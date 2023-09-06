@@ -22,7 +22,7 @@
             "reliable" : [ "30510"]
         }
     ],
-    "routing" : "speed",
+    "routing" : "image1",
     "service-discovery" :
     {
         "enable" : "true",

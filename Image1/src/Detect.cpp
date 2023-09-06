@@ -28,7 +28,7 @@ void Detect::startCamera() {
 
     cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
     cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-    cap.set(cv::CAP_PROP_FPS, 30);
+    cap.set(cv::CAP_PROP_FPS, 60);
     CommonAPI::CallStatus callStatus;
     int result;
     while (true) {
