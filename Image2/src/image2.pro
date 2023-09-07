@@ -13,11 +13,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 INCLUDEPATH += ../../src-gen-cluster/
 SOURCES += \
-    ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPDeployment.cpp \
-    ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPProxy.cpp \
-    ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPStubAdapter.cpp \
-    Detect2.cpp \
-    main.cpp
+    ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
+    ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
+    ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
+    main.cpp \
+    Detect.cpp
 
 RESOURCES += qml.qrc
 
@@ -54,15 +54,15 @@ INCLUDEPATH += /usr/local/include
 DEPENDPATH += /usr/local/include
 
 HEADERS += \
-    ../../src-gen-cluster/v1/commonapi/Cluster2.hpp \
-    ../../src-gen-cluster/v1/commonapi/Cluster2Proxy.hpp \
-    ../../src-gen-cluster/v1/commonapi/Cluster2ProxyBase.hpp \
-    ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPDeployment.hpp \
-    ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPProxy.hpp \
-    ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPStubAdapter.hpp \
-    ../../src-gen-cluster/v1/commonapi/Cluster2Stub.hpp \
-    ../../src-gen-cluster/v1/commonapi/Cluster2StubDefault.hpp \
-    Detect2.h
+    ../../src-gen-cluster/v1/commonapi/Cluster.hpp \
+    ../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
+    ../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
+    ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp \
+    ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.hpp \
+    ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
+    ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
+    ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
+    Detect.h
 
 INCLUDEPATH += /usr/include/opencv4/
 DEPENDPATH += /usr/include/opencv4/

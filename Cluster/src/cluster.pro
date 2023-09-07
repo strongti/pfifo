@@ -1,6 +1,7 @@
 QT += quick
 CONFIG += c++11
-QT += core
+QT += multimedia
+QT += network
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -12,12 +13,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 INCLUDEPATH += ../../src-gen-cluster/
-SOURCES += \
+SOURCES += main.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
-    main.cpp \
-    Detect.cpp
+    ClusterStubImpl.cpp
 
 RESOURCES += qml.qrc
 
@@ -62,7 +62,7 @@ HEADERS += \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
     ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
     ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
-    Detect.h
+    ClusterStubImpl.hpp
 
 INCLUDEPATH += /usr/include/opencv4/
 DEPENDPATH += /usr/include/opencv4/
@@ -83,13 +83,3 @@ LIBS += \
 -lopencv_features2d \
 -lopencv_imgproc \
 -lopencv_highgui
-
-DISTFILES += \
-    image.jpg \
-    yolov3-tiny.weights \
-    coco.names \
-    yolov3-tiny.cfg
-
-LIBS += -lpthread
-
-

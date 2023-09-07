@@ -2,11 +2,11 @@
 #include <string>
 #include <unistd.h>
 #include <CommonAPI/CommonAPI.hpp>
-#include <v1/commonapi/Cluster1Proxy.hpp>
+#include <v1/commonapi/ClusterProxy.hpp>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <qqml.h>
-#include "Detect1.h"
+#include "Detect.h"
 
 using namespace v1_0::commonapi;
 
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
     QQmlApplicationEngine engine;
 
-    qmlRegisterType<Detect1>("com.seame.Detect1", 1, 0, "Detect1");
+    qmlRegisterType<Detect>("com.seame.Detect", 1, 0, "Detect");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

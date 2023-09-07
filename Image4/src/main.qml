@@ -6,7 +6,7 @@ ApplicationWindow {
     visible: true
     width: 320
     height: 240
-    title: qsTr("image1")
+    title: qsTr("image4")
 
     Detect {
         id: detect

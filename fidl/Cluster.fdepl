@@ -1,47 +1,30 @@
 import "platform:/plugin/org.genivi.commonapi.someip/deployment/CommonAPI-4-SOMEIP_deployment_spec.fdepl"
 import "Cluster.fidl"
 
-define org.genivi.commonapi.someip.deployment for interface commonapi.Cluster1 {
+define org.genivi.commonapi.someip.deployment for interface commonapi.Cluster {
         SomeIpServiceID = 4660
+
 	method sendImage1 {
 		SomeIpMethodID = 124
 		SomeIpReliable = true
 	}
-}
-
-define org.genivi.commonapi.someip.deployment for interface commonapi.Cluster2 {
-        SomeIpServiceID = 4661
 	method sendImage2 {
 		SomeIpMethodID = 125
 		SomeIpReliable = true
 	}
-}
-
-define org.genivi.commonapi.someip.deployment for interface commonapi.Cluster3 {
-        SomeIpServiceID = 4662
 	method sendImage3 {
 		SomeIpMethodID = 126
 		SomeIpReliable = true
 	}
+	method sendImage4 {
+		SomeIpMethodID = 127
+		SomeIpReliable = true
+	}		
 }
 
-define org.genivi.commonapi.someip.deployment for provider as MyService1 {
-        instance commonapi.Cluster1 {
-                InstanceId = "cluster_service1"
+define org.genivi.commonapi.someip.deployment for provider as MyService {
+        instance commonapi.Cluster {
+                InstanceId = "cluster_service"
                 SomeIpInstanceID = 22136
-        }
-}
-
-define org.genivi.commonapi.someip.deployment for provider as MyService2 {
-        instance commonapi.Cluster2 {
-                InstanceId = "cluster_service2"
-                SomeIpInstanceID = 22137
-        }
-}
-
-define org.genivi.commonapi.someip.deployment for provider as MyService3 {
-        instance commonapi.Cluster3 {
-                InstanceId = "cluster_service3"
-                SomeIpInstanceID = 22138
         }
 }
