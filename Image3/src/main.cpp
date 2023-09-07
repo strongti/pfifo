@@ -11,21 +11,18 @@
 using namespace v1_0::commonapi;
 
 int main(int argc, char *argv[]) {
-    Detect detect;
-    detect.startCamera();
-//    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-//    QGuiApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
-//    QQmlApplicationEngine engine;
+    QQmlApplicationEngine engine;
 
-//    qmlRegisterType<Detect>("com.seame.Detect", 1, 0, "Detect");
+    qmlRegisterType<Detect>("com.seame.Detect", 1, 0, "Detect");
 
-//    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-//    if (engine.rootObjects().isEmpty())
-//        return -1;
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    if (engine.rootObjects().isEmpty())
+        return -1;
 
-//    return app.exec();
-    return 0;
+    return app.exec();
 }
 
