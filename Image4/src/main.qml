@@ -4,9 +4,9 @@ import com.seame.Detect 1.0
 
 ApplicationWindow {
     visible: true
-    width: 1280
-    height: 960
-    title: qsTr("Detect")
+    width: 320
+    height: 240
+    title: qsTr("image4")
 
     Detect {
         id: detect
@@ -15,8 +15,8 @@ ApplicationWindow {
     Button {
         id: buttonCamera
         property bool isToggled: false
-        x: 575
-        y: 103 // Add this line
+        x: 95
+        y: 60 // Add this line
 
         onClicked: {
             isToggled = !isToggled;

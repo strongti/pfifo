@@ -72,12 +72,11 @@ public:
      * Calls sendImage1 with synchronous semantics.
      *
      * All const parameters are input parameters to this method.
-     * All non-const parameters will be filled with the returned values.
      * The CallStatus will be filled when the method returns and indicate either
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info = nullptr);
     /**
      * Calls sendImage1 with asynchronous semantics.
      *
@@ -93,12 +92,11 @@ public:
      * Calls sendImage2 with synchronous semantics.
      *
      * All const parameters are input parameters to this method.
-     * All non-const parameters will be filled with the returned values.
      * The CallStatus will be filled when the method returns and indicate either
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info = nullptr);
     /**
      * Calls sendImage2 with asynchronous semantics.
      *
@@ -114,12 +112,11 @@ public:
      * Calls sendImage3 with synchronous semantics.
      *
      * All const parameters are input parameters to this method.
-     * All non-const parameters will be filled with the returned values.
      * The CallStatus will be filled when the method returns and indicate either
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info = nullptr);
     /**
      * Calls sendImage3 with asynchronous semantics.
      *
@@ -135,12 +132,11 @@ public:
      * Calls sendImage4 with synchronous semantics.
      *
      * All const parameters are input parameters to this method.
-     * All non-const parameters will be filled with the returned values.
      * The CallStatus will be filled when the method returns and indicate either
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info = nullptr);
     /**
      * Calls sendImage4 with asynchronous semantics.
      *
@@ -176,8 +172,8 @@ ClusterProxy<_AttributeExtensions...>::~ClusterProxy() {
 }
 
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
-    delegate_->sendImage1(_image1, _internalCallStatus, _status, _info);
+void ClusterProxy<_AttributeExtensions...>::sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info) {
+    delegate_->sendImage1(_image1, _internalCallStatus, _info);
 }
 
 template <typename ... _AttributeExtensions>
@@ -185,8 +181,8 @@ std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendIm
     return delegate_->sendImage1Async(_image1, _callback, _info);
 }
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
-    delegate_->sendImage2(_image2, _internalCallStatus, _status, _info);
+void ClusterProxy<_AttributeExtensions...>::sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info) {
+    delegate_->sendImage2(_image2, _internalCallStatus, _info);
 }
 
 template <typename ... _AttributeExtensions>
@@ -194,8 +190,8 @@ std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendIm
     return delegate_->sendImage2Async(_image2, _callback, _info);
 }
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
-    delegate_->sendImage3(_image3, _internalCallStatus, _status, _info);
+void ClusterProxy<_AttributeExtensions...>::sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info) {
+    delegate_->sendImage3(_image3, _internalCallStatus, _info);
 }
 
 template <typename ... _AttributeExtensions>
@@ -203,8 +199,8 @@ std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendIm
     return delegate_->sendImage3Async(_image3, _callback, _info);
 }
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info) {
-    delegate_->sendImage4(_image4, _internalCallStatus, _status, _info);
+void ClusterProxy<_AttributeExtensions...>::sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info) {
+    delegate_->sendImage4(_image4, _internalCallStatus, _info);
 }
 
 template <typename ... _AttributeExtensions>

@@ -46,9 +46,7 @@ void Detect::startCamera() {
             std::cerr << "Failed to encode frame." << std::endl;
             return;
         }
-        std::cerr << "send frame." << std::endl;
         myProxy->sendImage1(encoded_frame, callStatus, result);
-        std::cerr << "frame complete." << std::endl;
     }
 }
 

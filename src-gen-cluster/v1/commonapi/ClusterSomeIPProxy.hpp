@@ -53,19 +53,19 @@ public:
 
     virtual ~ClusterSomeIPProxy();
 
-    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
+    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info);
 
     virtual std::future<CommonAPI::CallStatus> sendImage1Async(const std::vector< uint8_t > &_image1, SendImage1AsyncCallback _callback, const CommonAPI::CallInfo *_info);
 
-    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
+    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info);
 
     virtual std::future<CommonAPI::CallStatus> sendImage2Async(const std::vector< uint8_t > &_image2, SendImage2AsyncCallback _callback, const CommonAPI::CallInfo *_info);
 
-    virtual void sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
+    virtual void sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info);
 
     virtual std::future<CommonAPI::CallStatus> sendImage3Async(const std::vector< uint8_t > &_image3, SendImage3AsyncCallback _callback, const CommonAPI::CallInfo *_info);
 
-    virtual void sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus, int32_t &_status, const CommonAPI::CallInfo *_info);
+    virtual void sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus, const CommonAPI::CallInfo *_info);
 
     virtual std::future<CommonAPI::CallStatus> sendImage4Async(const std::vector< uint8_t > &_image4, SendImage4AsyncCallback _callback, const CommonAPI::CallInfo *_info);
 

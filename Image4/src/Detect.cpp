@@ -24,17 +24,15 @@ void Detect::startCamera() {
         return;
     }
     std::vector<uchar> encoded_image;
-    if (!cv::imencode(".jpg", image, encoded_image)) {
-        std::cerr << "Failed to encode frame." << std::endl;
-        return;
-    }
     CommonAPI::CallStatus callStatus;
     int result;
     while (true) {
-        std::cerr << "send frame." << std::endl;
-        myProxy->sendImage4(encoded_image, callStatus, result);
-        std::cerr << "frame complete." << std::endl;
-        usleep(16666);
+//        if (!cv::imencode(".jpg", image, encoded_image)) {
+//            std::cerr << "Failed to encode frame." << std::endl;
+//            return;
+//        }
+        myProxy->sendImage4(encoded_image, callStatus, result);c
+//        usleep(3000);
     }
 }
 

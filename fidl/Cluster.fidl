@@ -6,32 +6,20 @@ interface Cluster {
     in {
       UInt8 [] image1
     }
-    out {
-      Int32 status
-    }
   }
   method sendImage2 {
     in {
       UInt8 [] image2
-    }
-    out {
-      Int32 status
     }
   }
   method sendImage3 {
     in {
       UInt8 [] image3
     }
-    out {
-      Int32 status
-    }
   }
   method sendImage4 {
     in {
       UInt8 [] image4
-    }
-    out {
-      Int32 status
     }
   }    
 }

@@ -56,33 +56,33 @@ public:
     CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
         ::v1::commonapi::ClusterStub,
         std::tuple< std::vector< uint8_t >>,
-        std::tuple< int32_t>,
+        std::tuple< >,
         std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
+        std::tuple< >
     > sendImage1StubDispatcher;
     
     CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
         ::v1::commonapi::ClusterStub,
         std::tuple< std::vector< uint8_t >>,
-        std::tuple< int32_t>,
+        std::tuple< >,
         std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
+        std::tuple< >
     > sendImage2StubDispatcher;
     
     CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
         ::v1::commonapi::ClusterStub,
         std::tuple< std::vector< uint8_t >>,
-        std::tuple< int32_t>,
+        std::tuple< >,
         std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
+        std::tuple< >
     > sendImage3StubDispatcher;
     
     CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
         ::v1::commonapi::ClusterStub,
         std::tuple< std::vector< uint8_t >>,
-        std::tuple< int32_t>,
+        std::tuple< >,
         std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
+        std::tuple< >
     > sendImage4StubDispatcher;
     
     ClusterSomeIPStubAdapterInternal(
@@ -100,7 +100,7 @@ public:
             false,
             _stub->hasElement(0),
             std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
+            std::make_tuple())
         
         ,
         sendImage2StubDispatcher(
@@ -108,7 +108,7 @@ public:
             false,
             _stub->hasElement(1),
             std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
+            std::make_tuple())
         
         ,
         sendImage3StubDispatcher(
@@ -116,7 +116,7 @@ public:
             false,
             _stub->hasElement(2),
             std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
+            std::make_tuple())
         
         ,
         sendImage4StubDispatcher(
@@ -124,7 +124,7 @@ public:
             false,
             _stub->hasElement(3),
             std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
+            std::make_tuple())
         
     {
         ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7c) }, &sendImage1StubDispatcher );

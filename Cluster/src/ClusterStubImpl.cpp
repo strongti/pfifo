@@ -13,7 +13,6 @@ void ClusterStubImpl::sendImage1(const std::shared_ptr<CommonAPI::ClientId> _cli
     };
     cv::imshow("Decoded Image1", decoded_image1);
     cv::waitKey(1);
-    _reply(0);
 }
 
 void ClusterStubImpl::sendImage2(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image2, sendImage2Reply_t _reply) {
@@ -24,7 +23,6 @@ void ClusterStubImpl::sendImage2(const std::shared_ptr<CommonAPI::ClientId> _cli
     };
     cv::imshow("Decoded Image2", decoded_image2);
     cv::waitKey(1);
-    _reply(0);
 }
 
 void ClusterStubImpl::sendImage3(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image3, sendImage3Reply_t _reply) {
@@ -35,7 +33,6 @@ void ClusterStubImpl::sendImage3(const std::shared_ptr<CommonAPI::ClientId> _cli
     };
     cv::imshow("Decoded Image3", decoded_image3);
     cv::waitKey(1);
-    _reply(0);
 }
 
 void ClusterStubImpl::sendImage4(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image4, sendImage4Reply_t _reply) {
@@ -46,5 +43,4 @@ void ClusterStubImpl::sendImage4(const std::shared_ptr<CommonAPI::ClientId> _cli
     };
     cv::imshow("Decoded Image4", decoded_image4);
     cv::waitKey(1);
-    _reply(0);
 }
