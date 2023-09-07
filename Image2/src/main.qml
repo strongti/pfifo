@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
-import com.seame.Detect 1.0
+import com.seame.Detect2 1.0
 
 ApplicationWindow {
     visible: true
@@ -8,7 +8,7 @@ ApplicationWindow {
     height: 240
     title: qsTr("image2")
 
-    Detect {
+    Detect2 {
         id: detect
     }
 

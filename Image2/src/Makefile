@@ -52,19 +52,19 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
-		../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
-		../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
-		main.cpp \
-		Detect.cpp qrc_qml.cpp \
-		moc_Detect.cpp
-OBJECTS       = ClusterSomeIPDeployment.o \
-		ClusterSomeIPProxy.o \
-		ClusterSomeIPStubAdapter.o \
+SOURCES       = ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPDeployment.cpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2SomeIPProxy.cpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2SomeIPStubAdapter.cpp \
+		Detect2.cpp \
+		main.cpp qrc_qml.cpp \
+		moc_Detect2.cpp
+OBJECTS       = Cluster2SomeIPDeployment.o \
+		Cluster2SomeIPProxy.o \
+		Cluster2SomeIPStubAdapter.o \
+		Detect2.o \
 		main.o \
-		Detect.o \
 		qrc_qml.o \
-		moc_Detect.o
+		moc_Detect2.o
 DIST          = image.jpg \
 		yolov3-tiny.weights \
 		coco.names \
@@ -149,19 +149,19 @@ DIST          = image.jpg \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		image2.pro ../../src-gen-cluster/v1/commonapi/Cluster.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
-		Detect.h ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
-		../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
-		../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
-		main.cpp \
-		Detect.cpp
+		image2.pro ../../src-gen-cluster/v1/commonapi/Cluster2.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2Proxy.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2ProxyBase.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2SomeIPDeployment.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2SomeIPProxy.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2SomeIPStubAdapter.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2Stub.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2StubDefault.hpp \
+		Detect2.h ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPDeployment.cpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2SomeIPProxy.cpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2SomeIPStubAdapter.cpp \
+		Detect2.cpp \
+		main.cpp
 QMAKE_TARGET  = image2
 DESTDIR       = 
 TARGET        = image2
@@ -354,8 +354,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../src-gen-cluster/v1/commonapi/Cluster.hpp ../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp ../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp Detect.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp main.cpp Detect.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../src-gen-cluster/v1/commonapi/Cluster2.hpp ../../src-gen-cluster/v1/commonapi/Cluster2Proxy.hpp ../../src-gen-cluster/v1/commonapi/Cluster2ProxyBase.hpp ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPDeployment.hpp ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPProxy.hpp ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPStubAdapter.hpp ../../src-gen-cluster/v1/commonapi/Cluster2Stub.hpp ../../src-gen-cluster/v1/commonapi/Cluster2StubDefault.hpp Detect2.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPDeployment.cpp ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPProxy.cpp ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPStubAdapter.cpp Detect2.cpp main.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -395,16 +395,16 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_Detect.cpp
+compiler_moc_header_make_all: moc_Detect2.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_Detect.cpp
-moc_Detect.cpp: Detect.h \
-		../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
-		../../src-gen-cluster/v1/commonapi/Cluster.hpp \
+	-$(DEL_FILE) moc_Detect2.cpp
+moc_Detect2.cpp: Detect2.h \
+		../../src-gen-cluster/v1/commonapi/Cluster2Proxy.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2ProxyBase.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2.hpp \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/avees/important/Image2/src/moc_predefs.h -I/usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/avees/important/Image2/src -I/home/avees/important/src-gen-cluster -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include -I/usr/include/opencv4 -I/usr/include/aarch64-linux-gnu/qt5 -I/usr/include/aarch64-linux-gnu/qt5/QtQuick -I/usr/include/aarch64-linux-gnu/qt5/QtGui -I/usr/include/aarch64-linux-gnu/qt5/QtQml -I/usr/include/aarch64-linux-gnu/qt5/QtNetwork -I/usr/include/aarch64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/aarch64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/aarch64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/aarch64-linux-gnu/7/include-fixed -I/usr/include/aarch64-linux-gnu -I/usr/include Detect.h -o moc_Detect.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/avees/important/Image2/src/moc_predefs.h -I/usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/avees/important/Image2/src -I/home/avees/important/src-gen-cluster -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include -I/usr/include/opencv4 -I/usr/include/aarch64-linux-gnu/qt5 -I/usr/include/aarch64-linux-gnu/qt5/QtQuick -I/usr/include/aarch64-linux-gnu/qt5/QtGui -I/usr/include/aarch64-linux-gnu/qt5/QtQml -I/usr/include/aarch64-linux-gnu/qt5/QtNetwork -I/usr/include/aarch64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/aarch64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/aarch64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/aarch64-linux-gnu/7/include-fixed -I/usr/include/aarch64-linux-gnu -I/usr/include Detect2.h -o moc_Detect2.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -420,36 +420,36 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
-ClusterSomeIPDeployment.o: ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ClusterSomeIPDeployment.o ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp
+Cluster2SomeIPDeployment.o: ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPDeployment.cpp ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPDeployment.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Cluster2SomeIPDeployment.o ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPDeployment.cpp
 
-ClusterSomeIPProxy.o: ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
-		../../src-gen-cluster/v1/commonapi/Cluster.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ClusterSomeIPProxy.o ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp
+Cluster2SomeIPProxy.o: ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPProxy.cpp ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPProxy.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2ProxyBase.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Cluster2SomeIPProxy.o ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPProxy.cpp
 
-ClusterSomeIPStubAdapter.o: ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
-		../../src-gen-cluster/v1/commonapi/Cluster.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ClusterSomeIPStubAdapter.o ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp
+Cluster2SomeIPStubAdapter.o: ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPStubAdapter.cpp ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPStubAdapter.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2Stub.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Cluster2SomeIPStubAdapter.o ../../src-gen-cluster/v1/commonapi/Cluster2SomeIPStubAdapter.cpp
 
-main.o: main.cpp ../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
-		../../src-gen-cluster/v1/commonapi/Cluster.hpp \
-		Detect.h
+Detect2.o: Detect2.cpp Detect2.h \
+		../../src-gen-cluster/v1/commonapi/Cluster2Proxy.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2ProxyBase.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Detect2.o Detect2.cpp
+
+main.o: main.cpp ../../src-gen-cluster/v1/commonapi/Cluster2Proxy.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2ProxyBase.hpp \
+		../../src-gen-cluster/v1/commonapi/Cluster2.hpp \
+		Detect2.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
-
-Detect.o: Detect.cpp Detect.h \
-		../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp \
-		../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp \
-		../../src-gen-cluster/v1/commonapi/Cluster.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Detect.o Detect.cpp
 
 qrc_qml.o: qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp
 
-moc_Detect.o: moc_Detect.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Detect.o moc_Detect.cpp
+moc_Detect2.o: moc_Detect2.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Detect2.o moc_Detect2.cpp
 
 ####### Install
 

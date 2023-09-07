@@ -1,0 +1,33 @@
+{ 
+   "unicast" : "192.168.1.2",
+    "logging" :
+    {
+        "level" : "debug",
+        "console" : "true",
+        "file" : { "enable" : "false" },
+        "dlt" : "false"
+    },
+    "applications" :
+    [
+        {
+            "name" : "service-sample1",
+            "id" : "0x1277"
+        }
+    ],
+    "services" :
+    [
+        {
+            "service" : "0x1234",
+            "instance" : "0x5678",
+            "reliable" : { "port" : "30509", "enable-magic-cookies" : "false" }
+        }
+    ],
+    "routing" : "service-sample1",
+    "service-discovery" :
+    {
+       "enable" : "true",
+       "multicast" : "224.244.224.241",
+       "port" : "30490",
+       "protocol" : "udp"
+    }
+}

@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>main.qml</file>
-        <file>image/camoff.png</file>
-        <file>image/camon.png</file>
-    </qresource>
-</RCC>

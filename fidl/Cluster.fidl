@@ -1,25 +1,28 @@
 package commonapi
 
-interface Cluster {
+interface Cluster1 {
   version {major 1 minor 0}
   method sendImage1 {
     in {
       UInt8 [] image1
     }
   }
+}
+
+interface Cluster2 {
+  version {major 1 minor 0}
   method sendImage2 {
     in {
       UInt8 [] image2
     }
   }
+}
+
+interface Cluster3 {
+  version {major 1 minor 0}
   method sendImage3 {
     in {
       UInt8 [] image3
     }
   }
-  method sendImage4 {
-    in {
-      UInt8 [] image4
-    }
-  }    
 }
