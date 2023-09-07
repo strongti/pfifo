@@ -30,6 +30,8 @@ void Detect::startCamera() {
     cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
     cap.set(cv::CAP_PROP_FPS, 60);
     CommonAPI::CallStatus callStatus;
+    uint8_t tos_value2 = 0x00;
+    setsockopt(33, IPPROTO_IP, IP_TOS, &tos_value2, sizeof(tos_value2));
     int result;
     while (true) {
         cv::Mat frame;
