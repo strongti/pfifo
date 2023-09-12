@@ -20,35 +20,29 @@ Detect::Detect(QObject *parent) : QObject(parent)
 
 
 void Detect::startCamera() {
-    cv::VideoCapture cap(2);  // Open the default camera
-    if (!cap.isOpened()) {
-        std::cerr << "Could not open camera." << std::endl;
+    std::vector<uchar> encoded_image;
+    CommonAPI::CallStatus callStatus;
+    uint8_t tos_value4 = 0x10;
+    setsockopt(36, IPPROTO_IP, IP_TOS, &tos_value4, sizeof(tos_value4));
+    int result;
+    cv::Mat image = cv::imread("image.jpg");
+
+    // 이미지 크기를 10배로 늘립니다
+    cv::Mat resized_image;
+    cv::resize(image, resized_image, cv::Size(image.cols * 100, image.rows * 100));
+
+    if (!cv::imencode(".jpg", resized_image, encoded_image)) {
+        std::cerr << "Failed to encode frame." << std::endl;
         return;
     }
 
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-    cap.set(cv::CAP_PROP_FPS, 60);
-    CommonAPI::CallStatus callStatus;
-    uint8_t tos_value2 = 0x00;
-    setsockopt(33, IPPROTO_IP, IP_TOS, &tos_value2, sizeof(tos_value2));
-    int result;
+    int n;
+    n = 0;
     while (true) {
-        cv::Mat frame;
-        cap >> frame;  // Get a new frame from the camera
-        cv::imshow("Image", frame);
-        cv::waitKey(1);
-        if (frame.empty()) {
-            std::cerr << "Failed to capture an image." << std::endl;
-            return;
-        }
-
-        std::vector<uchar> encoded_frame;
-        if (!cv::imencode(".jpg", frame, encoded_frame)) {
-            std::cerr << "Failed to encode frame." << std::endl;
-            return;
-        }
-        myProxy->sendImage2Async(encoded_frame);
+        std::cerr << n << std::endl;
+        myProxy->sendImage4Async(encoded_image);
+        std::cerr << "End" << std::endl;
+        n = n + 1;
     }
 }
 

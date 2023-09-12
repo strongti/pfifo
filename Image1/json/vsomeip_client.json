@@ -20,7 +20,7 @@
         {
             "service" : "0x1234",
             "instance" : "0x5678",
-            "reliable" : ["30510"]
+            "reliable" : [ "30510"]
         }
     ],
     "routing" : "image1",

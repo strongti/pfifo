@@ -1,5 +1,6 @@
 { 
    "unicast" : "192.168.1.1",
+   "network" : "image4",
     "logging" :
     {
         "level" : "debug",
@@ -19,10 +20,10 @@
         {
             "service" : "0x1234",
             "instance" : "0x5678",
-            "reliable" : [ "30510"]
+            "reliable" : [ "30513"]
         }
     ],
-    "routing" : "image1",
+    "routing" : "image4",
     "service-discovery" :
     {
         "enable" : "true",
