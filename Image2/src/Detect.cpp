@@ -29,7 +29,7 @@ void Detect::startCamera() {
 
     // 이미지 크기를 10배로 늘립니다
     cv::Mat resized_image;
-    cv::resize(image, resized_image, cv::Size(image.cols * 100, image.rows * 100));
+    cv::resize(image, resized_image, cv::Size(image.cols * 10, image.rows * 10));
 
     if (!cv::imencode(".jpg", resized_image, encoded_image)) {
         std::cerr << "Failed to encode frame." << std::endl;

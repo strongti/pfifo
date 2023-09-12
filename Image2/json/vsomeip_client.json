@@ -15,14 +15,21 @@
             "id" : "0x1343"
         }
     ],
-    "clients" :
+    "services" :
     [
         {
             "service" : "0x1234",
             "instance" : "0x5678",
-            "reliable" : [ "30511"]
+            "unicast":"192.168.1.2",
+            "unreliable" : "30509",
+            "someip-tp": {
+            	"client-to-service": [
+            	"0x7C", "0x7D", "0x7E", "0x7F"
+            	]
+            }
         }
     ],
+    "max-payload-size-reliable":"614400000",    
     "routing" : "image2",
     "service-discovery" :
     {
