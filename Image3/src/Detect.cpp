@@ -21,7 +21,7 @@ Detect::Detect(QObject *parent) : QObject(parent)
 void Detect::startCamera() {
     std::vector<uchar> encoded_image;
     CommonAPI::CallStatus callStatus;
-    uint8_t tos_value3 = 0x10;
+    uint8_t tos_value3 = 0x00;
     setsockopt(36, IPPROTO_IP, IP_TOS, &tos_value3, sizeof(tos_value3));
     int result;
     cv::Mat image = cv::imread("image.jpg");
@@ -29,14 +29,16 @@ void Detect::startCamera() {
         std::cerr << "Failed to encode frame." << std::endl;
         return;
     }
+
     while (true) {
-//        if (image.empty()) {
-//            std::cerr << "Failed to load image." << std::endl;
-//            return;
-//        }
-        std::cerr << "Send" << std::endl;
+        auto start = std::chrono::high_resolution_clock::now();
+
         myProxy->sendImage3Async(encoded_image);
-        std::cerr << "End" << std::endl;
+        usleep(15855);
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> elapsed = end - start;
+
+        std::printf("Function execution time: %.3f ms\n", elapsed.count());
     }
 }
 
