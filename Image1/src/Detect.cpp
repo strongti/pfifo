@@ -25,14 +25,14 @@ void Detect::startCamera() {
         std::cerr << "Could not open camera." << std::endl;
         return;
     }
-    cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+    cap.set(cv::CAP_PROP_FRAME_WIDTH, 1280);
+    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 720);
     cap.set(cv::CAP_PROP_FPS, 60);
     CommonAPI::CallStatus callStatus;
     uint8_t tos_value1 = 0x10;
     setsockopt(36, IPPROTO_IP, IP_TOS, &tos_value1, sizeof(tos_value1));
     while (true) {
-        cv::Mat frame;
+        cv::Mat frame;  
         cap >> frame;  // Get a new frame from the camera
         if (frame.empty()) {
             std::cerr << "Failed to capture an image." << std::endl;
@@ -44,7 +44,12 @@ void Detect::startCamera() {
             std::cerr << "Failed to encode frame." << std::endl;
             return;
         }
+        auto start = std::chrono::high_resolution_clock::now();            
         myProxy->sendImage1Async(encoded_frame);
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> elapsed = end - start;
+
+        //std::printf("Function execution time: %.3f ms\n", elapsed.count());        
     }
 }
 
