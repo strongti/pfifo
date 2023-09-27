@@ -5,7 +5,7 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <unistd.h>
-
+#include <sched.h>
 
 
 Detect::Detect(QObject *parent) : QObject(parent)
@@ -19,29 +19,33 @@ Detect::Detect(QObject *parent) : QObject(parent)
 
 
 
-    void Detect::startCamera() {
-        std::vector<uchar> encoded_image;
-        CommonAPI::CallStatus callStatus;
-        uint8_t tos_value2 = 0x00;
-        setsockopt(36, IPPROTO_IP, IP_TOS, &tos_value2, sizeof(tos_value2));
-        int result;
-        cv::Mat image = cv::imread("image.jpg");
-        cv::resize(image, image, cv::Size(320, 260));
-        if (!cv::imencode(".jpg", image, encoded_image)) {
-            std::cerr << "Failed to encode frame." << std::endl;
-            return;
-        }
+void Detect::startCamera() {
+    std::vector<uchar> encoded_image;
+    CommonAPI::CallStatus callStatus;
+    uint8_t tos_value2 = 0x00;
+    setsockopt(15, IPPROTO_IP, IP_TOS, &tos_value2, sizeof(tos_value2));
+    int result;
+    cv::Mat image = cv::imread("image.jpg");
+    cv::resize(image, image, cv::Size(1280, 720));
+    if (!cv::imencode(".jpg", image, encoded_image)) {
+        std::cerr << "Failed to encode frame." << std::endl;
+        return;
+    }
 
     while (true) {
         auto start = std::chrono::high_resolution_clock::now();
 
         myProxy->sendImage2Async(encoded_image);
-        usleep(5150);
+        // Do other stuff...
+
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double, std::milli> elapsed = end - start;
 
-        std::printf("Function execution time: %.3f ms\n", elapsed.count());
+        if (elapsed.count() < 15) {
+            std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(15) - elapsed);
+        }
+        // auto dend = std::chrono::high_resolution_clock::now();
+        // std::chrono::duration<double, std::milli> delapsed = dend - start;
+        // std::printf("Function execution time: %.3f ms\n", delapsed.count());
     }
 }
-
-
