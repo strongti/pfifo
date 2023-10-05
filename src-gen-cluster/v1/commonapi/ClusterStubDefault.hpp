@@ -63,22 +63,26 @@ public:
     COMMONAPI_EXPORT virtual void sendImage1(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image1, sendImage1Reply_t _reply) {
         (void)_client;
         (void)_image1;
-        _reply();
+        int32_t status = 0;
+        _reply(status);
     }
     COMMONAPI_EXPORT virtual void sendImage2(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image2, sendImage2Reply_t _reply) {
         (void)_client;
         (void)_image2;
-        _reply();
+        int32_t status = 0;
+        _reply(status);
     }
     COMMONAPI_EXPORT virtual void sendImage3(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image3, sendImage3Reply_t _reply) {
         (void)_client;
         (void)_image3;
-        _reply();
+        int32_t status = 0;
+        _reply(status);
     }
     COMMONAPI_EXPORT virtual void sendImage4(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image4, sendImage4Reply_t _reply) {
         (void)_client;
         (void)_image4;
-        _reply();
+        int32_t status = 0;
+        _reply(status);
     }
 
 

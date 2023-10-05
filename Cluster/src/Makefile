@@ -65,7 +65,10 @@ OBJECTS       = main.o \
 		ClusterStubImpl.o \
 		qrc_qml.o \
 		moc_ClusterStubImpl.o
-DIST          = /usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
+DIST          = coco.names \
+		yolov4-tiny.cfg \
+		yolov4-tiny.weights \
+		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/common/linux.conf \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/common/sanitize.conf \

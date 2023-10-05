@@ -20,32 +20,29 @@ Detect::Detect(QObject *parent) : QObject(parent)
 
 
 void Detect::startCamera() {
-    std::vector<uchar> encoded_image;
-    CommonAPI::CallStatus callStatus;
-    uint8_t tos_value2 = 0x00;
-    setsockopt(15, IPPROTO_IP, IP_TOS, &tos_value2, sizeof(tos_value2));
-    int result;
-    cv::Mat image = cv::imread("image.jpg");
-    cv::resize(image, image, cv::Size(1280, 720));
-    if (!cv::imencode(".jpg", image, encoded_image)) {
-        std::cerr << "Failed to encode frame." << std::endl;
+    cv::VideoCapture cap(2);  // Open the default camera
+    if (!cap.isOpened()) {
+        std::cerr << "Could not open camera." << std::endl;
         return;
     }
 
+    cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
+    cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+    cap.set(cv::CAP_PROP_FPS, 60);
+    CommonAPI::CallStatus callStatus;
+    int result;
     while (true) {
-        auto start = std::chrono::high_resolution_clock::now();
-
-        myProxy->sendImage2Async(encoded_image);
-        // Do other stuff...
-
-        auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double, std::milli> elapsed = end - start;
-
-        if (elapsed.count() < 15) {
-            std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(15) - elapsed);
+        cv::Mat frame;
+        cap >> frame;  // Get a new frame from the camera
+        if (frame.empty()) {
+            std::cerr << "Failed to capture an image." << std::endl;
+            return;
         }
-        // auto dend = std::chrono::high_resolution_clock::now();
-        // std::chrono::duration<double, std::milli> delapsed = dend - start;
-        // std::printf("Function execution time: %.3f ms\n", delapsed.count());
+        std::vector<uchar> encoded_frame;
+        if (!cv::imencode(".jpg", frame, encoded_frame)) {
+            std::cerr << "Failed to encode frame." << std::endl;
+            return;
+        }
+        myProxy->sendImage2(encoded_frame, callStatus, result);
     }
 }

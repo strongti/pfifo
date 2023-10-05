@@ -83,3 +83,8 @@ LIBS += \
 -lopencv_features2d \
 -lopencv_imgproc \
 -lopencv_highgui
+
+DISTFILES += \
+    coco.names \
+    yolov4-tiny.cfg \
+    yolov4-tiny.weights

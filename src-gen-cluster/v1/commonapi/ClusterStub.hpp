@@ -88,10 +88,10 @@ class ClusterStub
     : public virtual CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>
 {
 public:
-    typedef std::function<void ()> sendImage1Reply_t;
-    typedef std::function<void ()> sendImage2Reply_t;
-    typedef std::function<void ()> sendImage3Reply_t;
-    typedef std::function<void ()> sendImage4Reply_t;
+    typedef std::function<void (int32_t _status)> sendImage1Reply_t;
+    typedef std::function<void (int32_t _status)> sendImage2Reply_t;
+    typedef std::function<void (int32_t _status)> sendImage3Reply_t;
+    typedef std::function<void (int32_t _status)> sendImage4Reply_t;
 
     virtual ~ClusterStub() {}
     void lockInterfaceVersionAttribute(bool _lockAccess) { static_cast<void>(_lockAccess); }

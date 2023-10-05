@@ -3,6 +3,14 @@
 #include <CommonAPI/CommonAPI.hpp>
 #include <v1/commonapi/ClusterStubDefault.hpp>
 #include <QObject>
+#include <opencv2/dnn.hpp>
+#include <opencv2/opencv.hpp>
+#include <fstream>
+
+extern cv::dnn::Net net1;
+extern cv::dnn::Net net2;
+extern std::vector<std::string> classes1;
+extern std::vector<std::string> classes2;
 
 class ClusterStubImpl: public QObject, public v1_0::commonapi::ClusterStubDefault {
     Q_OBJECT

@@ -34,7 +34,7 @@ void Detect::startCamera() {
     while (true) {
         auto start = std::chrono::high_resolution_clock::now();
 
-        myProxy->sendImage3Async(encoded_image);
+        myProxy->sendImage3(encoded_image, callStatus, result);
         // Do other stuff...
 
         auto end = std::chrono::high_resolution_clock::now();
