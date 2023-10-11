@@ -31,6 +31,9 @@ void Detect::startCamera() {
     cap.set(cv::CAP_PROP_FPS, 60);
     CommonAPI::CallStatus callStatus;
     int result;
+    uint8_t emergency = 0x10;
+    uint8_t normal = 0x00; 
+    bool setSockOptNeeded = true;    
     while (true) {
         cv::Mat frame;
         cap >> frame;  // Get a new frame from the camera
@@ -44,5 +47,14 @@ void Detect::startCamera() {
             return;
         }
         myProxy->sendImage2(encoded_frame, callStatus, result);
+        if(result == 1 && setSockOptNeeded) {
+            setsockopt(15, IPPROTO_IP, IP_TOS, &emergency, sizeof(emergency));
+            setSockOptNeeded = false;
+            std::cout << "EMERGENCY" << std::endl;
+        } else if (result == 0 && !setSockOptNeeded) {
+            setsockopt(15, IPPROTO_IP, IP_TOS, &normal, sizeof(normal));
+            setSockOptNeeded = true;
+            std::cout << "NORMAL" << std::endl;
+        }
     }
 }

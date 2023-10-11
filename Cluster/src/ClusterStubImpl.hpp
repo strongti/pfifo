@@ -6,6 +6,8 @@
 #include <opencv2/dnn.hpp>
 #include <opencv2/opencv.hpp>
 #include <fstream>
+#include <NvInfer.h>
+
 
 extern cv::dnn::Net net1;
 extern cv::dnn::Net net2;
@@ -28,6 +30,8 @@ private:
     static std::chrono::high_resolution_clock::time_point lastTimestamp4;
     static double totalFPS1, totalFPS2, totalFPS3, totalFPS4;
     static int frameCount1, frameCount2, frameCount3, frameCount4;
+    nvinfer1::IRuntime* runtime;
+    nvinfer1::ICudaEngine* engine;
 //signals:
 //    void signalSpeed(int);
 //    void signalRPM(int);

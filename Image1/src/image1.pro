@@ -92,4 +92,5 @@ DISTFILES += \
 
 LIBS += -lpthread
 
+DEFINES += EMERGENCY_FLAG_PATH=\\\"/sys/kernel/emergency/emergency_flag\\\"
 

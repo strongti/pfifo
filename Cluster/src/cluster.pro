@@ -88,3 +88,10 @@ DISTFILES += \
     coco.names \
     yolov4-tiny.cfg \
     yolov4-tiny.weights
+
+INCLUDEPATH += /usr/local/cuda/include
+INCLUDEPATH += /usr/include/aarch64-linux-gnu/
+LIBS += -L/usr/lib/aarch64-linux-gnu \
+        -lnvinfer \
+        -lnvparsers \
+        -lnvinfer_plugin \
