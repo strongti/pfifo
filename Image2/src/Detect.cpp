@@ -50,10 +50,24 @@ void Detect::startCamera() {
         if(result == 1 && setSockOptNeeded) {
             setsockopt(15, IPPROTO_IP, IP_TOS, &emergency, sizeof(emergency));
             setSockOptNeeded = false;
+            FILE *fp = fopen(EMERGENCY_FLAG_PATH, "w");
+            if (fp) {
+                fprintf(fp, "1");
+                fclose(fp);
+            } else {
+                perror("Failed to set emergency_flag");
+            }
             std::cout << "EMERGENCY" << std::endl;
         } else if (result == 0 && !setSockOptNeeded) {
             setsockopt(15, IPPROTO_IP, IP_TOS, &normal, sizeof(normal));
             setSockOptNeeded = true;
+            FILE *fp = fopen(EMERGENCY_FLAG_PATH, "w");
+            if (fp) {
+                fprintf(fp, "0");
+                fclose(fp);
+            } else {
+                perror("Failed to unset emergency_flag");
+            }
             std::cout << "NORMAL" << std::endl;
         }
     }

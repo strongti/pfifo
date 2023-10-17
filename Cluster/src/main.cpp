@@ -9,44 +9,94 @@
 #include <CommonAPI/CommonAPI.hpp>
 #include "ClusterStubImpl.hpp"
 #include <fstream>
-#include <opencv2/dnn.hpp>
-#include <opencv2/opencv.hpp>
-#include <cstdint>
 
-//#include "WeatherAPI.h"
+// //
+// // TensorRT
+// #include "config.h"
+// #include "model.h"
+// #include "cuda_utils.h"
+// #include "logging.h"
+// #include "utils.h"
+// #include "preprocess.h"
+// #include "postprocess.h"
+#include "yolov7/mains.h"
+//
 
+using namespace nvinfer1;
 using namespace std;
 Q_DECLARE_METATYPE(std::string)
 
-cv::dnn::Net net1;
-cv::dnn::Net net2;
-std::vector<std::string> classes1;
-std::vector<std::string> classes2;
 
-int main(int argc, char *argv[])
-{
 
+std::mutex mtx;
+std::condition_variable condVar;
+bool exitFlag = false;
+
+cudaStream_t stream1;
+IExecutionContext* context1;
+float* device_buffers1[2];
+float* output_buffer_host1 = nullptr;
+
+cudaStream_t stream2;
+IExecutionContext* context2;
+float* device_buffers2[2];
+float* output_buffer_host2 = nullptr;
+
+
+void waitForExitSignal() {
+    std::unique_lock<std::mutex> lock(mtx);
+    condVar.wait(lock, [] { return exitFlag; });
+}
+
+int main(int argc, char *argv[]) {
     qRegisterMetaType<std::string>();
 
     std::shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
-    std::shared_ptr<ClusterStubImpl> myService =
-        std::make_shared<ClusterStubImpl>();
+    std::shared_ptr<ClusterStubImpl> myService = std::make_shared<ClusterStubImpl>();
     runtime->registerService("local", "cluster_service", myService);
     std::cout << "Successfully Registered Service!" << std::endl;
-    net1 = cv::dnn::readNet("yolov4-tiny.weights", "yolov4-tiny.cfg");
-    net1.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
-    net1.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
-    net2 = cv::dnn::readNet("yolov4-tiny.weights", "yolov4-tiny.cfg");
-    net2.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
-    net2.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);    
-    std::ifstream ifs1("coco.names");
-    std::string line1;
-    std::ifstream ifs2("coco.names");
-    std::string line2;
-    while (std::getline(ifs1, line1)) classes1.push_back(line1);
-    while (std::getline(ifs2, line2)) classes2.push_back(line2);
-    while(true){
 
-    }
+    //
+    std::string model_name_1 = "yolov7.engine";
+    std::string model_name_2 = "yolov7.engine";
+    IRuntime* runtimes1 = nullptr;
+    ICudaEngine* engine1 = nullptr;
+    IRuntime* runtimes2 = nullptr;
+    ICudaEngine* engine2 = nullptr;
+    deserialize_engine(model_name_1, &runtimes1, &engine1, &context1);
+    deserialize_engine(model_name_2, &runtimes2, &engine2, &context2);     
+    CUDA_CHECK(cudaStreamCreate(&stream1));
+    CUDA_CHECK(cudaStreamCreate(&stream2));        
+
+    //
+    cuda_preprocess_init(kMaxInputImageSize);
+
+    prepare_buffer(engine1, &device_buffers1[0], &device_buffers1[1], &output_buffer_host1);
+    prepare_buffer(engine2, &device_buffers2[0], &device_buffers2[1], &output_buffer_host2);
+
+
+
+    waitForExitSignal();
+
+    // GPU 메모리 해제
+    // Release stream and buffers
+    cudaStreamDestroy(stream1);
+    cudaStreamDestroy(stream2);
+    CUDA_CHECK(cudaFree(device_buffers1[0]));
+    CUDA_CHECK(cudaFree(device_buffers1[1]));
+    CUDA_CHECK(cudaFree(device_buffers2[0]));
+    CUDA_CHECK(cudaFree(device_buffers2[1]));
+    delete[] output_buffer_host1;
+    delete[] output_buffer_host2;
+    cuda_preprocess_destroy();
+
+    // Destroy the engine
+    delete context1;
+    delete engine1;
+    delete runtimes1;
+    delete context2;
+    delete engine2;
+    delete runtimes2;
+    
     return 0;
 }

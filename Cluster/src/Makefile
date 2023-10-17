@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_QUICK_LIB -DQT_MULTIMEDIA_LIB -DQT_GUI_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I../../src-gen-cluster -isystem /usr/local/include/CommonAPI-3.2 -isystem /usr/local/include/CommonAPI-3.2 -isystem /usr/local/include -isystem /usr/include/opencv4 -I/usr/local/cuda/include -isystem /usr/include/aarch64-linux-gnu -isystem /usr/include/aarch64-linux-gnu/qt5 -isystem /usr/include/aarch64-linux-gnu/qt5/QtQuick -isystem /usr/include/aarch64-linux-gnu/qt5/QtMultimedia -isystem /usr/include/aarch64-linux-gnu/qt5/QtGui -isystem /usr/include/aarch64-linux-gnu/qt5/QtQml -isystem /usr/include/aarch64-linux-gnu/qt5/QtNetwork -isystem /usr/include/aarch64-linux-gnu/qt5/QtCore -I. -I/usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I../../src-gen-cluster -isystem /usr/local/include/CommonAPI-3.2 -isystem /usr/local/include/CommonAPI-3.2 -isystem /usr/local/include -isystem /usr/include/opencv4 -I/include -Iinclude -Iinclude/yolov7 -Iinclude/yolov7/include -Iinclude/yolov7/src -Iinclude/yolov7/plugin -I/usr/local/cuda/include -isystem /usr/include/aarch64-linux-gnu -I/usr/local/cuda/include -isystem /usr/include/aarch64-linux-gnu/qt5 -isystem /usr/include/aarch64-linux-gnu/qt5/QtQuick -isystem /usr/include/aarch64-linux-gnu/qt5/QtMultimedia -isystem /usr/include/aarch64-linux-gnu/qt5/QtGui -isystem /usr/include/aarch64-linux-gnu/qt5/QtQml -isystem /usr/include/aarch64-linux-gnu/qt5/QtNetwork -isystem /usr/include/aarch64-linux-gnu/qt5/QtCore -I. -I/usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = cluster1.0.0
 DISTDIR = /home/avees/pfifo/Cluster/src/.tmp/cluster1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
-LIBS          = $(SUBLIBS) -L/usr/local/lib/ -lCommonAPI -lCommonAPI-SomeIP -lvsomeip3 -L/usr/lib/x86_64-linux-gnu/ -lopencv_core -lopencv_videoio -lopencv_ml -lopencv_objdetect -lopencv_stitching -lopencv_calib3d -lopencv_photo -lopencv_video -lopencv_dnn -lopencv_imgcodecs -lopencv_flann -lopencv_features2d -lopencv_imgproc -lopencv_highgui -L/usr/lib/aarch64-linux-gnu -lnvinfer -lnvparsers -lnvinfer_plugin /usr/lib/aarch64-linux-gnu/libQt5Quick.so /usr/lib/aarch64-linux-gnu/libQt5Multimedia.so /usr/lib/aarch64-linux-gnu/libQt5Gui.so /usr/lib/aarch64-linux-gnu/libQt5Qml.so /usr/lib/aarch64-linux-gnu/libQt5Network.so /usr/lib/aarch64-linux-gnu/libQt5Core.so /usr/lib/aarch64-linux-gnu/libGL.so -lpthread   
+LIBS          = $(SUBLIBS) -L/usr/local/cuda/lib${SYSTEM_TYPE} -L/usr/local/lib/ -lCommonAPI -lCommonAPI-SomeIP -lvsomeip3 -L/usr/lib/x86_64-linux-gnu/ -lopencv_core -lopencv_videoio -lopencv_ml -lopencv_objdetect -lopencv_stitching -lopencv_calib3d -lopencv_photo -lopencv_video -lopencv_dnn -lopencv_imgcodecs -lopencv_flann -lopencv_features2d -lopencv_imgproc -lopencv_highgui -L/usr/lib/aarch64-linux-gnu -lnvinfer -lnvparsers -lnvinfer_plugin -L/usr/local/cuda/lib64 -lcudart /usr/lib/aarch64-linux-gnu/libQt5Quick.so /usr/lib/aarch64-linux-gnu/libQt5Multimedia.so /usr/lib/aarch64-linux-gnu/libQt5Gui.so /usr/lib/aarch64-linux-gnu/libQt5Qml.so /usr/lib/aarch64-linux-gnu/libQt5Network.so /usr/lib/aarch64-linux-gnu/libQt5Core.so /usr/lib/aarch64-linux-gnu/libGL.so -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -56,18 +56,35 @@ SOURCES       = main.cpp \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
-		ClusterStubImpl.cpp qrc_qml.cpp \
+		ClusterStubImpl.cpp \
+		include/yolov7/mains.cpp \
+		include/yolov7/src/block.cpp \
+		include/yolov7/src/calibrator.cpp \
+		include/yolov7/src/model.cpp \
+		include/yolov7/src/postprocess.cpp qrc_qml.cpp \
 		moc_ClusterStubImpl.cpp
-OBJECTS       = main.o \
+OBJECTS       = ${OBJECTS_DIR}yololayer.o \
+		${OBJECTS_DIR}preprocess.o \
+		main.o \
 		ClusterSomeIPDeployment.o \
 		ClusterSomeIPProxy.o \
 		ClusterSomeIPStubAdapter.o \
 		ClusterStubImpl.o \
+		mains.o \
+		block.o \
+		calibrator.o \
+		model.o \
+		postprocess.o \
 		qrc_qml.o \
 		moc_ClusterStubImpl.o
 DIST          = coco.names \
+		include/yolov7/CMakeLists.txt \
+		include/yolov7/README.md \
+		include/yolov7/gen_wts.py \
+		include/yolov7/yolov7_trt.py \
 		yolov4-tiny.cfg \
 		yolov4-tiny.weights \
+		yolov7.engine \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -85,9 +102,6 @@ DIST          = coco.names \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_core_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_dbus.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_dbus_private.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_designer.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_designer_private.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_designercomponents_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_edid_support_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_egl_support_private.pri \
@@ -99,8 +113,6 @@ DIST          = coco.names \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_glx_support_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_help.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_help_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_input_support_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_kms_support_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
@@ -125,12 +137,7 @@ DIST          = coco.names \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_testlib.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_testlib_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_theme_support_private.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_uiplugin.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_uitools.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_uitools_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_vulkan_support_private.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkit.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
@@ -166,11 +173,29 @@ DIST          = coco.names \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
-		ClusterStubImpl.hpp main.cpp \
+		ClusterStubImpl.hpp \
+		include/yolov7/mains.h \
+		include/yolov7/include/block.h \
+		include/yolov7/include/calibrator.h \
+		include/yolov7/include/config.h \
+		include/yolov7/include/cuda_utils.h \
+		include/yolov7/include/logging.h \
+		include/yolov7/include/macros.h \
+		include/yolov7/include/model.h \
+		include/yolov7/include/types.h \
+		include/yolov7/include/utils.h \
+		include/yolov7/plugin/yololayer.h \
+		include/yolov7/include/postprocess.h \
+		include/yolov7/include/preprocess.h main.cpp \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
 		../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
-		ClusterStubImpl.cpp
+		ClusterStubImpl.cpp \
+		include/yolov7/mains.cpp \
+		include/yolov7/src/block.cpp \
+		include/yolov7/src/calibrator.cpp \
+		include/yolov7/src/model.cpp \
+		include/yolov7/src/postprocess.cpp
 QMAKE_TARGET  = cluster
 DESTDIR       = 
 TARGET        = cluster
@@ -199,9 +224,6 @@ Makefile: cluster.pro /usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_core_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_dbus.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_dbus_private.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_designer.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_designer_private.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_designercomponents_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_devicediscovery_support_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_edid_support_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_egl_support_private.pri \
@@ -213,8 +235,6 @@ Makefile: cluster.pro /usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_glx_support_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_help.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_help_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_input_support_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_kms_support_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri \
@@ -239,12 +259,7 @@ Makefile: cluster.pro /usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_testlib.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_testlib_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_theme_support_private.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_uiplugin.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_uitools.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_uitools_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_vulkan_support_private.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkit.pri \
-		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri \
 		/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri \
@@ -292,9 +307,6 @@ Makefile: cluster.pro /usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_core_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_dbus.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_dbus_private.pri:
-/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_designer.pri:
-/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_designer_private.pri:
-/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_designercomponents_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_devicediscovery_support_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_edid_support_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_egl_support_private.pri:
@@ -306,8 +318,6 @@ Makefile: cluster.pro /usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_glx_support_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_gui_private.pri:
-/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_help.pri:
-/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_help_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_input_support_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_kms_support_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_linuxaccessibility_support_private.pri:
@@ -332,12 +342,7 @@ Makefile: cluster.pro /usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++/qmake.con
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_testlib.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_testlib_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_theme_support_private.pri:
-/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_uiplugin.pri:
-/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_uitools.pri:
-/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_uitools_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_vulkan_support_private.pri:
-/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkit.pri:
-/usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_widgets_private.pri:
 /usr/lib/aarch64-linux-gnu/qt5/mkspecs/modules/qt_lib_xcb_qpa_lib_private.pri:
@@ -381,10 +386,11 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents include/yolov7/plugin/yololayer.cu include/yolov7/src/preprocess.cu $(DISTDIR)/
 	$(COPY_FILE) --parents qml.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/aarch64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../src-gen-cluster/v1/commonapi/Cluster.hpp ../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp ../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp ClusterStubImpl.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp ClusterStubImpl.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../src-gen-cluster/v1/commonapi/Cluster.hpp ../../src-gen-cluster/v1/commonapi/ClusterProxy.hpp ../../src-gen-cluster/v1/commonapi/ClusterProxyBase.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.hpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp ClusterStubImpl.hpp include/yolov7/mains.h include/yolov7/include/block.h include/yolov7/include/calibrator.h include/yolov7/include/config.h include/yolov7/include/cuda_utils.h include/yolov7/include/logging.h include/yolov7/include/macros.h include/yolov7/include/model.h include/yolov7/include/types.h include/yolov7/include/utils.h include/yolov7/plugin/yololayer.h include/yolov7/include/postprocess.h include/yolov7/include/preprocess.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp ClusterStubImpl.cpp include/yolov7/mains.cpp include/yolov7/src/block.cpp include/yolov7/src/calibrator.cpp include/yolov7/src/model.cpp include/yolov7/src/postprocess.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -407,6 +413,85 @@ mocables: compiler_moc_header_make_all compiler_moc_objc_header_make_all compile
 check: first
 
 benchmark: first
+
+compiler_cuda_make_all: ${OBJECTS_DIR}yololayer.o ${OBJECTS_DIR}preprocess.o
+compiler_cuda_clean:
+	-$(DEL_FILE) ${OBJECTS_DIR}yololayer.o ${OBJECTS_DIR}preprocess.o
+${OBJECTS_DIR}yololayer.o: include/yolov7/plugin/yololayer.cu \
+		include/yolov7/plugin/yololayer.h \
+		include/yolov7/include/macros.h \
+		include/yolov7/include/types.h \
+		include/yolov7/include/config.h \
+		include/yolov7/include/cuda_utils.h \
+		/usr/local/cuda/include/cuda_runtime_api.h \
+		/usr/local/cuda/include/crt/host_defines.h \
+		/usr/local/cuda/include/builtin_types.h \
+		/usr/local/cuda/include/device_types.h \
+		/usr/local/cuda/include/driver_types.h \
+		/usr/local/cuda/include/vector_types.h \
+		/usr/local/cuda/include/surface_types.h \
+		/usr/local/cuda/include/texture_types.h \
+		/usr/local/cuda/include/cuda_device_runtime_api.h
+	/usr/local/cuda/bin/nvcc -c --compiler-options -fno-strict-aliasing -use_fast_math -arch=sm_52 -I../../src-gen-cluster/ -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include -I/usr/include/opencv4/ -I/include -Iinclude -Iinclude/yolov7 -Iinclude/yolov7/include -Iinclude/yolov7/src -Iinclude/yolov7/plugin -I/usr/local/cuda/include -I/usr/include/aarch64-linux-gnu/ -I/usr/local/cuda/include  include/yolov7/plugin/yololayer.cu -o ${OBJECTS_DIR}yololayer.o -I../../src-gen-cluster/ -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include -I/usr/include/opencv4/ -I/include -Iinclude -Iinclude/yolov7 -Iinclude/yolov7/include -Iinclude/yolov7/src -Iinclude/yolov7/plugin -I/usr/local/cuda/include -I/usr/include/aarch64-linux-gnu/ -I/usr/local/cuda/include 
+
+${OBJECTS_DIR}preprocess.o: include/yolov7/src/preprocess.cu \
+		include/yolov7/include/preprocess.h \
+		/usr/local/cuda/include/cuda_runtime.h \
+		/usr/local/cuda/include/crt/host_config.h \
+		/usr/local/cuda/include/builtin_types.h \
+		/usr/local/cuda/include/device_types.h \
+		/usr/local/cuda/include/crt/host_defines.h \
+		/usr/local/cuda/include/driver_types.h \
+		/usr/local/cuda/include/vector_types.h \
+		/usr/local/cuda/include/surface_types.h \
+		/usr/local/cuda/include/texture_types.h \
+		/usr/local/cuda/include/library_types.h \
+		/usr/local/cuda/include/channel_descriptor.h \
+		/usr/local/cuda/include/cuda_runtime_api.h \
+		/usr/local/cuda/include/cuda_device_runtime_api.h \
+		/usr/local/cuda/include/driver_functions.h \
+		/usr/local/cuda/include/vector_functions.h \
+		/usr/local/cuda/include/vector_functions.hpp \
+		/usr/local/cuda/include/crt/device_functions.h \
+		/usr/local/cuda/include/crt/device_functions.hpp \
+		/usr/local/cuda/include/device_atomic_functions.h \
+		/usr/local/cuda/include/device_atomic_functions.hpp \
+		/usr/local/cuda/include/crt/device_double_functions.h \
+		/usr/local/cuda/include/crt/device_double_functions.hpp \
+		/usr/local/cuda/include/sm_20_atomic_functions.h \
+		/usr/local/cuda/include/sm_20_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_32_atomic_functions.h \
+		/usr/local/cuda/include/sm_32_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_35_atomic_functions.h \
+		/usr/local/cuda/include/sm_60_atomic_functions.h \
+		/usr/local/cuda/include/sm_60_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_20_intrinsics.h \
+		/usr/local/cuda/include/sm_20_intrinsics.hpp \
+		/usr/local/cuda/include/sm_30_intrinsics.h \
+		/usr/local/cuda/include/sm_30_intrinsics.hpp \
+		/usr/local/cuda/include/sm_32_intrinsics.h \
+		/usr/local/cuda/include/sm_32_intrinsics.hpp \
+		/usr/local/cuda/include/sm_35_intrinsics.h \
+		/usr/local/cuda/include/sm_61_intrinsics.h \
+		/usr/local/cuda/include/sm_61_intrinsics.hpp \
+		/usr/local/cuda/include/crt/sm_70_rt.h \
+		/usr/local/cuda/include/crt/sm_70_rt.hpp \
+		/usr/local/cuda/include/crt/sm_80_rt.h \
+		/usr/local/cuda/include/crt/sm_80_rt.hpp \
+		/usr/local/cuda/include/surface_functions.h \
+		/usr/local/cuda/include/cuda_surface_types.h \
+		/usr/local/cuda/include/texture_fetch_functions.h \
+		/usr/local/cuda/include/cuda_texture_types.h \
+		/usr/local/cuda/include/texture_indirect_functions.h \
+		/usr/local/cuda/include/surface_indirect_functions.h \
+		/usr/local/cuda/include/crt/common_functions.h \
+		/usr/local/cuda/include/crt/math_functions.h \
+		/usr/local/cuda/include/crt/func_macro.h \
+		/usr/local/cuda/include/crt/math_functions.hpp \
+		/usr/local/cuda/include/math_constants.h \
+		/usr/local/cuda/include/device_launch_parameters.h \
+		include/yolov7/include/cuda_utils.h
+	/usr/local/cuda/bin/nvcc -c --compiler-options -fno-strict-aliasing -use_fast_math -arch=sm_52 -I../../src-gen-cluster/ -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include -I/usr/include/opencv4/ -I/include -Iinclude -Iinclude/yolov7 -Iinclude/yolov7/include -Iinclude/yolov7/src -Iinclude/yolov7/plugin -I/usr/local/cuda/include -I/usr/include/aarch64-linux-gnu/ -I/usr/local/cuda/include  include/yolov7/src/preprocess.cu -o ${OBJECTS_DIR}preprocess.o -I../../src-gen-cluster/ -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include -I/usr/include/opencv4/ -I/include -Iinclude -Iinclude/yolov7 -Iinclude/yolov7/include -Iinclude/yolov7/src -Iinclude/yolov7/plugin -I/usr/local/cuda/include -I/usr/include/aarch64-linux-gnu/ -I/usr/local/cuda/include 
 
 compiler_rcc_make_all: qrc_qml.cpp
 compiler_rcc_clean:
@@ -436,9 +521,73 @@ moc_ClusterStubImpl.cpp: ClusterStubImpl.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
 		../../src-gen-cluster/v1/commonapi/Cluster.hpp \
+		include/yolov7/include/config.h \
+		include/yolov7/include/model.h \
+		include/yolov7/include/cuda_utils.h \
+		/usr/local/cuda/include/cuda_runtime_api.h \
+		/usr/local/cuda/include/crt/host_defines.h \
+		/usr/local/cuda/include/builtin_types.h \
+		/usr/local/cuda/include/device_types.h \
+		/usr/local/cuda/include/driver_types.h \
+		/usr/local/cuda/include/vector_types.h \
+		/usr/local/cuda/include/surface_types.h \
+		/usr/local/cuda/include/texture_types.h \
+		/usr/local/cuda/include/cuda_device_runtime_api.h \
+		include/yolov7/include/logging.h \
+		include/yolov7/include/macros.h \
+		include/yolov7/include/utils.h \
+		include/yolov7/include/preprocess.h \
+		/usr/local/cuda/include/cuda_runtime.h \
+		/usr/local/cuda/include/crt/host_config.h \
+		/usr/local/cuda/include/library_types.h \
+		/usr/local/cuda/include/channel_descriptor.h \
+		/usr/local/cuda/include/driver_functions.h \
+		/usr/local/cuda/include/vector_functions.h \
+		/usr/local/cuda/include/vector_functions.hpp \
+		/usr/local/cuda/include/crt/device_functions.h \
+		/usr/local/cuda/include/crt/device_functions.hpp \
+		/usr/local/cuda/include/device_atomic_functions.h \
+		/usr/local/cuda/include/device_atomic_functions.hpp \
+		/usr/local/cuda/include/crt/device_double_functions.h \
+		/usr/local/cuda/include/crt/device_double_functions.hpp \
+		/usr/local/cuda/include/sm_20_atomic_functions.h \
+		/usr/local/cuda/include/sm_20_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_32_atomic_functions.h \
+		/usr/local/cuda/include/sm_32_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_35_atomic_functions.h \
+		/usr/local/cuda/include/sm_60_atomic_functions.h \
+		/usr/local/cuda/include/sm_60_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_20_intrinsics.h \
+		/usr/local/cuda/include/sm_20_intrinsics.hpp \
+		/usr/local/cuda/include/sm_30_intrinsics.h \
+		/usr/local/cuda/include/sm_30_intrinsics.hpp \
+		/usr/local/cuda/include/sm_32_intrinsics.h \
+		/usr/local/cuda/include/sm_32_intrinsics.hpp \
+		/usr/local/cuda/include/sm_35_intrinsics.h \
+		/usr/local/cuda/include/sm_61_intrinsics.h \
+		/usr/local/cuda/include/sm_61_intrinsics.hpp \
+		/usr/local/cuda/include/crt/sm_70_rt.h \
+		/usr/local/cuda/include/crt/sm_70_rt.hpp \
+		/usr/local/cuda/include/crt/sm_80_rt.h \
+		/usr/local/cuda/include/crt/sm_80_rt.hpp \
+		/usr/local/cuda/include/surface_functions.h \
+		/usr/local/cuda/include/cuda_surface_types.h \
+		/usr/local/cuda/include/texture_fetch_functions.h \
+		/usr/local/cuda/include/cuda_texture_types.h \
+		/usr/local/cuda/include/texture_indirect_functions.h \
+		/usr/local/cuda/include/surface_indirect_functions.h \
+		/usr/local/cuda/include/crt/common_functions.h \
+		/usr/local/cuda/include/crt/math_functions.h \
+		/usr/local/cuda/include/crt/func_macro.h \
+		/usr/local/cuda/include/crt/math_functions.hpp \
+		/usr/local/cuda/include/math_constants.h \
+		/usr/local/cuda/include/device_launch_parameters.h \
+		include/yolov7/include/postprocess.h \
+		include/yolov7/include/types.h \
+		include/yolov7/mains.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/avees/pfifo/Cluster/src/moc_predefs.h -I/usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/avees/pfifo/Cluster/src -I/home/avees/pfifo/src-gen-cluster -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include -I/usr/include/opencv4 -I/usr/local/cuda/include -I/usr/include/aarch64-linux-gnu -I/usr/include/aarch64-linux-gnu/qt5 -I/usr/include/aarch64-linux-gnu/qt5/QtQuick -I/usr/include/aarch64-linux-gnu/qt5/QtMultimedia -I/usr/include/aarch64-linux-gnu/qt5/QtGui -I/usr/include/aarch64-linux-gnu/qt5/QtQml -I/usr/include/aarch64-linux-gnu/qt5/QtNetwork -I/usr/include/aarch64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/aarch64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/aarch64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/aarch64-linux-gnu/7/include-fixed -I/usr/include/aarch64-linux-gnu -I/usr/include ClusterStubImpl.hpp -o moc_ClusterStubImpl.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/avees/pfifo/Cluster/src/moc_predefs.h -I/usr/lib/aarch64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/avees/pfifo/Cluster/src -I/home/avees/pfifo/src-gen-cluster -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include/CommonAPI-3.2 -I/usr/local/include -I/usr/include/opencv4 -I/include -I/home/avees/pfifo/Cluster/src/include -I/home/avees/pfifo/Cluster/src/include/yolov7 -I/home/avees/pfifo/Cluster/src/include/yolov7/include -I/home/avees/pfifo/Cluster/src/include/yolov7/src -I/home/avees/pfifo/Cluster/src/include/yolov7/plugin -I/usr/local/cuda/include -I/usr/include/aarch64-linux-gnu -I/usr/local/cuda/include -I/usr/include/aarch64-linux-gnu/qt5 -I/usr/include/aarch64-linux-gnu/qt5/QtQuick -I/usr/include/aarch64-linux-gnu/qt5/QtMultimedia -I/usr/include/aarch64-linux-gnu/qt5/QtGui -I/usr/include/aarch64-linux-gnu/qt5/QtQml -I/usr/include/aarch64-linux-gnu/qt5/QtNetwork -I/usr/include/aarch64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/aarch64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/aarch64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/aarch64-linux-gnu/7/include-fixed -I/usr/include/aarch64-linux-gnu -I/usr/include ClusterStubImpl.hpp -o moc_ClusterStubImpl.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -450,14 +599,78 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
+compiler_clean: compiler_cuda_clean compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
 main.o: main.cpp ClusterStubImpl.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
-		../../src-gen-cluster/v1/commonapi/Cluster.hpp
+		../../src-gen-cluster/v1/commonapi/Cluster.hpp \
+		include/yolov7/include/config.h \
+		include/yolov7/include/model.h \
+		include/yolov7/include/cuda_utils.h \
+		/usr/local/cuda/include/cuda_runtime_api.h \
+		/usr/local/cuda/include/crt/host_defines.h \
+		/usr/local/cuda/include/builtin_types.h \
+		/usr/local/cuda/include/device_types.h \
+		/usr/local/cuda/include/driver_types.h \
+		/usr/local/cuda/include/vector_types.h \
+		/usr/local/cuda/include/surface_types.h \
+		/usr/local/cuda/include/texture_types.h \
+		/usr/local/cuda/include/cuda_device_runtime_api.h \
+		include/yolov7/include/logging.h \
+		include/yolov7/include/macros.h \
+		include/yolov7/include/utils.h \
+		include/yolov7/include/preprocess.h \
+		/usr/local/cuda/include/cuda_runtime.h \
+		/usr/local/cuda/include/crt/host_config.h \
+		/usr/local/cuda/include/library_types.h \
+		/usr/local/cuda/include/channel_descriptor.h \
+		/usr/local/cuda/include/driver_functions.h \
+		/usr/local/cuda/include/vector_functions.h \
+		/usr/local/cuda/include/vector_functions.hpp \
+		/usr/local/cuda/include/crt/device_functions.h \
+		/usr/local/cuda/include/crt/device_functions.hpp \
+		/usr/local/cuda/include/device_atomic_functions.h \
+		/usr/local/cuda/include/device_atomic_functions.hpp \
+		/usr/local/cuda/include/crt/device_double_functions.h \
+		/usr/local/cuda/include/crt/device_double_functions.hpp \
+		/usr/local/cuda/include/sm_20_atomic_functions.h \
+		/usr/local/cuda/include/sm_20_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_32_atomic_functions.h \
+		/usr/local/cuda/include/sm_32_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_35_atomic_functions.h \
+		/usr/local/cuda/include/sm_60_atomic_functions.h \
+		/usr/local/cuda/include/sm_60_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_20_intrinsics.h \
+		/usr/local/cuda/include/sm_20_intrinsics.hpp \
+		/usr/local/cuda/include/sm_30_intrinsics.h \
+		/usr/local/cuda/include/sm_30_intrinsics.hpp \
+		/usr/local/cuda/include/sm_32_intrinsics.h \
+		/usr/local/cuda/include/sm_32_intrinsics.hpp \
+		/usr/local/cuda/include/sm_35_intrinsics.h \
+		/usr/local/cuda/include/sm_61_intrinsics.h \
+		/usr/local/cuda/include/sm_61_intrinsics.hpp \
+		/usr/local/cuda/include/crt/sm_70_rt.h \
+		/usr/local/cuda/include/crt/sm_70_rt.hpp \
+		/usr/local/cuda/include/crt/sm_80_rt.h \
+		/usr/local/cuda/include/crt/sm_80_rt.hpp \
+		/usr/local/cuda/include/surface_functions.h \
+		/usr/local/cuda/include/cuda_surface_types.h \
+		/usr/local/cuda/include/texture_fetch_functions.h \
+		/usr/local/cuda/include/cuda_texture_types.h \
+		/usr/local/cuda/include/texture_indirect_functions.h \
+		/usr/local/cuda/include/surface_indirect_functions.h \
+		/usr/local/cuda/include/crt/common_functions.h \
+		/usr/local/cuda/include/crt/math_functions.h \
+		/usr/local/cuda/include/crt/func_macro.h \
+		/usr/local/cuda/include/crt/math_functions.hpp \
+		/usr/local/cuda/include/math_constants.h \
+		/usr/local/cuda/include/device_launch_parameters.h \
+		include/yolov7/include/postprocess.h \
+		include/yolov7/include/types.h \
+		include/yolov7/mains.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 ClusterSomeIPDeployment.o: ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.hpp
@@ -476,8 +689,172 @@ ClusterSomeIPStubAdapter.o: ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStub
 ClusterStubImpl.o: ClusterStubImpl.cpp ClusterStubImpl.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
 		../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
-		../../src-gen-cluster/v1/commonapi/Cluster.hpp
+		../../src-gen-cluster/v1/commonapi/Cluster.hpp \
+		include/yolov7/include/config.h \
+		include/yolov7/include/model.h \
+		include/yolov7/include/cuda_utils.h \
+		/usr/local/cuda/include/cuda_runtime_api.h \
+		/usr/local/cuda/include/crt/host_defines.h \
+		/usr/local/cuda/include/builtin_types.h \
+		/usr/local/cuda/include/device_types.h \
+		/usr/local/cuda/include/driver_types.h \
+		/usr/local/cuda/include/vector_types.h \
+		/usr/local/cuda/include/surface_types.h \
+		/usr/local/cuda/include/texture_types.h \
+		/usr/local/cuda/include/cuda_device_runtime_api.h \
+		include/yolov7/include/logging.h \
+		include/yolov7/include/macros.h \
+		include/yolov7/include/utils.h \
+		include/yolov7/include/preprocess.h \
+		/usr/local/cuda/include/cuda_runtime.h \
+		/usr/local/cuda/include/crt/host_config.h \
+		/usr/local/cuda/include/library_types.h \
+		/usr/local/cuda/include/channel_descriptor.h \
+		/usr/local/cuda/include/driver_functions.h \
+		/usr/local/cuda/include/vector_functions.h \
+		/usr/local/cuda/include/vector_functions.hpp \
+		/usr/local/cuda/include/crt/device_functions.h \
+		/usr/local/cuda/include/crt/device_functions.hpp \
+		/usr/local/cuda/include/device_atomic_functions.h \
+		/usr/local/cuda/include/device_atomic_functions.hpp \
+		/usr/local/cuda/include/crt/device_double_functions.h \
+		/usr/local/cuda/include/crt/device_double_functions.hpp \
+		/usr/local/cuda/include/sm_20_atomic_functions.h \
+		/usr/local/cuda/include/sm_20_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_32_atomic_functions.h \
+		/usr/local/cuda/include/sm_32_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_35_atomic_functions.h \
+		/usr/local/cuda/include/sm_60_atomic_functions.h \
+		/usr/local/cuda/include/sm_60_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_20_intrinsics.h \
+		/usr/local/cuda/include/sm_20_intrinsics.hpp \
+		/usr/local/cuda/include/sm_30_intrinsics.h \
+		/usr/local/cuda/include/sm_30_intrinsics.hpp \
+		/usr/local/cuda/include/sm_32_intrinsics.h \
+		/usr/local/cuda/include/sm_32_intrinsics.hpp \
+		/usr/local/cuda/include/sm_35_intrinsics.h \
+		/usr/local/cuda/include/sm_61_intrinsics.h \
+		/usr/local/cuda/include/sm_61_intrinsics.hpp \
+		/usr/local/cuda/include/crt/sm_70_rt.h \
+		/usr/local/cuda/include/crt/sm_70_rt.hpp \
+		/usr/local/cuda/include/crt/sm_80_rt.h \
+		/usr/local/cuda/include/crt/sm_80_rt.hpp \
+		/usr/local/cuda/include/surface_functions.h \
+		/usr/local/cuda/include/cuda_surface_types.h \
+		/usr/local/cuda/include/texture_fetch_functions.h \
+		/usr/local/cuda/include/cuda_texture_types.h \
+		/usr/local/cuda/include/texture_indirect_functions.h \
+		/usr/local/cuda/include/surface_indirect_functions.h \
+		/usr/local/cuda/include/crt/common_functions.h \
+		/usr/local/cuda/include/crt/math_functions.h \
+		/usr/local/cuda/include/crt/func_macro.h \
+		/usr/local/cuda/include/crt/math_functions.hpp \
+		/usr/local/cuda/include/math_constants.h \
+		/usr/local/cuda/include/device_launch_parameters.h \
+		include/yolov7/include/postprocess.h \
+		include/yolov7/include/types.h \
+		include/yolov7/mains.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ClusterStubImpl.o ClusterStubImpl.cpp
+
+mains.o: include/yolov7/mains.cpp include/yolov7/mains.h \
+		include/yolov7/include/config.h \
+		include/yolov7/include/model.h \
+		include/yolov7/include/cuda_utils.h \
+		/usr/local/cuda/include/cuda_runtime_api.h \
+		/usr/local/cuda/include/crt/host_defines.h \
+		/usr/local/cuda/include/builtin_types.h \
+		/usr/local/cuda/include/device_types.h \
+		/usr/local/cuda/include/driver_types.h \
+		/usr/local/cuda/include/vector_types.h \
+		/usr/local/cuda/include/surface_types.h \
+		/usr/local/cuda/include/texture_types.h \
+		/usr/local/cuda/include/cuda_device_runtime_api.h \
+		include/yolov7/include/logging.h \
+		include/yolov7/include/macros.h \
+		include/yolov7/include/utils.h \
+		include/yolov7/include/preprocess.h \
+		/usr/local/cuda/include/cuda_runtime.h \
+		/usr/local/cuda/include/crt/host_config.h \
+		/usr/local/cuda/include/library_types.h \
+		/usr/local/cuda/include/channel_descriptor.h \
+		/usr/local/cuda/include/driver_functions.h \
+		/usr/local/cuda/include/vector_functions.h \
+		/usr/local/cuda/include/vector_functions.hpp \
+		/usr/local/cuda/include/crt/device_functions.h \
+		/usr/local/cuda/include/crt/device_functions.hpp \
+		/usr/local/cuda/include/device_atomic_functions.h \
+		/usr/local/cuda/include/device_atomic_functions.hpp \
+		/usr/local/cuda/include/crt/device_double_functions.h \
+		/usr/local/cuda/include/crt/device_double_functions.hpp \
+		/usr/local/cuda/include/sm_20_atomic_functions.h \
+		/usr/local/cuda/include/sm_20_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_32_atomic_functions.h \
+		/usr/local/cuda/include/sm_32_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_35_atomic_functions.h \
+		/usr/local/cuda/include/sm_60_atomic_functions.h \
+		/usr/local/cuda/include/sm_60_atomic_functions.hpp \
+		/usr/local/cuda/include/sm_20_intrinsics.h \
+		/usr/local/cuda/include/sm_20_intrinsics.hpp \
+		/usr/local/cuda/include/sm_30_intrinsics.h \
+		/usr/local/cuda/include/sm_30_intrinsics.hpp \
+		/usr/local/cuda/include/sm_32_intrinsics.h \
+		/usr/local/cuda/include/sm_32_intrinsics.hpp \
+		/usr/local/cuda/include/sm_35_intrinsics.h \
+		/usr/local/cuda/include/sm_61_intrinsics.h \
+		/usr/local/cuda/include/sm_61_intrinsics.hpp \
+		/usr/local/cuda/include/crt/sm_70_rt.h \
+		/usr/local/cuda/include/crt/sm_70_rt.hpp \
+		/usr/local/cuda/include/crt/sm_80_rt.h \
+		/usr/local/cuda/include/crt/sm_80_rt.hpp \
+		/usr/local/cuda/include/surface_functions.h \
+		/usr/local/cuda/include/cuda_surface_types.h \
+		/usr/local/cuda/include/texture_fetch_functions.h \
+		/usr/local/cuda/include/cuda_texture_types.h \
+		/usr/local/cuda/include/texture_indirect_functions.h \
+		/usr/local/cuda/include/surface_indirect_functions.h \
+		/usr/local/cuda/include/crt/common_functions.h \
+		/usr/local/cuda/include/crt/math_functions.h \
+		/usr/local/cuda/include/crt/func_macro.h \
+		/usr/local/cuda/include/crt/math_functions.hpp \
+		/usr/local/cuda/include/math_constants.h \
+		/usr/local/cuda/include/device_launch_parameters.h \
+		include/yolov7/include/postprocess.h \
+		include/yolov7/include/types.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mains.o include/yolov7/mains.cpp
+
+block.o: include/yolov7/src/block.cpp include/yolov7/include/block.h \
+		include/yolov7/plugin/yololayer.h \
+		include/yolov7/include/macros.h \
+		include/yolov7/include/types.h \
+		include/yolov7/include/config.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o block.o include/yolov7/src/block.cpp
+
+calibrator.o: include/yolov7/src/calibrator.cpp include/yolov7/include/calibrator.h \
+		include/yolov7/include/macros.h \
+		include/yolov7/include/cuda_utils.h \
+		/usr/local/cuda/include/cuda_runtime_api.h \
+		/usr/local/cuda/include/crt/host_defines.h \
+		/usr/local/cuda/include/builtin_types.h \
+		/usr/local/cuda/include/device_types.h \
+		/usr/local/cuda/include/driver_types.h \
+		/usr/local/cuda/include/vector_types.h \
+		/usr/local/cuda/include/surface_types.h \
+		/usr/local/cuda/include/texture_types.h \
+		/usr/local/cuda/include/cuda_device_runtime_api.h \
+		include/yolov7/include/utils.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o calibrator.o include/yolov7/src/calibrator.cpp
+
+model.o: include/yolov7/src/model.cpp include/yolov7/include/model.h \
+		include/yolov7/include/block.h \
+		include/yolov7/include/config.h \
+		include/yolov7/include/calibrator.h \
+		include/yolov7/include/macros.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o model.o include/yolov7/src/model.cpp
+
+postprocess.o: include/yolov7/src/postprocess.cpp include/yolov7/include/postprocess.h \
+		include/yolov7/include/types.h \
+		include/yolov7/include/config.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o postprocess.o include/yolov7/src/postprocess.cpp
 
 qrc_qml.o: qrc_qml.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp

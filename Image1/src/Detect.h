@@ -29,6 +29,3 @@ public slots:
 
 
 #endif // DETECT_H
-
-
-

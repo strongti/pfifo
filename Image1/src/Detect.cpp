@@ -18,8 +18,6 @@ Detect::Detect(QObject *parent) : QObject(parent)
 
 }
 
-
-
 void Detect::startCamera() {
     cv::VideoCapture cap(0);  // Open the default camera
     if (!cap.isOpened()) {
@@ -76,5 +74,3 @@ void Detect::startCamera() {
         }
     }
 }
-
-

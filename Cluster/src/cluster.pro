@@ -17,7 +17,12 @@ SOURCES += main.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPDeployment.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPProxy.cpp \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.cpp \
-    ClusterStubImpl.cpp
+    ClusterStubImpl.cpp \
+    include/yolov7/mains.cpp \
+    include/yolov7/src/block.cpp \
+    include/yolov7/src/calibrator.cpp \
+    include/yolov7/src/model.cpp \
+    include/yolov7/src/postprocess.cpp
 
 RESOURCES += qml.qrc
 
@@ -62,7 +67,20 @@ HEADERS += \
     ../../src-gen-cluster/v1/commonapi/ClusterSomeIPStubAdapter.hpp \
     ../../src-gen-cluster/v1/commonapi/ClusterStub.hpp \
     ../../src-gen-cluster/v1/commonapi/ClusterStubDefault.hpp \
-    ClusterStubImpl.hpp
+    ClusterStubImpl.hpp \
+    include/yolov7/mains.h \
+    include/yolov7/include/block.h \
+    include/yolov7/include/calibrator.h \
+    include/yolov7/include/config.h \
+    include/yolov7/include/cuda_utils.h \
+    include/yolov7/include/logging.h \
+    include/yolov7/include/macros.h \
+    include/yolov7/include/model.h \
+    include/yolov7/include/types.h \
+    include/yolov7/include/utils.h \
+    include/yolov7/plugin/yololayer.h \
+    include/yolov7/include/postprocess.h \
+    include/yolov7/include/preprocess.h
 
 INCLUDEPATH += /usr/include/opencv4/
 DEPENDPATH += /usr/include/opencv4/
@@ -84,14 +102,55 @@ LIBS += \
 -lopencv_imgproc \
 -lopencv_highgui
 
-DISTFILES += \
-    coco.names \
-    yolov4-tiny.cfg \
-    yolov4-tiny.weights
-
+# 라이브러리와 헤더 경로 설정
+INCLUDEPATH += $${CUDA_DIR}/include
+INCLUDEPATH += include
+INCLUDEPATH += include/yolov7
+INCLUDEPATH += include/yolov7/include
+INCLUDEPATH += include/yolov7/src
+INCLUDEPATH += include/yolov7/plugin
 INCLUDEPATH += /usr/local/cuda/include
 INCLUDEPATH += /usr/include/aarch64-linux-gnu/
 LIBS += -L/usr/lib/aarch64-linux-gnu \
         -lnvinfer \
         -lnvparsers \
         -lnvinfer_plugin \
+
+DISTFILES += \
+    coco.names \
+    include/yolov7/CMakeLists.txt \
+    include/yolov7/README.md \
+    include/yolov7/gen_wts.py \
+    include/yolov7/yolov7_trt.py \
+    yolov4-tiny.cfg \
+    yolov4-tiny.weights \
+    yolov7.engine
+
+INCLUDEPATH += /usr/local/cuda/include
+LIBS += -L/usr/local/cuda/lib64
+LIBS += -lcudart
+
+
+# CUDA Toolkit 경로
+CUDA_DIR = /usr/local/cuda
+SYSTEM_TYPE = 64 # 32 for 32-bit system
+
+# nvcc 컴파일러 설정
+CUDA_SOURCES += include/yolov7/plugin/yololayer.cu \
+                include/yolov7/src/preprocess.cu
+
+CUDA_NVCC_FLAGS = --compiler-options -fno-strict-aliasing -use_fast_math -arch=sm_52 $$join(INCLUDEPATH,' -I','-I',' ')
+
+# qmake 사용자 정의 컴파일러 추가
+cuda.input = CUDA_SOURCES
+cuda.output = ${OBJECTS_DIR}${QMAKE_FILE_BASE}.o
+cuda.commands = $${CUDA_DIR}/bin/nvcc -c $${CUDA_NVCC_FLAGS} ${QMAKE_FILE_NAME} -o ${QMAKE_FILE_OUT} $$join(INCLUDEPATH,' -I','-I',' ')
+cuda.dependency_type = TYPE_C
+QMAKE_EXTRA_COMPILERS += cuda
+
+
+
+QMAKE_LIBDIR += $${CUDA_DIR}/lib${SYSTEM_TYPE}
+LIBS += -lcudart
+
+
