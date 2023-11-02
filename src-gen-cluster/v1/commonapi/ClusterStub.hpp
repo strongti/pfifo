@@ -88,15 +88,16 @@ class ClusterStub
     : public virtual CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>
 {
 public:
-    typedef std::function<void (int32_t _status)> sendImage1Reply_t;
-    typedef std::function<void (int32_t _status)> sendImage2Reply_t;
-    typedef std::function<void (int32_t _status)> sendImage3Reply_t;
-    typedef std::function<void (int32_t _status)> sendImage4Reply_t;
+    typedef std::function<void (int32_t _result)> sendImage1Reply_t;
+    typedef std::function<void (int32_t _result)> sendImage2Reply_t;
+    typedef std::function<void (int32_t _result)> sendImage3Reply_t;
+    typedef std::function<void (int32_t _result)> sendImage4Reply_t;
+    typedef std::function<void (int32_t _result)> checkErrorReply_t;
 
     virtual ~ClusterStub() {}
     void lockInterfaceVersionAttribute(bool _lockAccess) { static_cast<void>(_lockAccess); }
     bool hasElement(const uint32_t _id) const {
-        return (_id < 4);
+        return (_id < 5);
     }
     virtual const CommonAPI::Version& getInterfaceVersion(std::shared_ptr<CommonAPI::ClientId> _client) = 0;
 
@@ -108,6 +109,8 @@ public:
     virtual void sendImage3(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image3, sendImage3Reply_t _reply) = 0;
     /// This is the method that will be called on remote calls on the method sendImage4.
     virtual void sendImage4(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image4, sendImage4Reply_t _reply) = 0;
+    /// This is the method that will be called on remote calls on the method checkError.
+    virtual void checkError(const std::shared_ptr<CommonAPI::ClientId> _client, int32_t _check, checkErrorReply_t _reply) = 0;
 
 
     using CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>::initStubAdapter;

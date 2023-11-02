@@ -7,6 +7,11 @@
 #include <QQmlApplicationEngine>
 #include <qqml.h>
 #include "Detect.h"
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <unistd.h>
+#include <sys/types.h>
 
 using namespace v1_0::commonapi;
 

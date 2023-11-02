@@ -76,7 +76,9 @@ int main(int argc, char *argv[]) {
 
 
 
-    waitForExitSignal();
+    while(true){
+        
+    }
 
     // GPU 메모리 해제
     // Release stream and buffers

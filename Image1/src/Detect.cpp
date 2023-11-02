@@ -27,14 +27,18 @@ void Detect::startCamera() {
 
     cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
     cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-    cap.set(cv::CAP_PROP_FPS, 60);
+    cap.set(cv::CAP_PROP_FPS, 30);
     CommonAPI::CallStatus callStatus;
+    CommonAPI::CallStatus checkStatus;
     int result;
+    int error;
     uint8_t emergency = 0x10;
     uint8_t normal = 0x00; 
     bool setSockOptNeeded = true;
+    int number;
     setsockopt(15, IPPROTO_IP, IP_TOS, &normal, sizeof(normal));
     while (true) {
+        bool haha = true;
         cv::Mat frame;
         cap >> frame;  // Get a new frame from the camera
         if (frame.empty()) {
@@ -46,7 +50,21 @@ void Detect::startCamera() {
             std::cerr << "Failed to encode frame." << std::endl;
             return;
         }
-        myProxy->sendImage1(encoded_frame, callStatus, result);
+        auto send_future = std::async(std::launch::async, [&]() {
+            myProxy->sendImage1(encoded_frame, callStatus, result);
+        });
+        if(number > 2 && send_future.wait_for(std::chrono::milliseconds(100)) != std::future_status::ready) {
+            setsockopt(15, IPPROTO_IP, IP_TOS, &emergency, sizeof(emergency));
+            FILE *fp = fopen(EMERGENCY_FLAG_PATH, "w");
+            if (fp) {
+                fprintf(fp, "1");
+                fclose(fp);
+            } else {
+                perror("Failed to set emergency_flag");
+            }
+            // setSockOptNeeded = true;
+            std::cout << "EMERGENCY1" << std::endl;
+        }
         if(result == 1 && setSockOptNeeded) {
             setsockopt(15, IPPROTO_IP, IP_TOS, &emergency, sizeof(emergency));
             FILE *fp = fopen(EMERGENCY_FLAG_PATH, "w");
@@ -56,21 +74,9 @@ void Detect::startCamera() {
             } else {
                 perror("Failed to set emergency_flag");
             }
-
+            std::cout << "EMERGENCY2" << std::endl;
             setSockOptNeeded = false;
-            std::cout << "EMERGENCY" << std::endl;
-        } else if (result == 0 && !setSockOptNeeded) {
-            setsockopt(15, IPPROTO_IP, IP_TOS, &normal, sizeof(normal));
-            FILE *fp = fopen(EMERGENCY_FLAG_PATH, "w");
-            if (fp) {
-                fprintf(fp, "0");
-                fclose(fp);
-            } else {
-                perror("Failed to unset emergency_flag");
-            }
-
-            setSockOptNeeded = true;
-            std::cout << "NORMAL" << std::endl;
         }
+        number = number + 1;
     }
 }
