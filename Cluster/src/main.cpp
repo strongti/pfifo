@@ -42,6 +42,11 @@ IExecutionContext* context2;
 float* device_buffers2[2];
 float* output_buffer_host2 = nullptr;
 
+extern int number;
+int result1;
+std::shared_ptr<ClusterStubImpl> myService;
+std::chrono::high_resolution_clock::time_point last_fps_time;
+
 
 void waitForExitSignal() {
     std::unique_lock<std::mutex> lock(mtx);
@@ -52,7 +57,7 @@ int main(int argc, char *argv[]) {
     qRegisterMetaType<std::string>();
 
     std::shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
-    std::shared_ptr<ClusterStubImpl> myService = std::make_shared<ClusterStubImpl>();
+    myService = std::make_shared<ClusterStubImpl>();
     runtime->registerService("local", "cluster_service", myService);
     std::cout << "Successfully Registered Service!" << std::endl;
 
@@ -75,11 +80,25 @@ int main(int argc, char *argv[]) {
     prepare_buffer(engine2, &device_buffers2[0], &device_buffers2[1], &output_buffer_host2);
 
 
-
-    while(true){
-        
+    while (true) {
+        auto current_time = std::chrono::high_resolution_clock::now();
+        auto elapsed_time = std::chrono::duration<double>(current_time - last_fps_time).count();
+        // 1초 이상 경과했을 때 FPS 계산 및 출력
+        if (elapsed_time >= 1) {
+            std::cout << "time: " << elapsed_time << std::endl;
+            std::cout << "frame: " << myService->frame_counter << std::endl;  
+            // // std::cout << "time: " << elapsed_time << std::endl; 
+            // std::cout << "FPS: " << frame_counter << std::endl;  // 프레임 카운터 값이 바로 FPS입니다
+            if (number > 60 && myService->frame_counter < 26 && result1 == 0) {
+                result1 = 1;
+                myService->fireErrorBroadcastEvent(result1);
+                std::cout << "Order Emergency1" << std::endl;
+            }
+            last_fps_time = current_time;
+            myService->frame_counter = 0;
+            
+        }
     }
-
     // GPU 메모리 해제
     // Release stream and buffers
     cudaStreamDestroy(stream1);

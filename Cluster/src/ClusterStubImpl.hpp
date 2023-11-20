@@ -34,16 +34,17 @@ extern float* device_buffers2[2];
 extern float* output_buffer_host2;
 
 
+
 class ClusterStubImpl: public QObject, public v1_0::commonapi::ClusterStubDefault {
     Q_OBJECT
 public:
     ClusterStubImpl();
     virtual ~ClusterStubImpl();
-    virtual void sendImage1(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image1, sendImage1Reply_t _reply);
-    virtual void sendImage2(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image2, sendImage2Reply_t _reply);
-    virtual void sendImage3(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image3, sendImage3Reply_t _reply);
-    virtual void sendImage4(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image4, sendImage4Reply_t _reply);
-    // virtual void checkError(const std::shared_ptr<CommonAPI::ClientId> _client, int32_t _check, checkErrorReply_t _reply);
+    virtual void sendImage1(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image1);
+    virtual void sendImage2(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image2);
+    virtual void sendImage3(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image3);
+    virtual void sendImage4(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image4);
+    int frame_counter = 0;
 private:
     static std::chrono::high_resolution_clock::time_point lastTimestamp1;
     static std::chrono::high_resolution_clock::time_point lastTimestamp2;
@@ -51,8 +52,7 @@ private:
     static std::chrono::high_resolution_clock::time_point lastTimestamp4;
     static double totalFPS1, totalFPS2, totalFPS3, totalFPS4;
     static int frameCount1, frameCount2, frameCount3, frameCount4;
-    int frame_counter = 0;
-    std::chrono::high_resolution_clock::time_point last_fps_time; 
+
 
 //signals:
 //    void signalSpeed(int);

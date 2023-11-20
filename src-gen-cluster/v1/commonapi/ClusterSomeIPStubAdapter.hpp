@@ -46,6 +46,10 @@ public:
         ClusterSomeIPStubAdapterHelper::deinit();
     }
 
+    void fireErrrorCheckAttributeChanged(const bool &_value);
+    
+    void fireErrorBroadcastEvent(const int32_t &_result);
+
     void deactivateManagedInstances() {}
     
     CommonAPI::SomeIP::GetAttributeStubDispatcher<
@@ -53,45 +57,34 @@ public:
         CommonAPI::Version
     > getClusterInterfaceVersionStubDispatcher;
 
-    CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
+    CommonAPI::SomeIP::GetAttributeStubDispatcher<
+        ::v1::commonapi::ClusterStub,
+        bool
+    > getErrrorCheckAttributeStubDispatcher;
+    
+    CommonAPI::SomeIP::MethodStubDispatcher<
         ::v1::commonapi::ClusterStub,
         std::tuple< std::vector< uint8_t >>,
-        std::tuple< int32_t>,
-        std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
+        std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>
     > sendImage1StubDispatcher;
     
-    CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
+    CommonAPI::SomeIP::MethodStubDispatcher<
         ::v1::commonapi::ClusterStub,
         std::tuple< std::vector< uint8_t >>,
-        std::tuple< int32_t>,
-        std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
+        std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>
     > sendImage2StubDispatcher;
     
-    CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
+    CommonAPI::SomeIP::MethodStubDispatcher<
         ::v1::commonapi::ClusterStub,
         std::tuple< std::vector< uint8_t >>,
-        std::tuple< int32_t>,
-        std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
+        std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>
     > sendImage3StubDispatcher;
     
-    CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
+    CommonAPI::SomeIP::MethodStubDispatcher<
         ::v1::commonapi::ClusterStub,
         std::tuple< std::vector< uint8_t >>,
-        std::tuple< int32_t>,
-        std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
+        std::tuple< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >>
     > sendImage4StubDispatcher;
-    
-    CommonAPI::SomeIP::MethodWithReplyStubDispatcher<
-        ::v1::commonapi::ClusterStub,
-        std::tuple< int32_t>,
-        std::tuple< int32_t>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>,
-        std::tuple< CommonAPI::SomeIP::IntegerDeployment<int32_t>>
-    > checkErrorStubDispatcher;
     
     ClusterSomeIPStubAdapterInternal(
         const CommonAPI::SomeIP::Address &_address,
@@ -103,52 +96,60 @@ public:
             _connection,
             std::dynamic_pointer_cast< ClusterStub>(_stub)),
         getClusterInterfaceVersionStubDispatcher(&ClusterStub::lockInterfaceVersionAttribute, &ClusterStub::getInterfaceVersion, false, true),
+        getErrrorCheckAttributeStubDispatcher(
+            &::v1::commonapi::ClusterStub::lockErrrorCheckAttribute,
+            &::v1::commonapi::ClusterStub::getErrrorCheckAttribute,
+            false,
+            _stub->hasElement(0))
+        ,
         sendImage1StubDispatcher(
             &ClusterStub::sendImage1,
             false,
-            _stub->hasElement(0),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
+            _stub->hasElement(1),
+            std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)))
         
         ,
         sendImage2StubDispatcher(
             &ClusterStub::sendImage2,
             false,
-            _stub->hasElement(1),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
+            _stub->hasElement(2),
+            std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)))
         
         ,
         sendImage3StubDispatcher(
             &ClusterStub::sendImage3,
             false,
-            _stub->hasElement(2),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
+            _stub->hasElement(3),
+            std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)))
         
         ,
         sendImage4StubDispatcher(
             &ClusterStub::sendImage4,
             false,
-            _stub->hasElement(3),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
-        
-        ,
-        checkErrorStubDispatcher(
-            &ClusterStub::checkError,
-            false,
             _stub->hasElement(4),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)),
-            std::make_tuple(static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr)))
+            std::make_tuple(static_cast< CommonAPI::SomeIP::ArrayDeployment< CommonAPI::SomeIP::IntegerDeployment<uint8_t> >* >(nullptr)))
         
     {
+        ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x2007) }, &getErrrorCheckAttributeStubDispatcher );
         ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7c) }, &sendImage1StubDispatcher );
         ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7d) }, &sendImage2StubDispatcher );
         ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7e) }, &sendImage3StubDispatcher );
         ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x7f) }, &sendImage4StubDispatcher );
-        ClusterSomeIPStubAdapterHelper::addStubDispatcher( { CommonAPI::SomeIP::method_id_t(0x80) }, &checkErrorStubDispatcher );
+        std::shared_ptr<CommonAPI::SomeIP::ClientId> itsClient = std::make_shared<CommonAPI::SomeIP::ClientId>(0xFFFF, 0xFFFFFFFF, 0xFFFFFFFF);
+
         // Provided events/fields
+        {
+            std::set<CommonAPI::SomeIP::eventgroup_id_t> itsEventGroups;
+            itsEventGroups.insert(CommonAPI::SomeIP::eventgroup_id_t(0x1002));
+            CommonAPI::SomeIP::StubAdapter::registerEvent(CommonAPI::SomeIP::event_id_t(0x8235), itsEventGroups, CommonAPI::SomeIP::event_type_e::ET_EVENT, CommonAPI::SomeIP::reliability_type_e::RT_UNRELIABLE);
+        }
+        if (_stub->hasElement(0)) {
+            std::set<CommonAPI::SomeIP::eventgroup_id_t> itsEventGroups;
+            itsEventGroups.insert(CommonAPI::SomeIP::eventgroup_id_t(CommonAPI::SomeIP::eventgroup_id_t(0x1001)));
+            CommonAPI::SomeIP::StubAdapter::registerEvent(CommonAPI::SomeIP::event_id_t(0xa005), itsEventGroups, CommonAPI::SomeIP::event_type_e::ET_FIELD, CommonAPI::SomeIP::reliability_type_e::RT_UNRELIABLE);
+            fireErrrorCheckAttributeChanged(std::dynamic_pointer_cast< ::v1::commonapi::ClusterStub>(_stub)->getErrrorCheckAttribute(itsClient));
+        }
+
     }
 
     // Register/Unregister event handlers for selective broadcasts
@@ -156,6 +157,33 @@ public:
     void unregisterSelectiveEventHandlers();
 
 };
+
+template <typename _Stub, typename... _Stubs>
+void ClusterSomeIPStubAdapterInternal<_Stub, _Stubs...>::fireErrrorCheckAttributeChanged(const bool &_value) {
+    CommonAPI::SomeIP::StubEventHelper<
+        CommonAPI::SomeIP::SerializableArguments<
+            bool
+            >
+    >::sendEvent(
+        *this,
+        CommonAPI::SomeIP::event_id_t(0xa005),
+        false,
+        _value
+    );
+}
+
+template <typename _Stub, typename... _Stubs>
+void ClusterSomeIPStubAdapterInternal<_Stub, _Stubs...>::fireErrorBroadcastEvent(const int32_t &_result) {
+    CommonAPI::Deployable< int32_t, CommonAPI::SomeIP::IntegerDeployment<int32_t>> deployed_result(_result, static_cast< CommonAPI::SomeIP::IntegerDeployment<int32_t>* >(nullptr));
+    CommonAPI::SomeIP::StubEventHelper<CommonAPI::SomeIP::SerializableArguments<  CommonAPI::Deployable< int32_t, CommonAPI::SomeIP::IntegerDeployment<int32_t> > 
+    >>
+        ::sendEvent(
+            *this,
+            CommonAPI::SomeIP::event_id_t(0x8235),
+            false,
+             deployed_result 
+    );
+}
 
 
 template <typename _Stub, typename... _Stubs>

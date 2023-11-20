@@ -19,7 +19,7 @@ Detect::Detect(QObject *parent) : QObject(parent)
 }
 
 void Detect::startCamera() {
-    cv::VideoCapture cap(0);  // Open the default camera
+    cv::VideoCapture cap(1);  // Open the default camera
     if (!cap.isOpened()) {
         std::cerr << "Could not open camera." << std::endl;
         return;
@@ -32,11 +32,24 @@ void Detect::startCamera() {
     CommonAPI::CallStatus checkStatus;
     int result;
     int error;
-    uint8_t emergency = 0x10;
+    uint8_t emergency = 0x20;
     uint8_t normal = 0x00; 
     bool setSockOptNeeded = true;
     int number;
-    setsockopt(15, IPPROTO_IP, IP_TOS, &normal, sizeof(normal));
+    myProxy->getErrorBroadcastEvent().subscribe([&](const int32_t &result) {
+        if(result == 1 && setSockOptNeeded) {
+            setsockopt(15, IPPROTO_IP, IP_TOS, &emergency, sizeof(emergency));
+            FILE *fp = fopen(EMERGENCY_FLAG_PATH, "w");
+            if (fp) {
+                fprintf(fp, "0");
+                fclose(fp);
+            } else {
+                perror("Failed to set emergency_flag");
+            }
+            std::cout << "EMERGENCY2" << std::endl;
+            setSockOptNeeded = false;
+        }
+    });
     while (true) {
         bool haha = true;
         cv::Mat frame;
@@ -50,33 +63,25 @@ void Detect::startCamera() {
             std::cerr << "Failed to encode frame." << std::endl;
             return;
         }
-        auto send_future = std::async(std::launch::async, [&]() {
-            myProxy->sendImage1(encoded_frame, callStatus, result);
-        });
-        if(number > 2 && send_future.wait_for(std::chrono::milliseconds(100)) != std::future_status::ready) {
-            setsockopt(15, IPPROTO_IP, IP_TOS, &emergency, sizeof(emergency));
-            FILE *fp = fopen(EMERGENCY_FLAG_PATH, "w");
-            if (fp) {
-                fprintf(fp, "1");
-                fclose(fp);
-            } else {
-                perror("Failed to set emergency_flag");
-            }
-            // setSockOptNeeded = true;
-            std::cout << "EMERGENCY1" << std::endl;
-        }
-        if(result == 1 && setSockOptNeeded) {
-            setsockopt(15, IPPROTO_IP, IP_TOS, &emergency, sizeof(emergency));
-            FILE *fp = fopen(EMERGENCY_FLAG_PATH, "w");
-            if (fp) {
-                fprintf(fp, "1");
-                fclose(fp);
-            } else {
-                perror("Failed to set emergency_flag");
-            }
-            std::cout << "EMERGENCY2" << std::endl;
-            setSockOptNeeded = false;
-        }
-        number = number + 1;
+            // auto start = std::chrono::high_resolution_clock::now();
+        myProxy->sendImage1(encoded_frame, callStatus);
+            // auto end = std::chrono::high_resolution_clock::now();
+            // auto tt = std::chrono::duration<double>(end - start).count();
+            // std::cout << "time :" << tt << std::endl;
+
+        // if(number > 2 && send_future.wait_for(std::chrono::milliseconds(100)) != std::future_status::ready) {
+        //     setsockopt(15, IPPROTO_IP, IP_TOS, &emergency, sizeof(emergency));
+        //     FILE *fp = fopen(EMERGENCY_FLAG_PATH, "w");
+        //     if (fp) {
+        //         fprintf(fp, "1");
+        //         fclose(fp);
+        //     } else {
+        //         perror("Failed to set emergency_flag");
+        //     }
+        //     // setSockOptNeeded = true;
+        //     myProxy->sendImage1(encoded_frame, callStatus, result);
+        //     std::cout << "EMERGENCY1" << std::endl;
+        //     setSockOptNeeded = false;
+        // }
     }
 }

@@ -23,8 +23,10 @@
 #define HAS_DEFINED_COMMONAPI_INTERNAL_COMPILATION_HERE
 #endif
 
+#include <unordered_set>
 #include <vector>
 
+#include <mutex>
 
 #include <CommonAPI/Stub.hpp>
 
@@ -46,16 +48,31 @@ class ClusterStubAdapter
     : public virtual CommonAPI::StubAdapter,
       public virtual Cluster {
  public:
+    ///Notifies all remote listeners about a change of value of the attribute errrorCheck.
+    virtual void fireErrrorCheckAttributeChanged(const bool &errrorCheck) = 0;
+    /**
+    * Sends a broadcast event for ErrorBroadcast. Should not be called directly.
+    * Instead, the "fire<broadcastName>Event" methods of the stub should be used.
+    */
+    virtual void fireErrorBroadcastEvent(const int32_t &_result) = 0;
 
 
     virtual void deactivateManagedInstances() = 0;
 
+    void lockErrrorCheckAttribute(bool _lockAccess) {
+        if (_lockAccess) {
+            errrorCheckMutex_.lock();
+        } else {
+            errrorCheckMutex_.unlock();
+        }
+    }
 
 protected:
     /**
      * Defines properties for storing the ClientIds of clients / proxies that have
      * subscribed to the selective broadcasts
      */
+    std::recursive_mutex errrorCheckMutex_;
 
 };
 
@@ -88,29 +105,41 @@ class ClusterStub
     : public virtual CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>
 {
 public:
-    typedef std::function<void (int32_t _result)> sendImage1Reply_t;
-    typedef std::function<void (int32_t _result)> sendImage2Reply_t;
-    typedef std::function<void (int32_t _result)> sendImage3Reply_t;
-    typedef std::function<void (int32_t _result)> sendImage4Reply_t;
-    typedef std::function<void (int32_t _result)> checkErrorReply_t;
 
     virtual ~ClusterStub() {}
     void lockInterfaceVersionAttribute(bool _lockAccess) { static_cast<void>(_lockAccess); }
     bool hasElement(const uint32_t _id) const {
-        return (_id < 5);
+        return (_id < 6);
     }
     virtual const CommonAPI::Version& getInterfaceVersion(std::shared_ptr<CommonAPI::ClientId> _client) = 0;
 
+    /// Provides getter access to the attribute errrorCheck
+    virtual const bool &getErrrorCheckAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) = 0;
+    /// sets attribute with the given value and propagates it to the adapter
+    virtual void fireErrrorCheckAttributeChanged(bool _value) {
+    auto stubAdapter = CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>::stubAdapter_.lock();
+    if (stubAdapter)
+        stubAdapter->fireErrrorCheckAttributeChanged(_value);
+    }
+    void lockErrrorCheckAttribute(bool _lockAccess) {
+        auto stubAdapter = CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->lockErrrorCheckAttribute(_lockAccess);
+    }
     /// This is the method that will be called on remote calls on the method sendImage1.
-    virtual void sendImage1(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image1, sendImage1Reply_t _reply) = 0;
+    virtual void sendImage1(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image1) = 0;
     /// This is the method that will be called on remote calls on the method sendImage2.
-    virtual void sendImage2(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image2, sendImage2Reply_t _reply) = 0;
+    virtual void sendImage2(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image2) = 0;
     /// This is the method that will be called on remote calls on the method sendImage3.
-    virtual void sendImage3(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image3, sendImage3Reply_t _reply) = 0;
+    virtual void sendImage3(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image3) = 0;
     /// This is the method that will be called on remote calls on the method sendImage4.
-    virtual void sendImage4(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image4, sendImage4Reply_t _reply) = 0;
-    /// This is the method that will be called on remote calls on the method checkError.
-    virtual void checkError(const std::shared_ptr<CommonAPI::ClientId> _client, int32_t _check, checkErrorReply_t _reply) = 0;
+    virtual void sendImage4(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image4) = 0;
+    /// Sends a broadcast event for ErrorBroadcast.
+    virtual void fireErrorBroadcastEvent(const int32_t &_result) {
+        auto stubAdapter = CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>::stubAdapter_.lock();
+        if (stubAdapter)
+            stubAdapter->fireErrorBroadcastEvent(_result);
+    }
 
 
     using CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>::initStubAdapter;

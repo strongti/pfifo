@@ -60,39 +60,63 @@ public:
         return &remoteEventHandler_;
     }
 
-    COMMONAPI_EXPORT virtual void sendImage1(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image1, sendImage1Reply_t _reply) {
+    COMMONAPI_EXPORT virtual const bool &getErrrorCheckAttribute() {
+        return errrorCheckAttributeValue_;
+    }
+    COMMONAPI_EXPORT virtual const bool &getErrrorCheckAttribute(const std::shared_ptr<CommonAPI::ClientId> _client) {
+        (void)_client;
+        return getErrrorCheckAttribute();
+    }
+    COMMONAPI_EXPORT virtual void setErrrorCheckAttribute(bool _value) {
+        const bool valueChanged = trySetErrrorCheckAttribute(std::move(_value));
+        if (valueChanged) {
+            fireErrrorCheckAttributeChanged(errrorCheckAttributeValue_);
+        }
+    }
+    COMMONAPI_EXPORT virtual void sendImage1(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image1) {
         (void)_client;
         (void)_image1;
-        int32_t result = 0;
-        _reply(result);
     }
-    COMMONAPI_EXPORT virtual void sendImage2(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image2, sendImage2Reply_t _reply) {
+    COMMONAPI_EXPORT virtual void sendImage2(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image2) {
         (void)_client;
         (void)_image2;
-        int32_t result = 0;
-        _reply(result);
     }
-    COMMONAPI_EXPORT virtual void sendImage3(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image3, sendImage3Reply_t _reply) {
+    COMMONAPI_EXPORT virtual void sendImage3(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image3) {
         (void)_client;
         (void)_image3;
-        int32_t result = 0;
-        _reply(result);
     }
-    COMMONAPI_EXPORT virtual void sendImage4(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image4, sendImage4Reply_t _reply) {
+    COMMONAPI_EXPORT virtual void sendImage4(const std::shared_ptr<CommonAPI::ClientId> _client, std::vector< uint8_t > _image4) {
         (void)_client;
         (void)_image4;
-        int32_t result = 0;
-        _reply(result);
     }
-    COMMONAPI_EXPORT virtual void checkError(const std::shared_ptr<CommonAPI::ClientId> _client, int32_t _check, checkErrorReply_t _reply) {
-        (void)_client;
-        (void)_check;
-        int32_t result = 0;
-        _reply(result);
+    COMMONAPI_EXPORT virtual void fireErrorBroadcastEvent(const int32_t &_result) {
+        ClusterStub::fireErrorBroadcastEvent(_result);
     }
 
 
 protected:
+    COMMONAPI_EXPORT virtual bool trySetErrrorCheckAttribute(bool _value) {
+        if (!validateErrrorCheckAttributeRequestedValue(_value))
+            return false;
+
+        bool valueChanged;
+        std::shared_ptr<ClusterStubAdapter> stubAdapter = CommonAPI::Stub<ClusterStubAdapter, ClusterStubRemoteEvent>::stubAdapter_.lock();
+        if(stubAdapter) {
+            stubAdapter->lockErrrorCheckAttribute(true);
+            valueChanged = (errrorCheckAttributeValue_ != _value);
+            errrorCheckAttributeValue_ = std::move(_value);
+            stubAdapter->lockErrrorCheckAttribute(false);
+        } else {
+            valueChanged = (errrorCheckAttributeValue_ != _value);
+            errrorCheckAttributeValue_ = std::move(_value);
+        }
+
+       return valueChanged;
+    }
+    COMMONAPI_EXPORT virtual bool validateErrrorCheckAttributeRequestedValue(const bool &_value) {
+        (void)_value;
+        return true;
+    }
     class COMMONAPI_EXPORT_CLASS_EXPLICIT RemoteEventHandler: public virtual ClusterStubRemoteEvent {
     public:
         COMMONAPI_EXPORT RemoteEventHandler(ClusterStubDefault *_defaultStub)
@@ -109,6 +133,7 @@ protected:
 
 private:
 
+    bool errrorCheckAttributeValue_ {};
 
     CommonAPI::Version interfaceVersion_;
 };

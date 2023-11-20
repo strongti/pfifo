@@ -20,6 +20,8 @@
 #include <CommonAPI/SomeIP/Factory.hpp>
 #include <CommonAPI/SomeIP/Proxy.hpp>
 #include <CommonAPI/SomeIP/Types.hpp>
+#include <CommonAPI/SomeIP/Attribute.hpp>
+#include <CommonAPI/SomeIP/Event.hpp>
 
 #if defined (HAS_DEFINED_COMMONAPI_INTERNAL_COMPILATION_HERE)
 #undef COMMONAPI_INTERNAL_COMPILATION
@@ -53,31 +55,25 @@ public:
 
     virtual ~ClusterSomeIPProxy();
 
-    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info);
+    virtual ErrrorCheckAttribute& getErrrorCheckAttribute();
 
-    virtual std::future<CommonAPI::CallStatus> sendImage1Async(const std::vector< uint8_t > &_image1, SendImage1AsyncCallback _callback, const CommonAPI::CallInfo *_info);
+    virtual ErrorBroadcastEvent& getErrorBroadcastEvent();
 
-    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info);
+    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus);
 
-    virtual std::future<CommonAPI::CallStatus> sendImage2Async(const std::vector< uint8_t > &_image2, SendImage2AsyncCallback _callback, const CommonAPI::CallInfo *_info);
+    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus);
 
-    virtual void sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info);
+    virtual void sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus);
 
-    virtual std::future<CommonAPI::CallStatus> sendImage3Async(const std::vector< uint8_t > &_image3, SendImage3AsyncCallback _callback, const CommonAPI::CallInfo *_info);
-
-    virtual void sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info);
-
-    virtual std::future<CommonAPI::CallStatus> sendImage4Async(const std::vector< uint8_t > &_image4, SendImage4AsyncCallback _callback, const CommonAPI::CallInfo *_info);
-
-    virtual void checkError(int32_t _check, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info);
-
-    virtual std::future<CommonAPI::CallStatus> checkErrorAsync(const int32_t &_check, CheckErrorAsyncCallback _callback, const CommonAPI::CallInfo *_info);
+    virtual void sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus);
 
     virtual void getOwnVersion(uint16_t &_major, uint16_t &_minor) const;
 
     virtual std::future<void> getCompletionFuture();
 
 private:
+    CommonAPI::SomeIP::ObservableAttribute<CommonAPI::SomeIP::ReadonlyAttribute<ErrrorCheckAttribute>> errrorCheck_;
+    CommonAPI::SomeIP::Event<ErrorBroadcastEvent, CommonAPI::Deployable< int32_t, CommonAPI::SomeIP::IntegerDeployment<int32_t> >> errorBroadcast_;
 
     std::promise<void> completed_;
 };

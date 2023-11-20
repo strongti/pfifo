@@ -21,6 +21,8 @@
 
 #include <vector>
 
+#include <CommonAPI/Attribute.hpp>
+#include <CommonAPI/Event.hpp>
 #include <CommonAPI/Proxy.hpp>
 #include <functional>
 #include <future>
@@ -36,23 +38,30 @@ namespace commonapi {
 class ClusterProxyBase
     : virtual public CommonAPI::Proxy {
 public:
+    typedef CommonAPI::ObservableReadonlyAttribute<bool> ErrrorCheckAttribute;
+    typedef CommonAPI::Event<
+        int32_t
+    > ErrorBroadcastEvent;
 
-    typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> SendImage1AsyncCallback;
-    typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> SendImage2AsyncCallback;
-    typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> SendImage3AsyncCallback;
-    typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> SendImage4AsyncCallback;
-    typedef std::function<void(const CommonAPI::CallStatus&, const int32_t&)> CheckErrorAsyncCallback;
 
-    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual std::future<CommonAPI::CallStatus> sendImage1Async(const std::vector< uint8_t > &_image1, SendImage1AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual std::future<CommonAPI::CallStatus> sendImage2Async(const std::vector< uint8_t > &_image2, SendImage2AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual void sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual std::future<CommonAPI::CallStatus> sendImage3Async(const std::vector< uint8_t > &_image3, SendImage3AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual void sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual std::future<CommonAPI::CallStatus> sendImage4Async(const std::vector< uint8_t > &_image4, SendImage4AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual void checkError(int32_t _check, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info = nullptr) = 0;
-    virtual std::future<CommonAPI::CallStatus> checkErrorAsync(const int32_t &_check, CheckErrorAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr) = 0;
+    virtual ErrrorCheckAttribute& getErrrorCheckAttribute() = 0;
+    /**
+     * @invariant Fire And Forget
+     */
+    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus) = 0;
+    /**
+     * @invariant Fire And Forget
+     */
+    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus) = 0;
+    /**
+     * @invariant Fire And Forget
+     */
+    virtual void sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus) = 0;
+    /**
+     * @invariant Fire And Forget
+     */
+    virtual void sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus) = 0;
+    virtual ErrorBroadcastEvent& getErrorBroadcastEvent() = 0;
 
     virtual std::future<void> getCompletionFuture() = 0;
 };

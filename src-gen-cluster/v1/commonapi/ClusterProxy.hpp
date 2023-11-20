@@ -18,6 +18,8 @@
 #define HAS_DEFINED_COMMONAPI_INTERNAL_COMPILATION_HERE
 #endif
 
+#include <CommonAPI/AttributeExtension.hpp>
+#include <CommonAPI/Factory.hpp>
 
 #if defined (HAS_DEFINED_COMMONAPI_INTERNAL_COMPILATION_HERE)
 #undef COMMONAPI_INTERNAL_COMPILATION
@@ -69,110 +71,53 @@ public:
     virtual std::future<void> getCompletionFuture();
 
     /**
-     * Calls sendImage1 with synchronous semantics.
+     * Returns the wrapper class that provides access to the attribute errrorCheck.
+     */
+    virtual ErrrorCheckAttribute& getErrrorCheckAttribute() {
+        return delegate_->getErrrorCheckAttribute();
+    }
+    /**
+     * Calls sendImage1 with Fire&Forget semantics.
      *
      * All const parameters are input parameters to this method.
-     * All non-const parameters will be filled with the returned values.
      * The CallStatus will be filled when the method returns and indicate either
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus);
     /**
-     * Calls sendImage1 with asynchronous semantics.
-     *
-     * The provided callback will be called when the reply to this call arrives or
-     * an error occurs during the call. The CallStatus will indicate either "SUCCESS"
-     * or which type of error has occurred. In case of any error, ONLY the CallStatus
-     * will have a defined value.
-     * The std::future returned by this method will be fulfilled at arrival of the reply.
-     * It will provide the same value for CallStatus as will be handed to the callback.
-     */
-    virtual std::future<CommonAPI::CallStatus> sendImage1Async(const std::vector< uint8_t > &_image1, SendImage1AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
-    /**
-     * Calls sendImage2 with synchronous semantics.
+     * Calls sendImage2 with Fire&Forget semantics.
      *
      * All const parameters are input parameters to this method.
-     * All non-const parameters will be filled with the returned values.
      * The CallStatus will be filled when the method returns and indicate either
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus);
     /**
-     * Calls sendImage2 with asynchronous semantics.
-     *
-     * The provided callback will be called when the reply to this call arrives or
-     * an error occurs during the call. The CallStatus will indicate either "SUCCESS"
-     * or which type of error has occurred. In case of any error, ONLY the CallStatus
-     * will have a defined value.
-     * The std::future returned by this method will be fulfilled at arrival of the reply.
-     * It will provide the same value for CallStatus as will be handed to the callback.
-     */
-    virtual std::future<CommonAPI::CallStatus> sendImage2Async(const std::vector< uint8_t > &_image2, SendImage2AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
-    /**
-     * Calls sendImage3 with synchronous semantics.
+     * Calls sendImage3 with Fire&Forget semantics.
      *
      * All const parameters are input parameters to this method.
-     * All non-const parameters will be filled with the returned values.
      * The CallStatus will be filled when the method returns and indicate either
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus);
     /**
-     * Calls sendImage3 with asynchronous semantics.
-     *
-     * The provided callback will be called when the reply to this call arrives or
-     * an error occurs during the call. The CallStatus will indicate either "SUCCESS"
-     * or which type of error has occurred. In case of any error, ONLY the CallStatus
-     * will have a defined value.
-     * The std::future returned by this method will be fulfilled at arrival of the reply.
-     * It will provide the same value for CallStatus as will be handed to the callback.
-     */
-    virtual std::future<CommonAPI::CallStatus> sendImage3Async(const std::vector< uint8_t > &_image3, SendImage3AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
-    /**
-     * Calls sendImage4 with synchronous semantics.
+     * Calls sendImage4 with Fire&Forget semantics.
      *
      * All const parameters are input parameters to this method.
-     * All non-const parameters will be filled with the returned values.
      * The CallStatus will be filled when the method returns and indicate either
      * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
      * will be set.
      */
-    virtual void sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info = nullptr);
+    virtual void sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus);
     /**
-     * Calls sendImage4 with asynchronous semantics.
-     *
-     * The provided callback will be called when the reply to this call arrives or
-     * an error occurs during the call. The CallStatus will indicate either "SUCCESS"
-     * or which type of error has occurred. In case of any error, ONLY the CallStatus
-     * will have a defined value.
-     * The std::future returned by this method will be fulfilled at arrival of the reply.
-     * It will provide the same value for CallStatus as will be handed to the callback.
+     * Returns the wrapper class that provides access to the broadcast ErrorBroadcast.
      */
-    virtual std::future<CommonAPI::CallStatus> sendImage4Async(const std::vector< uint8_t > &_image4, SendImage4AsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
-    /**
-     * Calls checkError with synchronous semantics.
-     *
-     * All const parameters are input parameters to this method.
-     * All non-const parameters will be filled with the returned values.
-     * The CallStatus will be filled when the method returns and indicate either
-     * "SUCCESS" or which type of error has occurred. In case of an error, ONLY the CallStatus
-     * will be set.
-     */
-    virtual void checkError(int32_t _check, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info = nullptr);
-    /**
-     * Calls checkError with asynchronous semantics.
-     *
-     * The provided callback will be called when the reply to this call arrives or
-     * an error occurs during the call. The CallStatus will indicate either "SUCCESS"
-     * or which type of error has occurred. In case of any error, ONLY the CallStatus
-     * will have a defined value.
-     * The std::future returned by this method will be fulfilled at arrival of the reply.
-     * It will provide the same value for CallStatus as will be handed to the callback.
-     */
-    virtual std::future<CommonAPI::CallStatus> checkErrorAsync(const int32_t &_check, CheckErrorAsyncCallback _callback = nullptr, const CommonAPI::CallInfo *_info = nullptr);
+    virtual ErrorBroadcastEvent& getErrorBroadcastEvent() {
+        return delegate_->getErrorBroadcastEvent();
+    }
 
 
 
@@ -182,6 +127,27 @@ public:
 
 typedef ClusterProxy<> ClusterProxyDefault;
 
+namespace ClusterExtensions {
+    template <template <typename > class _ExtensionType>
+    class ErrrorCheckAttributeExtension {
+     public:
+        typedef _ExtensionType< ClusterProxyBase::ErrrorCheckAttribute> extension_type;
+    
+        static_assert(std::is_base_of<typename CommonAPI::AttributeExtension< ClusterProxyBase::ErrrorCheckAttribute>, extension_type>::value,
+                      "Not CommonAPI Attribute Extension!");
+    
+        ErrrorCheckAttributeExtension(ClusterProxyBase& proxy): attributeExtension_(proxy.getErrrorCheckAttribute()) {
+        }
+    
+        inline extension_type& getErrrorCheckAttributeExtension() {
+            return attributeExtension_;
+        }
+    
+     private:
+        extension_type attributeExtension_;
+    };
+
+} // namespace ClusterExtensions
 
 //
 // ClusterProxy Implementation
@@ -197,49 +163,20 @@ ClusterProxy<_AttributeExtensions...>::~ClusterProxy() {
 }
 
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info) {
-    delegate_->sendImage1(_image1, _internalCallStatus, _result, _info);
-}
-
-template <typename ... _AttributeExtensions>
-std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendImage1Async(const std::vector< uint8_t > &_image1, SendImage1AsyncCallback _callback, const CommonAPI::CallInfo *_info) {
-    return delegate_->sendImage1Async(_image1, _callback, _info);
+void ClusterProxy<_AttributeExtensions...>::sendImage1(std::vector< uint8_t > _image1, CommonAPI::CallStatus &_internalCallStatus) {
+    delegate_->sendImage1(_image1, _internalCallStatus);
 }
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info) {
-    delegate_->sendImage2(_image2, _internalCallStatus, _result, _info);
-}
-
-template <typename ... _AttributeExtensions>
-std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendImage2Async(const std::vector< uint8_t > &_image2, SendImage2AsyncCallback _callback, const CommonAPI::CallInfo *_info) {
-    return delegate_->sendImage2Async(_image2, _callback, _info);
+void ClusterProxy<_AttributeExtensions...>::sendImage2(std::vector< uint8_t > _image2, CommonAPI::CallStatus &_internalCallStatus) {
+    delegate_->sendImage2(_image2, _internalCallStatus);
 }
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info) {
-    delegate_->sendImage3(_image3, _internalCallStatus, _result, _info);
-}
-
-template <typename ... _AttributeExtensions>
-std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendImage3Async(const std::vector< uint8_t > &_image3, SendImage3AsyncCallback _callback, const CommonAPI::CallInfo *_info) {
-    return delegate_->sendImage3Async(_image3, _callback, _info);
+void ClusterProxy<_AttributeExtensions...>::sendImage3(std::vector< uint8_t > _image3, CommonAPI::CallStatus &_internalCallStatus) {
+    delegate_->sendImage3(_image3, _internalCallStatus);
 }
 template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info) {
-    delegate_->sendImage4(_image4, _internalCallStatus, _result, _info);
-}
-
-template <typename ... _AttributeExtensions>
-std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::sendImage4Async(const std::vector< uint8_t > &_image4, SendImage4AsyncCallback _callback, const CommonAPI::CallInfo *_info) {
-    return delegate_->sendImage4Async(_image4, _callback, _info);
-}
-template <typename ... _AttributeExtensions>
-void ClusterProxy<_AttributeExtensions...>::checkError(int32_t _check, CommonAPI::CallStatus &_internalCallStatus, int32_t &_result, const CommonAPI::CallInfo *_info) {
-    delegate_->checkError(_check, _internalCallStatus, _result, _info);
-}
-
-template <typename ... _AttributeExtensions>
-std::future<CommonAPI::CallStatus> ClusterProxy<_AttributeExtensions...>::checkErrorAsync(const int32_t &_check, CheckErrorAsyncCallback _callback, const CommonAPI::CallInfo *_info) {
-    return delegate_->checkErrorAsync(_check, _callback, _info);
+void ClusterProxy<_AttributeExtensions...>::sendImage4(std::vector< uint8_t > _image4, CommonAPI::CallStatus &_internalCallStatus) {
+    delegate_->sendImage4(_image4, _internalCallStatus);
 }
 
 template <typename ... _AttributeExtensions>
@@ -276,6 +213,15 @@ std::future<void> ClusterProxy<_AttributeExtensions...>::getCompletionFuture() {
 } // namespace commonapi
 } // namespace v1
 
+namespace CommonAPI {
+template<template<typename > class _AttributeExtension>
+struct DefaultAttributeProxyHelper< ::v1::commonapi::ClusterProxy,
+    _AttributeExtension> {
+    typedef typename ::v1::commonapi::ClusterProxy<
+            ::v1::commonapi::ClusterExtensions::ErrrorCheckAttributeExtension<_AttributeExtension>
+    > class_t;
+};
+}
 
 
 // Compatibility
