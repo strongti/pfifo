@@ -78,6 +78,10 @@ int main(int argc, char *argv[]) {
 
     prepare_buffer(engine1, &device_buffers1[0], &device_buffers1[1], &output_buffer_host1);
     prepare_buffer(engine2, &device_buffers2[0], &device_buffers2[1], &output_buffer_host2);
+    std::ifstream file;
+    std::string line;
+    long long prev_rx = 0, prev_tx = 0;
+    long check_rx = 0;
 
 
     while (true) {
@@ -89,15 +93,35 @@ int main(int argc, char *argv[]) {
             std::cout << "frame: " << myService->frame_counter << std::endl;  
             // // std::cout << "time: " << elapsed_time << std::endl; 
             // std::cout << "FPS: " << frame_counter << std::endl;  // 프레임 카운터 값이 바로 FPS입니다
-            if (number > 60 && myService->frame_counter < 26 && result1 == 0) {
-                result1 = 1;
-                myService->fireErrorBroadcastEvent(result1);
-                std::cout << "Order Emergency1" << std::endl;
-            }
             last_fps_time = current_time;
             myService->frame_counter = 0;
-            
+            file.open("/proc/net/dev");
+            if (file.is_open()) {
+                while (getline(file, line)) {
+                    if (line.find("eth0:") != std::string::npos) { // 'eth0' 대신에 본인의 네트워크 인터페이스 이름으로 바꿔주세요.
+                        size_t pos = line.find("eth0:") + 6; // 여기도 마찬가지로 인터페이스 이름에 맞게 조정
+                        long long rx_bytes, tx_bytes;
+                        sscanf(line.substr(pos).c_str(), "%lld %*d %*d %*d %*d %*d %*d %*d %lld", &rx_bytes, &tx_bytes);
+
+                        if (prev_rx != 0 && prev_tx != 0) {
+                            std::cout << "Received: " << rx_bytes - prev_rx << " bytes, Sent: " << tx_bytes - prev_tx << " bytes\n";
+                        }
+                        check_rx = rx_bytes - prev_rx;
+                        prev_rx = rx_bytes;
+                        prev_tx = tx_bytes;
+                    }
+                }
+                file.close();
+            }
+            //normal : 2067447
+            std::cout << "Received: " << check_rx << std::endl;
+            if (number > 60 && myService->frame_counter < 26 && check_rx > 20674470 && result1 == 0) {
+                result1 = 1;
+                // myService->fireErrorBroadcastEvent(result1);
+                std::cout << "Order Emergency1" << std::endl;
+            }            
         }
+
     }
     // GPU 메모리 해제
     // Release stream and buffers
