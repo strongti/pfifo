@@ -89,12 +89,9 @@ int main(int argc, char *argv[]) {
         auto elapsed_time = std::chrono::duration<double>(current_time - last_fps_time).count();
         // 1초 이상 경과했을 때 FPS 계산 및 출력
         if (elapsed_time >= 1) {
-            std::cout << "time: " << elapsed_time << std::endl;
-            std::cout << "frame: " << myService->frame_counter << std::endl;  
+
             // // std::cout << "time: " << elapsed_time << std::endl; 
             // std::cout << "FPS: " << frame_counter << std::endl;  // 프레임 카운터 값이 바로 FPS입니다
-            last_fps_time = current_time;
-            myService->frame_counter = 0;
             file.open("/proc/net/dev");
             if (file.is_open()) {
                 while (getline(file, line)) {
@@ -103,9 +100,9 @@ int main(int argc, char *argv[]) {
                         long long rx_bytes, tx_bytes;
                         sscanf(line.substr(pos).c_str(), "%lld %*d %*d %*d %*d %*d %*d %*d %lld", &rx_bytes, &tx_bytes);
 
-                        if (prev_rx != 0 && prev_tx != 0) {
-                            std::cout << "Received: " << rx_bytes - prev_rx << " bytes, Sent: " << tx_bytes - prev_tx << " bytes\n";
-                        }
+                        // if (prev_rx != 0 && prev_tx != 0) {
+                        //     std::cout << "Received: " << rx_bytes - prev_rx << " bytes, Sent: " << tx_bytes - prev_tx << " bytes\n";
+                        // }
                         check_rx = rx_bytes - prev_rx;
                         prev_rx = rx_bytes;
                         prev_tx = tx_bytes;
@@ -114,12 +111,16 @@ int main(int argc, char *argv[]) {
                 file.close();
             }
             //normal : 2067447
+            //std::cout << "time: " << elapsed_time << std::endl;
+            std::cout << "\n\n\nframe: " << myService->frame_counter << std::endl;  
             std::cout << "Received: " << check_rx << std::endl;
             if (number > 60 && myService->frame_counter < 26 && check_rx > 20674470 && result1 == 0) {
                 result1 = 1;
-                // myService->fireErrorBroadcastEvent(result1);
+                myService->fireErrorBroadcastEvent(result1);
                 std::cout << "Order Emergency1" << std::endl;
-            }            
+            }
+            last_fps_time = current_time;
+            myService->frame_counter = 0;            
         }
 
     }
