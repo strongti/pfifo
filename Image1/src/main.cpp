@@ -16,13 +16,6 @@
 using namespace v1_0::commonapi;
 
 int main(int argc, char *argv[]) {
-    FILE *fp = fopen(EMERGENCY_FLAG_PATH, "w");
-    if (fp) {
-        fprintf(fp, "0");
-        fclose(fp);
-    } else {
-        perror("Failed to set emergency_flag");
-    }
     Detect detect;
     detect.startCamera();
 //    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
